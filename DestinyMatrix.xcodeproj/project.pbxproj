@@ -10,9 +10,22 @@
 		79AFE6412CCE836C00D650B8 /* DestinyMatrix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DestinyMatrix.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		79AFE6602CCEA2D300D650B8 /* Exceptions for "DestinyMatrix" folder in "DestinyMatrix" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 79AFE6402CCE836C00D650B8 /* DestinyMatrix */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		79AFE6432CCE836C00D650B8 /* DestinyMatrix */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				79AFE6602CCEA2D300D650B8 /* Exceptions for "DestinyMatrix" folder in "DestinyMatrix" target */,
+			);
 			path = DestinyMatrix;
 			sourceTree = "<group>";
 		};
@@ -255,6 +268,7 @@
 				DEVELOPMENT_TEAM = GNN7DQ637Y;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DestinyMatrix/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = DestinyMatrix;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -284,6 +298,7 @@
 				DEVELOPMENT_TEAM = GNN7DQ637Y;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DestinyMatrix/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = DestinyMatrix;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
