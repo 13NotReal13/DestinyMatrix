@@ -20,7 +20,19 @@ struct HomeView: View {
                 Spacer()
                 
                 Text("Матрица Судьбы")
-                    .font(.custom("Avenir Next", size: 36)) // Замените "MagicFont" на название вашего шрифта
+                    .font(.custom("Inkverse", size: 36)) // Замените "MagicFont" на название вашего шрифта
+                    .foregroundColor(.white)
+                    .shadow(color: .purple.opacity(0.7), radius: 5, x: 0, y: 0) // Добавляет магическое свечение
+                    .padding(.bottom, 20)
+                
+                Text("Матрица Судьбы")
+                    .font(.custom("CorrectionBrush", size: 36)) // Замените "MagicFont" на название вашего шрифта
+                    .foregroundColor(.white)
+                    .shadow(color: .purple.opacity(0.7), radius: 5, x: 0, y: 0) // Добавляет магическое свечение
+                    .padding(.bottom, 20)
+                
+                Text("Матрица Судьбы")
+                    .font(.custom("Blackcraft", size: 36)) // Замените "MagicFont" на название вашего шрифта
                     .foregroundColor(.white)
                     .shadow(color: .purple.opacity(0.7), radius: 5, x: 0, y: 0) // Добавляет магическое свечение
                     .padding(.bottom, 20)
