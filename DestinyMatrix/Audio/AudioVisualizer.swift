@@ -11,7 +11,7 @@ import SwiftUI
 final class AudioVisualizer: ObservableObject {
     private let audioEngine = AVAudioEngine()
     private let playerNode = AVAudioPlayerNode()
-    @Published var amplitudes: [CGFloat] = Array(repeating: 0.5, count: 130)
+    @Published var amplitudes: [CGFloat] = Array(repeating: 0.5, count: 120)
     
     func start() {
         audioEngine.attach(playerNode)

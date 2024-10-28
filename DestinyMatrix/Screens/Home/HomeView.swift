@@ -20,37 +20,15 @@ struct HomeView: View {
                 Spacer()
                 
                 Text("Матрица Судьбы")
-                    .font(.custom("Inkverse", size: 36)) // Замените "MagicFont" на название вашего шрифта
-                    .foregroundColor(.white)
-                    .shadow(color: .purple.opacity(0.7), radius: 5, x: 0, y: 0) // Добавляет магическое свечение
-                    .padding(.bottom, 20)
-                
-                Text("Матрица Судьбы")
                     .font(.custom("CorrectionBrush", size: 36)) // Замените "MagicFont" на название вашего шрифта
                     .foregroundColor(.white)
                     .shadow(color: .purple.opacity(0.7), radius: 5, x: 0, y: 0) // Добавляет магическое свечение
                     .padding(.bottom, 20)
                 
-                Text("Матрица Судьбы")
-                    .font(.custom("Blackcraft", size: 36)) // Замените "MagicFont" на название вашего шрифта
-                    .foregroundColor(.white)
-                    .shadow(color: .purple.opacity(0.7), radius: 5, x: 0, y: 0) // Добавляет магическое свечение
-                    .padding(.bottom, 20)
-                
-//                ZStack {
-//                    Image(.lightAround4)
-//                        .resizable()
-//                        .frame(width: 285, height: 285)
-//                        .rotationEffect(.degrees(rotationAngle), anchor: .center)
-//                        .onAppear {
-//                            withAnimation(Animation.linear(duration: 100).repeatForever(autoreverses: false)) {
-//                                rotationAngle = 360
-//                            }
-//                        }
-//                    
-//                    Rotating3DSphereView()
-//                        .frame(width: 300, height: 300)
-//                }
+                ZStack {
+                    Rotating3DSphereView(iamegName: Shape.shape1.rawValue)
+                        .frame(width: 300, height: 300)
+                }
                 
                 Spacer()
                 Spacer()

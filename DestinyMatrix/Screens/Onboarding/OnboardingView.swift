@@ -26,9 +26,11 @@ struct OnboardingView: View {
     
     @State private var textOffset: CGFloat = UIScreen.main.bounds.height * 0.35
     
-    private var colorOfEqualizer = Color.white
+//    private var colorOfEqualizer = Color.cyan
+//    private var colorOfEqualizer = Color.indigo   // main
+    private var colorOfEqualizer = Color.indigo
     private var offsetDistanceOfEqualizer: CGFloat = -110
-    private var shadowColorOfEqualizer = Color.yellow
+    private var shadowColorOfEqualizer = Color.white
     
     private var customFont: CustomFont = .correctionBrush
     
