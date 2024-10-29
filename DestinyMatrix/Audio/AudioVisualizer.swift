@@ -33,9 +33,13 @@ final class AudioVisualizer: ObservableObject {
         }
     }
     
-    func playAudio(url: URL) {
+    func playAudio(url: URL, completion: @escaping () -> Void) {
         let file = try! AVAudioFile(forReading: url)
-        playerNode.scheduleFile(file, at: nil)
+        playerNode.scheduleFile(file, at: nil) {
+            DispatchQueue.main.async {
+                completion()
+            }
+        }
         playerNode.play()
     }
     

@@ -24,10 +24,13 @@ enum Shape: String {
 struct OnboardingView: View {
     @StateObject private var audioVisualizer = AudioVisualizer()
     
+    @State private var audioIsFinished = true
+    @State private var navigateToHome = false
+    
     @State private var textOffset: CGFloat = UIScreen.main.bounds.height * 0.35
     
-//    private var colorOfEqualizer = Color.cyan
-//    private var colorOfEqualizer = Color.indigo   // main
+    //    private var colorOfEqualizer = Color.cyan
+    //    private var colorOfEqualizer = Color.indigo   // main
     private var colorOfEqualizer = Color.indigo
     private var offsetDistanceOfEqualizer: CGFloat = -110
     private var shadowColorOfEqualizer = Color.white
@@ -37,69 +40,93 @@ struct OnboardingView: View {
     private var shape: Shape = .shape1
     
     var body: some View {
-        VStack {
-            ZStack {
-                Image(.background)
-                    .scaledToFill()
-                    .ignoresSafeArea()
-                
-                VStack(spacing: UIScreen.main.bounds.height * 0.05) {
-                    ZStack {
-                        CircularEqualizerView(
-                            amplitudes: audioVisualizer.amplitudes,
-                            color: colorOfEqualizer,
-                            shadowColor: shadowColorOfEqualizer,
-                            offsetDistance: offsetDistanceOfEqualizer
-                        )
-                        
-                        Rotating3DSphereView(iamegName: shape.rawValue)
-                            .frame(width: 300, height: 300)
-                    }
-                    
-                    ScrollView {
-                        Text(OnboardingTextModel.introductionText)
-                            .font(.custom(customFont.rawValue, size: 24))
-                            .foregroundColor(.white)
-                            .shadow(color: .purple.opacity(0.7), radius: 5, x: 0, y: 0)
-                            .multilineTextAlignment(.center)
-                            .lineSpacing(4)
-                            .offset(y: textOffset)
-                            .frame(maxWidth: UIScreen.main.bounds.width * 0.9)
-                            .onAppear {
-                                withAnimation(Animation.linear(duration: 54)) {
-                                    textOffset = -UIScreen.main.bounds.height
-                                }
-                            }
-                    }
-                    .frame(height: 300)
-                    .mask(
-                        LinearGradient(
-                            gradient: Gradient(stops: [
-                                .init(color: .clear, location: 0),
-                                .init(color: .white, location: 0.1),
-                                .init(color: .white, location: 0.9),
-                                .init(color: .clear, location: 1)
-                            ]),
-                            startPoint: .top,
-                            endPoint: .bottom
-                        )
+        ZStack {
+            Image(.background)
+                .scaledToFill()
+                .ignoresSafeArea()
+            
+            VStack(spacing: UIScreen.main.bounds.height * 0.05) {
+                ZStack {
+                    CircularEqualizerView(
+                        amplitudes: audioVisualizer.amplitudes,
+                        color: colorOfEqualizer,
+                        shadowColor: shadowColorOfEqualizer,
+                        offsetDistance: offsetDistanceOfEqualizer
                     )
+                    
+                    Rotating3DSphereView(iamegName: shape.rawValue)
+                        .frame(width: 300, height: 300)
                 }
-                .frame(height: UIScreen.main.bounds.height * 0.8)
-            }
-            .onAppear {
-                if let audioURL = Bundle.main.url(forResource: "CharlotteOnboarding", withExtension: ".mp3") {
-                    audioVisualizer.start()
-                    audioVisualizer.playAudio(url: audioURL)
+                
+                ScrollView {
+                    Text(OnboardingTextModel.introductionText)
+                        .font(.custom(customFont.rawValue, size: 24))
+                        .foregroundColor(.white)
+                        .shadow(color: .purple.opacity(0.7), radius: 5, x: 0, y: 0)
+                        .multilineTextAlignment(.center)
+                        .lineSpacing(4)
+                        .offset(y: textOffset)
+                        .frame(maxWidth: UIScreen.main.bounds.width * 0.9)
+                        .onAppear {
+                            withAnimation(Animation.linear(duration: 54)) {
+                                textOffset = -UIScreen.main.bounds.height
+                            }
+                        }
                 }
+                .frame(height: 300)
+                .mask(
+                    LinearGradient(
+                        gradient: Gradient(stops: [
+                            .init(color: .clear, location: 0),
+                            .init(color: .white, location: 0.1),
+                            .init(color: .white, location: 0.9),
+                            .init(color: .clear, location: 1)
+                        ]),
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                )
             }
-            .onDisappear {
-                audioVisualizer.stop()
+            .frame(height: UIScreen.main.bounds.height * 0.8)
+            
+            Spacer()
+            
+            if audioIsFinished {
+                NextButtonOnboardingView(
+                    navigateToHome: $navigateToHome,
+                    audioIsFinished: $audioIsFinished,
+                    customFont: .correctionBrush
+                )
             }
+            
+        }
+        //        .onAppear {
+        //            if let audioURL = Bundle.main.url(forResource: "CharlotteOnboarding", withExtension: ".mp3") {
+//                audioVisualizer.start()
+//                audioVisualizer.playAudio(url: audioURL) {
+//                    withAnimation(.easeIn(duration: 1.5)) {
+//                        audioIsFinished = true
+//                    }
+//                }
+//            }
+//        }
+        .onDisappear {
+            audioVisualizer.stop()
+        }
+        .fullScreenCover(isPresented: $navigateToHome) {
+            HomeView()
+                .transition(.opacity.animation(.easeInOut(duration: 1.5)))
+                .background(
+                    LinearGradient(
+                        gradient: Gradient(colors: [.clear, .black]),
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                )
         }
     }
 }
 
-//#Preview {
-//    OnboardingView()
-//}
+#Preview {
+    OnboardingView()
+}
