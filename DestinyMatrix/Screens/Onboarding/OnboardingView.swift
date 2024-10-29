@@ -24,14 +24,14 @@ enum Shape: String {
 struct OnboardingView: View {
     @StateObject private var audioVisualizer = AudioVisualizer()
     
-    @State private var audioIsFinished = false
+    @State private var audioIsFinished = true
     @State private var navigateToHome = false
     
     @State private var textOffset: CGFloat = UIScreen.main.bounds.height * 0.35
     
-    //    private var colorOfEqualizer = Color.cyan
-    //    private var colorOfEqualizer = Color.indigo   // main
-    private var colorOfEqualizer = Color.indigo
+        private var colorOfEqualizer = Color.cyan
+//        private var colorOfEqualizer = Color.indigo   // main
+//    private var colorOfEqualizer = Color.indigo
     private var offsetDistanceOfEqualizer: CGFloat = -110
     private var shadowColorOfEqualizer = Color.white
     
@@ -67,16 +67,15 @@ struct OnboardingView: View {
                         duration: durationOfTextAnimation
                     )
                     
-                    VStack {
-                        if audioIsFinished {
+                    if audioIsFinished {
+                        NavigationLink(destination: HomeView()) {
                             NextButtonOnboardingView(
-                                navigateToHome: $navigateToHome,
                                 audioIsFinished: $audioIsFinished,
                                 customFont: .correctionBrush
                             )
+                            .frame(height: UIScreen.main.bounds.height * 0.05)
                         }
                     }
-                    .frame(height: UIScreen.main.bounds.height * 0.05)
                 }
                 .frame(height: UIScreen.main.bounds.height * 0.8)
             }
@@ -94,6 +93,7 @@ struct OnboardingView: View {
                 audioVisualizer.stop()
             }
         }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 
