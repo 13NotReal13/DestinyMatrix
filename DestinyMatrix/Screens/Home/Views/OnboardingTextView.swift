@@ -29,7 +29,6 @@ struct OnboardingTextView: View {
                     }
                 }
         }
-        .frame(height: 300)
         .mask(
             LinearGradient(
                 gradient: Gradient(stops: [
