@@ -44,9 +44,7 @@ struct OnboardingView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                Image(.background)
-                    .scaledToFill()
-                    .ignoresSafeArea()
+                AnimatedStarryBackgroundView()
                 
                 VStack(spacing: UIScreen.main.bounds.height * 0.05) {
                     ZStack {

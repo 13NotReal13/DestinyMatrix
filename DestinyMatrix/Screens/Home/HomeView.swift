@@ -12,9 +12,9 @@ struct HomeView: View {
 
     var body: some View {
         ZStack {
-            Image(.background)
-                .scaledToFill()
-                .ignoresSafeArea()
+//            Image(.background)
+//                .scaledToFill()
+//                .ignoresSafeArea()
             
             VStack {
                 Spacer()

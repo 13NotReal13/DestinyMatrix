@@ -22,7 +22,7 @@ struct AnimatedStarryBackgroundView: View {
             }
             .background(
                 LinearGradient(
-                    gradient: Gradient(colors: [Color.black, Color.blue, Color.purple]),
+                    gradient: Gradient(colors: [Color.backgroundColor1, Color.backgroundColor2]),
                     startPoint: .top,
                     endPoint: .bottom
                 )
