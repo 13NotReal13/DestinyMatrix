@@ -10,8 +10,8 @@ import SwiftUI
 struct HomeView: View {
     @StateObject private var audioVisualizer = AudioVisualizer()
     
-    @State private var audioIsFinished = true
-    @State private var onboardingIsFinished = true
+    @State private var audioIsFinished = false
+    @State private var onboardingIsFinished = false
     
     @State private var onboardingTextOffset: CGFloat = UIScreen.main.bounds.height * 0.35
     
@@ -24,7 +24,7 @@ struct HomeView: View {
     
     private var customFont: CustomFont = .correctionBrush
     
-    private var shape: Shape = .shape1
+    private var shape: Shape = .shape9
     
     var body: some View {
         NavigationView {
@@ -159,16 +159,16 @@ struct HomeView: View {
                 .frame(height: UIScreen.main.bounds.height * 0.9)
                     
             }
-//            .onAppear {
-//                if let audioURL = Bundle.main.url(forResource: "CharlotteOnboarding", withExtension: ".mp3") {
-//                    audioVisualizer.start()
-//                    audioVisualizer.playAudio(url: audioURL) {
-//                        withAnimation(.easeIn(duration: 1.5)) {
-//                            audioIsFinished = true
-//                        }
-//                    }
-//                }
-//            }
+            .onAppear {
+                if let audioURL = Bundle.main.url(forResource: "CharlotteOnboarding", withExtension: ".mp3") {
+                    audioVisualizer.start()
+                    audioVisualizer.playAudio(url: audioURL) {
+                        withAnimation(.easeIn(duration: 1.5)) {
+                            audioIsFinished = true
+                        }
+                    }
+                }
+            }
             .onDisappear {
                 audioVisualizer.stop()
             }
@@ -177,6 +177,6 @@ struct HomeView: View {
     }
 }
 
-#Preview {
-    HomeView()
-}
+//#Preview {
+//    HomeView()
+//}

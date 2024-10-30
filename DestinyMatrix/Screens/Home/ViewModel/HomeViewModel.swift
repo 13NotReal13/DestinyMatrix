@@ -20,6 +20,10 @@ enum Shape: String {
     case shape3 = "Shape3"
     case shape4 = "Shape4"
     case shape5 = "Shape5"
+    case shape6 = "Shape6"
+    case shape7 = "Shape7"
+    case shape8 = "Shape8"
+    case shape9 = "Shape9"
 }
 
 final class HomeViewModel: ObservableObject {
