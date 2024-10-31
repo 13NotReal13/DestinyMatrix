@@ -10,55 +10,55 @@ import SwiftUI
 struct HomeMenuButtonsView: View {
     var body: some View {
         VStack {
-            HStack {
-                Spacer()
-                
-                Text("1")
-                    .customText(fontSize: 90)
-                    .padding()
-                    .background(
-                        LinearGradient(
-                            colors: [.backgroundColor1],
-                            startPoint: .bottom,
-                            endPoint: .top
-                        )
-                    )
-                    .overlay(
-                        Circle()
-                            .stroke(Color.white, lineWidth: 2)
-                    )
-                    .clipShape(.circle)
-                
-                Spacer()
-                
-                Text("7")
-                    .customText(fontSize: 90)
-                    .padding()
-                    .background(
-                        LinearGradient(
-                            colors: [.backgroundColor1, .buttonColor2],
-                            startPoint: .bottom,
-                            endPoint: .top
-                        )
-                    )
-                    .overlay(
-                        Circle()
-                            .stroke(Color.white, lineWidth: 2)
-                    )
-                    .clipShape(.circle)
-                
-                Spacer()
-                
-                Text("5")
-                    .customText(fontSize: 40)
-                
-                Spacer()
-                
-                Text("5")
-                    .customText(fontSize: 40)
-                
-                Spacer()
-            }
+//            HStack {
+//                Spacer()
+//                
+//                Text("1")
+//                    .customText(fontSize: 90)
+//                    .padding()
+//                    .background(
+//                        LinearGradient(
+//                            colors: [.backgroundColor1],
+//                            startPoint: .bottom,
+//                            endPoint: .top
+//                        )
+//                    )
+//                    .overlay(
+//                        Circle()
+//                            .stroke(Color.white, lineWidth: 2)
+//                    )
+//                    .clipShape(.circle)
+//                
+//                Spacer()
+//                
+//                Text("7")
+//                    .customText(fontSize: 90)
+//                    .padding()
+//                    .background(
+//                        LinearGradient(
+//                            colors: [.backgroundColor1, .buttonColor2],
+//                            startPoint: .bottom,
+//                            endPoint: .top
+//                        )
+//                    )
+//                    .overlay(
+//                        Circle()
+//                            .stroke(Color.white, lineWidth: 2)
+//                    )
+//                    .clipShape(.circle)
+//                
+//                Spacer()
+//                
+//                Text("5")
+//                    .customText(fontSize: 40)
+//                
+//                Spacer()
+//                
+//                Text("5")
+//                    .customText(fontSize: 40)
+//                
+//                Spacer()
+//            }
             
             HStack() {
                 Spacer()

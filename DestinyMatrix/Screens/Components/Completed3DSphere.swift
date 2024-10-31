@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct Completed3DSphere: View {
+    @State private var size: CGFloat = 0.8
+    
     var amplitudes: [CGFloat]
     var colorOfEqualizer: Color
     var shadowColorOfEqualizer: Color
@@ -15,10 +17,10 @@ struct Completed3DSphere: View {
     
     var imageName: String
     
-    @State private var size: CGFloat = 0.8
-    
     var body: some View {
         ZStack {
+//            AnimatedStarryBackgroundView()
+            
             CircularEqualizerView(
                 amplitudes: amplitudes,
                 color: colorOfEqualizer,
@@ -26,8 +28,14 @@ struct Completed3DSphere: View {
                 offsetDistance: offsetDistanceOfEqualizer
             )
             
-            Rotating3DSphereView(iamegName: imageName)
+            Rotating3DSphereView(imageName: imageName)
                 .frame(width: UIScreen.main.bounds.width * size, height: UIScreen.main.bounds.width * size)
+            
+//            Circle()
+//                .stroke(lineWidth: 6)
+//                .frame(width: UIScreen.main.bounds.width * (size - 0.2))
+//                .foregroundStyle(.lightAroundSphere)
+//                .shadow(color: .yellow, radius: 10)
         }
     }
 }

@@ -57,7 +57,7 @@ final class AudioVisualizer: ObservableObject {
         
         // Преобразуем значения в амплитуды, чтобы сильнее выделить изменения
         let amplitude = channelDataArray.map { abs($0) }.max() ?? 0.0
-        let scaledAmplitude = CGFloat(amplitude) * 3 // Увеличиваем коэффициент для видимого эффекта
+        let scaledAmplitude = CGFloat(amplitude) * 4 // Увеличиваем коэффициент для видимого эффекта
         
         DispatchQueue.main.async {
             self.amplitudes = self.amplitudes.map { _ in

@@ -9,7 +9,7 @@ import SwiftUI
 import SceneKit
 
 struct Rotating3DSphereView: UIViewRepresentable {
-    let iamegName: String
+    let imageName: String
     
     func makeUIView(context: Context) -> SCNView {
         // Создание сцены
@@ -24,7 +24,7 @@ struct Rotating3DSphereView: UIViewRepresentable {
         
         // Настройка материалов сферы
         let material = SCNMaterial()
-        material.diffuse.contents = UIImage(named: self.iamegName)
+        material.diffuse.contents = UIImage(named: self.imageName)
         sphere.materials = [material]
         
         // Создание узла со сферой
