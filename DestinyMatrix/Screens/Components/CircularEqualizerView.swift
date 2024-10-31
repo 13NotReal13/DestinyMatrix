@@ -19,11 +19,6 @@ struct CircularEqualizerView: View {
             ForEach(0..<amplitudes.count, id: \.self) { i in
                 
                 RoundedRectangle(cornerRadius: 4)
-//                    .fill(LinearGradient(
-//                        gradient: Gradient(colors: [Color.white, Color.blue]),
-//                        startPoint: .top,
-//                        endPoint: .bottom
-//                    ))
                     .fill(color)
                     .frame(width: 3, height: amplitudes[i] * maxAmplitude + 10)
                     .offset(y: offsetDistance)

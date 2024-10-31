@@ -9,9 +9,10 @@ import AVFoundation
 import SwiftUI
 
 final class AudioVisualizer: ObservableObject {
+    @Published var amplitudes: [CGFloat] = Array(repeating: 0.5, count: 120)
+    
     private let audioEngine = AVAudioEngine()
     private let playerNode = AVAudioPlayerNode()
-    @Published var amplitudes: [CGFloat] = Array(repeating: 0.5, count: 120)
     
     func start() {
         audioEngine.attach(playerNode)

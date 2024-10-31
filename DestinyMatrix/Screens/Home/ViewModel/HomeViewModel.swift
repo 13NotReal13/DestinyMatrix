@@ -27,24 +27,39 @@ enum Shape: String {
 }
 
 final class HomeViewModel: ObservableObject {
-    @Published private var audioIsFinished = true
-    @Published private var onboardingIsFinished = true
+    @Published var audioIsFinished = true
+    @Published var onboardingIsFinished = true
     
     // MARK: - OnboardingText
-    @Published private var onboardingTextOffset: CGFloat = UIScreen.main.bounds.height * 0.35
-    @Published private var durationOfTextAnimation: CGFloat = 54
+    @Published var onboardingTextOffset: CGFloat = UIScreen.main.bounds.height * 0.35
+    @Published var durationOfTextAnimation: CGFloat = 54
     
     // MARK: - Equalizer
     //    private var colorOfEqualizer = Color.indigo
-    @Published private var colorOfEqualizer = Color.cyan
-    @Published private var offsetDistanceOfEqualizer: CGFloat = -110
-    @Published private var shadowColorOfEqualizer = Color.white
+    @Published var colorOfEqualizer = Color.cyan
+    @Published var offsetDistanceOfEqualizer: CGFloat = -110
+    @Published var shadowColorOfEqualizer = Color.white
     
     // MARK: - Font
-    @Published private var customFont: CustomFont = .correctionBrush
+    @Published var customFont: CustomFont = .correctionBrush
     
     // MARK: - Shape of 3D
-    @Published private var shape: Shape = .shape1
+    @Published var shape: String = Shape.shape9.rawValue
     
-    private var audioVisualizer = AudioVisualizer()
+    func startOnboardingAudio(audioVisualizer: AudioVisualizer) {
+        if !audioIsFinished, let audioURL = Bundle.main.url(forResource: "CharlotteOnboarding", withExtension: "mp3") {
+            audioVisualizer.start()
+            audioVisualizer.playAudio(url: audioURL) { [weak self] in
+                DispatchQueue.main.async {
+                    withAnimation(.easeIn(duration: 1.5)) {
+                        self?.audioIsFinished = true
+                    }
+                }
+            }
+        }
+    }
+    
+    func stopAudio(audioVisualizer: AudioVisualizer) {
+        audioVisualizer.stop()
+    }
 }

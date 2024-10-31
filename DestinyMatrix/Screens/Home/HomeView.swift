@@ -8,23 +8,10 @@
 import SwiftUI
 
 struct HomeView: View {
-    @StateObject private var audioVisualizer = AudioVisualizer()
+    @EnvironmentObject private var audioVisualizer: AudioVisualizer
+    @StateObject private var viewModel = HomeViewModel()
     
-    @State private var audioIsFinished = false
-    @State private var onboardingIsFinished = false
-    
-    @State private var onboardingTextOffset: CGFloat = UIScreen.main.bounds.height * 0.35
-    
-    private var colorOfEqualizer = Color.cyan
-//    private var colorOfEqualizer = Color.indigo
-    private var offsetDistanceOfEqualizer: CGFloat = -110
-    private var shadowColorOfEqualizer = Color.white
-    
-    private var durationOfTextAnimation: CGFloat = 54
-    
-    private var customFont: CustomFont = .correctionBrush
-    
-    private var shape: Shape = .shape9
+    private var screenHeight = UIScreen.main.bounds.height
     
     var body: some View {
         NavigationView {
@@ -32,151 +19,75 @@ struct HomeView: View {
                 AnimatedStarryBackgroundView()
                 
                 VStack {
-                    ZStack {
-                        CircularEqualizerView(
+                    VStack {
+                        if viewModel.onboardingIsFinished {
+                            Text("Матрица Судьбы")
+                                .customText(fontSize: 36)
+                        }
+                    }
+                    .frame(height: screenHeight * 0.05)
+                    
+                    ZStack {                        
+                        Completed3DSphere(
                             amplitudes: audioVisualizer.amplitudes,
-                            color: colorOfEqualizer,
-                            shadowColor: shadowColorOfEqualizer,
-                            offsetDistance: offsetDistanceOfEqualizer
+                            colorOfEqualizer: viewModel.colorOfEqualizer,
+                            shadowColorOfEqualizer: viewModel.shadowColorOfEqualizer,
+                            offsetDistanceOfEqualizer: viewModel.offsetDistanceOfEqualizer,
+                            imageName: viewModel.shape
                         )
                         
-                        Rotating3DSphereView(iamegName: shape.rawValue)
-                            .frame(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.width * 0.8)
-                        
                         VStack {
-                            if onboardingIsFinished {
-                                TitleWithDatesView(customFont: .correctionBrush)
+                            if viewModel.onboardingIsFinished {
+                                TitleWithDatesView(customFont: viewModel.customFont)
                                 Spacer()
                             }
                         }
                     }
-                    .frame(height: UIScreen.main.bounds.height * 0.5)
+                    .frame(height: screenHeight * 0.4)
                     
                     VStack {
-                        if !onboardingIsFinished {
+                        if !viewModel.onboardingIsFinished {
                             VStack {
                                 OnboardingTextView(
-                                    textOffset: $onboardingTextOffset,
-                                    customFont: .correctionBrush,
-                                    duration: durationOfTextAnimation
+                                    textOffset: $viewModel.onboardingTextOffset,
+                                    customFont: viewModel.customFont,
+                                    duration: viewModel.durationOfTextAnimation
                                 )
                             }
-                            .frame(height: UIScreen.main.bounds.height * 0.35)
+                            .frame(height: screenHeight * 0.35)
                             
                             VStack {
-                                if audioIsFinished {
+                                if viewModel.audioIsFinished {
                                     NextButtonOnboardingView(
-                                        audioIsFinished: $audioIsFinished,
-                                        onboardingIsFinished: $onboardingIsFinished,
-                                        customFont: .correctionBrush
+                                        audioIsFinished: $viewModel.audioIsFinished,
+                                        onboardingIsFinished: $viewModel.onboardingIsFinished,
+                                        customFont: viewModel.customFont
                                     )
                                 }
                             }
-                            .frame(height: UIScreen.main.bounds.height * 0.05)
+                            .frame(height: screenHeight * 0.05)
                         } else {
-                            VStack {
-                                HStack() {
-                                    Spacer()
-                                    
-                                    Button {
-                                        
-                                    } label: {
-                                        Image(systemName: "questionmark")
-                                            .font(.system(size: 34))
-                                            .foregroundStyle(.white)
-                                            .shadow(color: .purple.opacity(0.7), radius: 5, x: 0, y: 0)
-                                            .padding()
-                                            .background(
-                                                LinearGradient(
-                                                    colors: [.backgroundColor1, .buttonColor2],
-                                                    startPoint: .bottom,
-                                                    endPoint: .top
-                                                )
-                                            )
-                                            .overlay(
-                                                Circle()
-                                                    .stroke(Color.white, lineWidth: 2)
-                                            )
-                                            .clipShape(.circle)
-                                    }
-                                    
-                                    Spacer()
-                                    
-                                    Button {
-                                        
-                                    } label: {
-                                        Text("Рассчитать матрицу")
-                                            .font(.custom(customFont.rawValue, size: 16))
-                                            .foregroundStyle(.white)
-                                            .shadow(color: .purple.opacity(0.7), radius: 5, x: 0, y: 0)
-                                            .padding()
-                                            .background(
-                                                LinearGradient(
-                                                    colors: [.backgroundColor2, .buttonColor2],
-                                                    startPoint: .bottom,
-                                                    endPoint: .top
-                                                )
-                                            )
-                                            .overlay(
-                                                Capsule()
-                                                    .stroke(Color.white, lineWidth: 2)
-                                            )
-                                            .clipShape(.capsule)
-                                    }
-                                    
-                                    Spacer()
-                                    
-                                    Button {
-                                        
-                                    } label: {
-                                        Image(systemName: "book.pages")
-                                            .font(.system(size: 24))
-                                            .foregroundStyle(.white)
-                                            .shadow(color: .purple.opacity(0.7), radius: 5, x: 0, y: 0)
-                                            .padding()
-                                            .background(
-                                                LinearGradient(
-                                                    colors: [.backgroundColor1, .buttonColor2],
-                                                    startPoint: .bottom,
-                                                    endPoint: .top
-                                                )
-                                            )
-                                            .overlay(
-                                                Circle()
-                                                    .stroke(Color.white, lineWidth: 2)
-                                            )
-                                            .clipShape(.circle)
-                                    }
-                                    
-                                    Spacer()
-                                }
-                            }
+                            HomeMenuButtonsView()
                         }
                     }
-                    .frame(height: UIScreen.main.bounds.height * 0.4)
+                    .frame(height: screenHeight * 0.4)
                 }
                 .padding()
-                .frame(height: UIScreen.main.bounds.height * 0.9)
+                .frame(height: screenHeight * 0.9)
                     
             }
             .onAppear {
-                if let audioURL = Bundle.main.url(forResource: "CharlotteOnboarding", withExtension: ".mp3") {
-                    audioVisualizer.start()
-                    audioVisualizer.playAudio(url: audioURL) {
-                        withAnimation(.easeIn(duration: 1.5)) {
-                            audioIsFinished = true
-                        }
-                    }
-                }
+                viewModel.startOnboardingAudio(audioVisualizer: audioVisualizer)
             }
             .onDisappear {
-                audioVisualizer.stop()
+                viewModel.stopAudio(audioVisualizer: audioVisualizer)
             }
         }
         .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 
-//#Preview {
-//    HomeView()
-//}
+#Preview {
+    HomeView()
+        .environmentObject(AudioVisualizer())
+}
