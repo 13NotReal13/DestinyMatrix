@@ -12,6 +12,7 @@ struct DatePickerView: View {
     @Binding var isDatePickerPresented: Bool
     @Binding var dateBirthday: Date
     @State var dateFormatter: DateFormatter
+    @State var displayedDateText: String
     
     var body: some View {
         ZStack {
@@ -25,7 +26,7 @@ struct DatePickerView: View {
                     isDatePickerPresented.toggle()
                 }) {
                     HStack {
-                        Text(dateFormatter.string(from: dateBirthday))
+                        Text(displayedDateText)
                             .foregroundStyle(.black)
                             .shadow(color: .purple, radius: 5)
                             .frame(width: UIScreen.main.bounds.width * 0.55)
@@ -44,6 +45,12 @@ struct DatePickerView: View {
                                 .colorMultiply(Color.white)
                                 .labelsHidden()
                                 .padding()
+                                .onChange(of: dateBirthday) { newDate in
+                                    let formatter = DateFormatter()
+                                    formatter.dateStyle = .medium
+                                    formatter.locale = Locale(identifier: "ru")
+                                    displayedDateText = formatter.string(from: newDate)
+                                }
                             
                             Button {
                                 isDatePickerPresented = false
@@ -71,5 +78,5 @@ struct DatePickerView: View {
             formatter.dateStyle = .medium
             formatter.locale = Locale(identifier: "ru")
             return formatter
-        }())
+        }(), displayedDateText: "1")
 }
