@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct DestinyMatrixApp: App {
+    @StateObject private var audioVisualizer = AudioVisualizer()
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomeView()
+                .environmentObject(audioVisualizer)
         }
     }
 }

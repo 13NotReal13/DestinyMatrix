@@ -1,119 +1,93 @@
 //
-//  HomeView.swift
+//  Onboarding.swift
 //  DestinyMatrix
 //
-//  Created by Иван Семикин on 27/10/2024.
+//  Created by Иван Семикин on 28/10/2024.
 //
 
 import SwiftUI
 
 struct HomeView: View {
-    @State private var rotationAngle: Double = 0
-
+    @EnvironmentObject private var audioVisualizer: AudioVisualizer
+    @StateObject private var viewModel = HomeViewModel()
+    
+    private var screenHeight = UIScreen.main.bounds.height
+    
     var body: some View {
-        ZStack {
-            Image(.background)
-                .scaledToFill()
-                .ignoresSafeArea()
-            
-            VStack {
-                Spacer()
+        NavigationView {
+            ZStack {
+                AnimatedStarryBackgroundView()
                 
-                Text("Матрица Судьбы")
-                    .font(.custom("Inkverse", size: 36)) // Замените "MagicFont" на название вашего шрифта
-                    .foregroundColor(.white)
-                    .shadow(color: .purple.opacity(0.7), radius: 5, x: 0, y: 0) // Добавляет магическое свечение
-                    .padding(.bottom, 20)
-                
-                Text("Матрица Судьбы")
-                    .font(.custom("CorrectionBrush", size: 36)) // Замените "MagicFont" на название вашего шрифта
-                    .foregroundColor(.white)
-                    .shadow(color: .purple.opacity(0.7), radius: 5, x: 0, y: 0) // Добавляет магическое свечение
-                    .padding(.bottom, 20)
-                
-                Text("Матрица Судьбы")
-                    .font(.custom("Blackcraft", size: 36)) // Замените "MagicFont" на название вашего шрифта
-                    .foregroundColor(.white)
-                    .shadow(color: .purple.opacity(0.7), radius: 5, x: 0, y: 0) // Добавляет магическое свечение
-                    .padding(.bottom, 20)
-                
-                ZStack {
-                    Image(.lightAround4)
-                        .resizable()
-                        .frame(width: 285, height: 285)
-                        .rotationEffect(.degrees(rotationAngle), anchor: .center)
-                        .onAppear {
-                            withAnimation(Animation.linear(duration: 100).repeatForever(autoreverses: false)) {
-                                rotationAngle = 360
+                VStack {
+                    VStack {
+                        if viewModel.onboardingIsFinished {
+                            Text("Матрица Судьбы")
+                                .customText(fontSize: 36, textColor: .white)
+                        }
+                    }
+                    .frame(height: screenHeight * 0.05)
+                    
+                    ZStack {                        
+                        Completed3DSphere(
+                            amplitudes: audioVisualizer.amplitudes,
+                            colorOfEqualizer: viewModel.colorOfEqualizer,
+                            shadowColorOfEqualizer: viewModel.shadowColorOfEqualizer,
+                            offsetDistanceOfEqualizer: viewModel.offsetDistanceOfEqualizer,
+                            imageName: viewModel.shape
+                        )
+                        
+                        VStack {
+                            if viewModel.onboardingIsFinished {
+                                DateAround3DSphere(customFont: viewModel.customFont)
+                                Spacer()
                             }
                         }
+                    }
+                    .frame(height: screenHeight * 0.4)
                     
-                    Rotating3DSphereView()
-                        .frame(width: 300, height: 300)
-                }
-                
-                Spacer()
-                Spacer()
-                
-                Button {
-                    //
-                } label: {
-                    Text("Рассчитать матрицу")
-                        .padding()
-                        .frame(width: UIScreen.main.bounds.width * 0.5)
-                        .background(.colorButton)
-                        .clipShape(.rect(cornerRadius: 40))
-                        .foregroundStyle(.white)
-                        .overlay {
-                            RoundedRectangle(cornerRadius: 40)
-                                .stroke(Color.white, lineWidth: 1)
+                    VStack {
+                        if !viewModel.onboardingIsFinished {
+                            VStack {
+                                OnboardingTextView(
+                                    textOffset: $viewModel.onboardingTextOffset,
+                                    customFont: viewModel.customFont,
+                                    duration: viewModel.durationOfTextAnimation
+                                )
+                            }
+                            .frame(height: screenHeight * 0.35)
+                            
+                            VStack {
+                                if viewModel.audioIsFinished {
+                                    NextButtonOnboardingView(
+                                        audioIsFinished: $viewModel.audioIsFinished,
+                                        onboardingIsFinished: $viewModel.onboardingIsFinished,
+                                        customFont: viewModel.customFont
+                                    )
+                                }
+                            }
+                            .frame(height: screenHeight * 0.05)
+                        } else {
+                            HomeMenuButtonsView()
                         }
+                    }
+                    .frame(height: screenHeight * 0.4)
                 }
-                
-                Spacer()
-                Spacer()
+                .padding()
+                .frame(height: screenHeight * 0.9)
+                    
+            }
+            .onAppear {
+//                viewModel.startOnboardingAudio(audioVisualizer: audioVisualizer)
+            }
+            .onDisappear {
+                viewModel.stopAudio(audioVisualizer: audioVisualizer)
             }
         }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
-}
-
-import SceneKit
-
-struct Rotating3DSphereView: UIViewRepresentable {
-    func makeUIView(context: Context) -> SCNView {
-        // Создание сцены
-        let sceneView = SCNView()
-        let scene = SCNScene()
-        sceneView.scene = scene
-        sceneView.allowsCameraControl = false
-        sceneView.backgroundColor = .clear
-        
-        // Создание сферы
-        let sphere = SCNSphere(radius: 1.0)
-        
-        // Настройка материалов сферы
-        let material = SCNMaterial()
-        material.diffuse.contents = UIImage(named: "Shape")
-        sphere.materials = [material]
-        
-        // Создание узла со сферой
-        let sphereNode = SCNNode(geometry: sphere)
-        scene.rootNode.addChildNode(sphereNode)
-        
-        // Анимация вращения
-        let rotation = CABasicAnimation(keyPath: "rotation")
-        rotation.fromValue = SCNVector4(0, 1, 0, 0)
-        rotation.toValue = SCNVector4(0, 1, 0, Float.pi * 2)
-        rotation.duration = 100 // Длительность полного оборота
-        rotation.repeatCount = .infinity
-        sphereNode.addAnimation(rotation, forKey: "rotation")
-        
-        return sceneView
-    }
-
-    func updateUIView(_ uiView: SCNView, context: Context) {}
 }
 
 #Preview {
     HomeView()
+        .environmentObject(AudioVisualizer())
 }
