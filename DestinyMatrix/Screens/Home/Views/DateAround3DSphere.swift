@@ -53,5 +53,5 @@ struct DateAround3DSphere: View {
 }
 
 #Preview {
-    DateAround3DSphere(customFont: CustomFont.correctionBrush)
+    DateAround3DSphere(customFont: CustomFont.fontName)
 }

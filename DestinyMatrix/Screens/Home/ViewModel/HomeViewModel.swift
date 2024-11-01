@@ -10,7 +10,7 @@ import SwiftUI
 
 enum CustomFont: String {
     case blackcraft = "Blackcraft"
-    case correctionBrush = "CorrectionBrush"
+    case fontName = "CorrectionBrush" // main
     case inkverse = "Inkverse"
 }
 
@@ -35,7 +35,7 @@ final class HomeViewModel: ObservableObject {
     @Published var shadowColorOfEqualizer = Color.white
     
     // MARK: - Font
-    @Published var customFont: CustomFont = .correctionBrush
+    @Published var customFont: CustomFont = .fontName
     
     // MARK: - Shape of 3D
     @Published var shape: String = Shape.shape9.rawValue

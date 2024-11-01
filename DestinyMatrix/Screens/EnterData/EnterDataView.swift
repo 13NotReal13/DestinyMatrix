@@ -8,17 +8,7 @@
 import SwiftUI
 
 struct EnterDataView: View {
-    @Binding var name: String
-    @Binding var dateBirthday: Date
-    
-    @State private var isDatePickerPresented = false
-    
-    private var dateFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.locale = Locale(identifier: "ru")
-        return formatter
-    }
+    @StateObject private var viewModel = EnterDataViewModel()
     
     var body: some View {
         ZStack {
@@ -27,24 +17,9 @@ struct EnterDataView: View {
             VStack(spacing: 20) {
                 Spacer()
                 
-                VStack {
-                    Text("Введите ваше полное имя (только имя)")
-                        .customText(fontSize: 12, textColor: .white)
-                    
-                    TextField("полное имя", text: $name)
-                        .multilineTextAlignment(.center)
-                        .customText(fontSize: 16, textColor: .black)
-                        .frame(width: UIScreen.main.bounds.width * 0.55)
-                        .customButtonStyle(color1: .lightAroundSphere, color2: .lightAroundSphere, shape: .capsule)
-                }
+                NameTextFieldView(viewModel: viewModel)
                 
-                VStack {
-                    DatePickerView(
-                        isDatePickerPresented: $isDatePickerPresented,
-                        dateBirthday: $dateBirthday,
-                        dateFormatter: dateFormatter
-                    )
-                }
+                DatePickerView(viewModel: viewModel)
                 
                 Spacer()
                 
@@ -63,12 +38,6 @@ struct EnterDataView: View {
     }
 }
 
-// Превью для EnterDataView
-struct EnterDataView_Previews: PreviewProvider {
-    @State static var name = ""
-    @State static var dateBirthday = Date()
-    
-    static var previews: some View {
-        EnterDataView(name: $name, dateBirthday: $dateBirthday)
-    }
+#Preview {
+    EnterDataView()
 }

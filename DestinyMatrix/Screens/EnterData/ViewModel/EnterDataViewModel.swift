@@ -9,8 +9,9 @@ import SwiftUI
 import Combine
 
 final class EnterDataViewModel: ObservableObject {
+    @Published var name: String = ""
     @Published var dateBirthday: Date = Date()
-    @Published var displayedDateText: String = ""
+    @Published var displayedDateText: String = "Выбрать дату"
     @Published var isDatePickerPresented: Bool = false
 
     private var dateFormatter: DateFormatter {

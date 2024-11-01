@@ -34,6 +34,6 @@ struct NextButtonOnboardingView: View {
     NextButtonOnboardingView(
         audioIsFinished: .constant(true),
         onboardingIsFinished: .constant(false),
-        customFont: CustomFont.correctionBrush
+        customFont: CustomFont.fontName
     )
 }
