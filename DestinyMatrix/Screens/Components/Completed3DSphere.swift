@@ -27,15 +27,23 @@ struct Completed3DSphere: View {
                 shadowColor: shadowColorOfEqualizer,
                 offsetDistance: offsetDistanceOfEqualizer
             )
+
             
             Rotating3DSphereView(imageName: imageName)
                 .frame(width: UIScreen.main.bounds.width * size, height: UIScreen.main.bounds.width * size)
             
-//            Circle()
-//                .stroke(lineWidth: 6)
-//                .frame(width: UIScreen.main.bounds.width * (size - 0.2))
-//                .foregroundStyle(.lightAroundSphere)
-//                .shadow(color: .yellow, radius: 10)
+            Circle()
+                .stroke(lineWidth: 4)
+                .frame(width: UIScreen.main.bounds.width * (size - 0.2))
+                .foregroundStyle(.lightAroundSphere)
+                .shadow(color: .yellow, radius: 10)
+            
+            
+            Circle()
+                .stroke(lineWidth: 0.1)
+                .frame(width: UIScreen.main.bounds.width * (size - 0.05))
+                .foregroundStyle(.lightAroundSphere)
+            
         }
     }
 }

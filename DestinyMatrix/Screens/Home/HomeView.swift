@@ -38,7 +38,7 @@ struct HomeView: View {
                         
                         VStack {
                             if viewModel.onboardingIsFinished {
-                                TitleWithDatesView(customFont: viewModel.customFont)
+                                DateAround3DSphere(customFont: viewModel.customFont)
                                 Spacer()
                             }
                         }
@@ -77,7 +77,7 @@ struct HomeView: View {
                     
             }
             .onAppear {
-                viewModel.startOnboardingAudio(audioVisualizer: audioVisualizer)
+//                viewModel.startOnboardingAudio(audioVisualizer: audioVisualizer)
             }
             .onDisappear {
                 viewModel.stopAudio(audioVisualizer: audioVisualizer)

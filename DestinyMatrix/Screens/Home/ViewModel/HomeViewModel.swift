@@ -24,10 +24,12 @@ enum Shape: String {
     case shape7 = "Shape7"
     case shape8 = "Shape8"
     case shape9 = "Shape9"
+    case shape10 = "Shape10"
+    case shape11 = "Shape11"
 }
 
 final class HomeViewModel: ObservableObject {
-    @Published var audioIsFinished = true
+    @Published var audioIsFinished = false
     @Published var onboardingIsFinished = true
     
     // MARK: - OnboardingText
