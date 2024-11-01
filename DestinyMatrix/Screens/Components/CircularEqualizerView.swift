@@ -20,12 +20,12 @@ struct CircularEqualizerView: View {
                 
                 RoundedRectangle(cornerRadius: 4)
                     .fill(color)
-                    .frame(width: 3, height: amplitudes[i] * maxAmplitude + 10)
+                    .frame(width: 2, height: amplitudes[i] * maxAmplitude + 10)
                     .offset(y: offsetDistance)
                     .shadow(color: shadowColor.opacity(0.7), radius: 5, x: 0, y: 0)
                     .rotationEffect(.degrees(Double(i) / Double(amplitudes.count) * 360))
                     .animation(
-                        .easeInOut(duration: 0.3)
+                        .easeInOut(duration: 0.2)
                         .delay(Double(i) * 0.001), value: amplitudes[i]
                     )
             }

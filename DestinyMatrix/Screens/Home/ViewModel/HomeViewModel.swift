@@ -15,22 +15,14 @@ enum CustomFont: String {
 }
 
 enum Shape: String {
-    case shape1 = "Shape1"
-    case shape2 = "Shape2"
-    case shape3 = "Shape3"
-    case shape4 = "Shape4"
-    case shape5 = "Shape5"
-    case shape6 = "Shape6"
-    case shape7 = "Shape7"
-    case shape8 = "Shape8"
     case shape9 = "Shape9"
     case shape10 = "Shape10"
     case shape11 = "Shape11"
 }
 
 final class HomeViewModel: ObservableObject {
-    @Published var audioIsFinished = false
-    @Published var onboardingIsFinished = true
+    @Published var audioIsFinished = true
+    @Published var onboardingIsFinished = false
     
     // MARK: - OnboardingText
     @Published var onboardingTextOffset: CGFloat = UIScreen.main.bounds.height * 0.35
@@ -39,7 +31,7 @@ final class HomeViewModel: ObservableObject {
     // MARK: - Equalizer
     //    private var colorOfEqualizer = Color.indigo
     @Published var colorOfEqualizer = Color.cyan
-    @Published var offsetDistanceOfEqualizer: CGFloat = -110
+    @Published var offsetDistanceOfEqualizer: CGFloat = -116
     @Published var shadowColorOfEqualizer = Color.white
     
     // MARK: - Font
