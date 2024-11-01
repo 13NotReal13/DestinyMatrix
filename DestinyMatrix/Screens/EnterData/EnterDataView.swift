@@ -22,18 +22,18 @@ struct EnterDataView: View {
                 
                 VStack {
                     Text("Введите ваше полное имя (только имя)")
-                        .customText(fontSize: 12)
+                        .customText(fontSize: 12, textColor: .white)
                     
                     TextField("полное имя", text: $name)
                         .multilineTextAlignment(.center)
-                        .customText(fontSize: 16)
+                        .customText(fontSize: 16, textColor: .black)
                         .frame(width: UIScreen.main.bounds.width * 0.55)
                         .customButtonStyle(color1: .lightAroundSphere, color2: .lightAroundSphere, shape: .capsule)
                 }
                 
                 VStack {
                     Text("Выберите вашу дату рождения")
-                        .customText(fontSize: 12)
+                        .customText(fontSize: 12, textColor: .white)
                     
                     Button(action: {
                         isDatePickerPresented.toggle()
@@ -64,7 +64,7 @@ struct EnterDataView: View {
                                 } label: {
                                     Text("Готово")
                                         .padding(.horizontal)
-                                        .customText(fontSize: 16)
+                                        .customText(fontSize: 16, textColor: .white)
                                         .customButtonStyle(color1: .backgroundColor1, color2: .buttonColor2, shape: .capsule)
                                 }
                             }
@@ -80,7 +80,7 @@ struct EnterDataView: View {
                 } label: {
                     Text("Далее")
                         .padding(.horizontal)
-                        .customText(fontSize: 16)
+                        .customText(fontSize: 16, textColor: .white)
                         .customButtonStyle(color1: .backgroundColor1, color2: .buttonColor2, shape: .capsule)
                 }
                 

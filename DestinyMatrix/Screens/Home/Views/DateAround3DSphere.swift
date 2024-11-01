@@ -28,24 +28,24 @@ struct DateAround3DSphere: View {
         VStack {
             HStack {
                 Text(dayToday)
-                    .customText(fontSize: 40)
+                    .customText(fontSize: 40, textColor: .white)
     
                 Spacer()
                 
                 Text(monthToday)
-                    .customText(fontSize: 40)
+                    .customText(fontSize: 40, textColor: .white)
             }
             
             Spacer()
             
             HStack {
                 Image(systemName: "hourglass")
-                    .customText(fontSize: 40)
+                    .customText(fontSize: 40, textColor: .white)
                 
                 Spacer()
                 
                 Image(systemName: "sunrise")
-                    .customText(fontSize: 40)
+                    .customText(fontSize: 40, textColor: .white)
             }
         }
         .padding(UIScreen.main.bounds.width * 0.05)

@@ -22,7 +22,7 @@ struct HomeView: View {
                     VStack {
                         if viewModel.onboardingIsFinished {
                             Text("Матрица Судьбы")
-                                .customText(fontSize: 36)
+                                .customText(fontSize: 36, textColor: .white)
                         }
                     }
                     .frame(height: screenHeight * 0.05)

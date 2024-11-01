@@ -10,11 +10,12 @@ import SwiftUI
 
 struct CustomShadowModifier: ViewModifier {
     var fontSize: CGFloat
+    var textColor: Color
     
     func body(content: Content) -> some View {
         content
             .font(.custom(CustomFont.correctionBrush.rawValue, size: fontSize))
-            .foregroundStyle(.white)
+            .foregroundStyle(textColor)
             .shadow(color: .purple.opacity(0.7), radius: 5, x: 0, y: 0)
     }
 }
