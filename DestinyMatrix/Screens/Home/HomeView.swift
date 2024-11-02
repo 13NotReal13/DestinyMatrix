@@ -25,7 +25,8 @@ struct HomeView: View {
             
             VStack {
                 Completed3DSphere(
-                    viewModel: homeViewModel,
+                    homeViewModel: homeViewModel,
+                    audioVusualizer: audioVisualizer,
                     amplitudes: audioVisualizer.amplitudes,
                     onboardingIsFinished: homeViewModel.onboardingIsFinished
                 )

@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 final class OnboardingViewModel: ObservableObject {
-    @Published var audioIsFinished: Bool = true
+    @Published var audioIsFinished: Bool = false
     @Published var onboardingWasShowed: Bool = false
     
     func startOnboardingAudio(audioVisualizer: AudioVisualizer) {

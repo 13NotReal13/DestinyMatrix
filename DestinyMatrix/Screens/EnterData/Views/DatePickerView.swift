@@ -24,13 +24,12 @@ struct DatePickerView: View {
                         Text(enterDataViewModel.displayedDateText)
                             .font(.custom(CustomFont.fontName.rawValue, size: 15))
                             .foregroundStyle(Color.gray.opacity(0.6))
-                            .frame(width: UIScreen.main.bounds.width * 0.55)
                     } else {
                         Text(enterDataViewModel.displayedDateText)
                             .customText(fontSize: 16, textColor: .black)
-                            .frame(width: UIScreen.main.bounds.width * 0.55)
                     }
                 }
+                .frame(width: UIScreen.main.bounds.width * 0.55)
                 .customButtonStyle(color1: .lightAroundSphere, color2: .lightAroundSphere, shape: .capsule)
             }
             .sheet(isPresented: $enterDataViewModel.isDatePickerPresented) {

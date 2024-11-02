@@ -11,19 +11,23 @@ struct OnboardingView: View {
     @StateObject var onboardingViewModel = OnboardingViewModel()
     @StateObject var homeViewModel: HomeViewModel
     @StateObject var audioVisualizer: AudioVisualizer
-    @State var textOffset: CGFloat = UIScreen.main.bounds.height * 0.35
+    @State var textOffset: CGFloat = UIScreen.main.bounds.height * 0.3
     
     var duration: CGFloat = 54
     
     var body: some View {
         VStack {
             if !onboardingViewModel.onboardingWasShowed {
+                VStack {
+                    
+                }
+                .frame(height: UIScreen.main.bounds.height * 0.05)
+                
                 ScrollView {
                     VStack {
                         Text(OnboardingTextModel.introductionText)
-                            .font(.custom(CustomFont.fontName.rawValue, size: 24))
+                            .customText(fontSize: 24, textColor: .white)
                             .foregroundColor(.white)
-                            .shadow(color: .purple.opacity(0.7), radius: 5, x: 0, y: 0)
                             .multilineTextAlignment(.center)
                             .lineSpacing(4)
                             .offset(y: textOffset)
@@ -35,7 +39,6 @@ struct OnboardingView: View {
                             }
                     }
                 }
-                .frame(height: UIScreen.main.bounds.height * 0.35)
                 .mask(
                     LinearGradient(
                         gradient: Gradient(stops: [

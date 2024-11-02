@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct Completed3DSphere: View {
-    @StateObject var viewModel: HomeViewModel
+    @StateObject var homeViewModel: HomeViewModel
+    @StateObject var audioVusualizer: AudioVisualizer
+    
     @State private var size: CGFloat = 0.8
     
     var amplitudes: [CGFloat]
@@ -16,14 +18,14 @@ struct Completed3DSphere: View {
     
     var colorOfEqualizer: Color = .cyan
     var shadowColorOfEqualizer: Color = .white
-    var offsetDistanceOfEqualizer: CGFloat = -110
+    var offsetDistanceOfEqualizer: CGFloat = -116
     
     var imageName: String = Shape.shapeName.rawValue
     
     var body: some View {
         VStack {
             VStack {
-                if viewModel.currentScreen != .onboarding {
+                if homeViewModel.currentScreen != .onboarding {
                     Text("Матрица Судьбы")
                         .customText(fontSize: 28, textColor: .white)
                 }
@@ -31,13 +33,14 @@ struct Completed3DSphere: View {
             .frame(height: UIScreen.main.bounds.height * 0.05)
             
             ZStack {
-                CircularEqualizerView(
-                    amplitudes: amplitudes,
-                    color: colorOfEqualizer,
-                    shadowColor: shadowColorOfEqualizer,
-                    offsetDistance: offsetDistanceOfEqualizer
-                )
-                
+                if audioVusualizer.isPlaying {
+                    CircularEqualizerView(
+                        amplitudes: amplitudes,
+                        color: colorOfEqualizer,
+                        shadowColor: shadowColorOfEqualizer,
+                        offsetDistance: offsetDistanceOfEqualizer
+                    )
+                }
                 
                 Rotating3DSphereView(imageName: imageName)
                     .frame(width: UIScreen.main.bounds.width * size, height: UIScreen.main.bounds.width * size)
@@ -55,7 +58,7 @@ struct Completed3DSphere: View {
                     .foregroundStyle(.lightAroundSphere)
                 
                 VStack {
-                    if viewModel.currentScreen != .onboarding  {
+                    if homeViewModel.currentScreen != .onboarding  {
                         DateAround3DSphere(customFont: CustomFont.fontName)
                         Spacer()
                     }
@@ -68,7 +71,8 @@ struct Completed3DSphere: View {
 
 #Preview {
     Completed3DSphere(
-        viewModel: HomeViewModel(),
+        homeViewModel: HomeViewModel(),
+        audioVusualizer: AudioVisualizer(),
         amplitudes: [],
         onboardingIsFinished: true
     )

@@ -10,6 +10,7 @@ import SwiftUI
 
 final class AudioVisualizer: ObservableObject {
     @Published var amplitudes: [CGFloat] = Array(repeating: 0.5, count: 120)
+    @Published var isPlaying: Bool = false
     
     private let audioEngine = AVAudioEngine()
     private let playerNode = AVAudioPlayerNode()
@@ -42,8 +43,12 @@ final class AudioVisualizer: ObservableObject {
     func playAudio(url: URL, completion: @escaping () -> Void) {
         do {
             let file = try AVAudioFile(forReading: url)
+            isPlaying = true
             playerNode.scheduleFile(file, at: nil) {
-                DispatchQueue.main.async {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    withAnimation(.easeOut(duration: 0.5)) {
+                        self.isPlaying = false
+                    }
                     completion()
                 }
             }
@@ -72,7 +77,6 @@ final class AudioVisualizer: ObservableObject {
     
     func stop() {
         playerNode.stop()
-//        backgroundPlayerNode.stop()
         audioEngine.stop()
         audioEngine.mainMixerNode.removeTap(onBus: 0)
     }

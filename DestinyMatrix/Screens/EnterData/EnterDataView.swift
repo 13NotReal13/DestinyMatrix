@@ -15,25 +15,26 @@ struct EnterDataView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            
-            Spacer()
-            
-            NameTextFieldView(enterDataViewModel: enterDataViewModel)
-            
-            DatePickerView(enterDataViewModel: enterDataViewModel)
-            
-            Spacer()
-            
-            Button {
+            if enterDataViewModel.audioEnterDataIsFinished {
+                Spacer()
                 
-            } label: {
-                Text("Далее")
-                    .padding(.horizontal)
-                    .customText(fontSize: 16, textColor: .white)
-                    .customButtonStyle(color1: .backgroundColor2, color2: .buttonColor2, shape: .capsule)
+                NameTextFieldView(enterDataViewModel: enterDataViewModel)
+                
+                DatePickerView(enterDataViewModel: enterDataViewModel)
+                
+                Spacer()
+                
+                Button {
+                    
+                } label: {
+                    Text("Далее")
+                        .padding(.horizontal)
+                        .customText(fontSize: 16, textColor: .white)
+                        .customButtonStyle(color1: .backgroundColor2, color2: .buttonColor2, shape: .capsule)
+                }
+                
+                Spacer()
             }
-            
-            Spacer()
         }
         .frame(height: UIScreen.main.bounds.height * 0.4)
         .onAppear {
@@ -45,6 +46,9 @@ struct EnterDataView: View {
     }
 }
 
-//#Preview {
-//    EnterDataView()
-//}
+#Preview {
+    EnterDataView(
+        audioVisualizer: AudioVisualizer(),
+        homeViewModel: HomeViewModel()
+    )
+}

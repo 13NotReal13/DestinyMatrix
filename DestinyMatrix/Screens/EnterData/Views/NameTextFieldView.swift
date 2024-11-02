@@ -15,12 +15,14 @@ struct NameTextFieldView: View {
             Text("Введите ваше полное имя (только имя)")
                 .customText(fontSize: 12, textColor: .white)
             
-            TextField("ПОЛНОЕ ИМЯ", text: $enterDataViewModel.name)
-                .multilineTextAlignment(.center)
-                .customText(fontSize: 16, textColor: .black)
-                .customButtonStyle(color1: .lightAroundSphere, color2: .lightAroundSphere, shape: .capsule)
+            VStack {
+                TextField("ПОЛНОЕ ИМЯ", text: $enterDataViewModel.name)
+                    .multilineTextAlignment(.center)
+                    .customText(fontSize: 16, textColor: .black)
+            }
+            .frame(width: UIScreen.main.bounds.width * 0.55)
+            .customButtonStyle(color1: .lightAroundSphere, color2: .lightAroundSphere, shape: .capsule)
         }
-        .frame(width: UIScreen.main.bounds.width * 0.55)
     }
 }
 
