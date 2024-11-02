@@ -60,18 +60,20 @@ final class AudioVisualizer: ObservableObject {
     }
     
     func playBackgroundAudio() {
-        guard let backgroundAudioUrl = Bundle.main.url(forResource: "BackgroundMusic", withExtension: "mp3") else {
-            print("Фоновая музыка не найдена.")
-            return
-        }
-        
-        do {
-            let backgroundFile = try AVAudioFile(forReading: backgroundAudioUrl)
-            backgroundPlayerNode.scheduleFile(backgroundFile, at: nil)
-            backgroundPlayerNode.volume = 0.2 // Уровень громкости для фоновой музыки
-            backgroundPlayerNode.play()
-        } catch {
-            print("Ошибка при загрузке фоновой музыки: \(error.localizedDescription)")
+        DispatchQueue.global(qos: .background).async {
+            guard let backgroundAudioUrl = Bundle.main.url(forResource: "BackgroundMusic", withExtension: "mp3") else {
+                print("Фоновая музыка не найдена.")
+                return
+            }
+            
+            do {
+                let backgroundFile = try AVAudioFile(forReading: backgroundAudioUrl)
+                self.backgroundPlayerNode.scheduleFile(backgroundFile, at: nil)
+                self.backgroundPlayerNode.volume = 0.2 // Уровень громкости для фоновой музыки
+                self.backgroundPlayerNode.play()
+            } catch {
+                print("Ошибка при загрузке фоновой музыки: \(error.localizedDescription)")
+            }
         }
     }
     

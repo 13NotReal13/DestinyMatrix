@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Combine
 
 enum Screen {
     case onboarding
@@ -18,17 +17,12 @@ struct HomeView: View {
     @EnvironmentObject private var audioVisualizer: AudioVisualizer
     @StateObject private var homeViewModel = HomeViewModel()
     
-    @State private var keyboardHeight: CGFloat = 0
-    @State private var isKeyboardShown: Bool = false
-    @State private var keyboardPublisher: AnyCancellable?
-    
     private var screenHeight = UIScreen.main.bounds.height
     
     var body: some View {
         ZStack {
             AnimatedStarryBackgroundView()
             
-            ScrollView(showsIndicators: false) {
                 VStack {
                     Completed3DSphere(
                         homeViewModel: homeViewModel,
@@ -53,26 +47,6 @@ struct HomeView: View {
                 }
                 .padding()
                 .frame(height: screenHeight * 0.9)
-                .padding(.bottom, keyboardHeight + 300)
-                .animation(.easeOut(duration: isKeyboardShown ? 0.3 : 0.6), value: keyboardHeight)
-            }
-            .frame(height: screenHeight * 0.9)
-//            .scrollDisabled(true)
-            .onAppear {
-                setupKeyboardObservers() // Подписка на события клавиатуры
-            }
-            .onDisappear {
-                keyboardPublisher?.cancel() // Отписка от событий клавиатуры
-            }
-        }
-    }
-    
-    private func setupKeyboardObservers() {
-        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillChangeFrameNotification, object: nil, queue: .main) { notification in
-            if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
-                self.keyboardHeight = keyboardFrame.height == UIScreen.main.bounds.height ? 0 : keyboardFrame.height
-                self.isKeyboardShown = true
-            }
         }
     }
 }

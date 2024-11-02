@@ -19,6 +19,7 @@ struct NameTextFieldView: View {
                 TextField("ПОЛНОЕ ИМЯ", text: $enterDataViewModel.name)
                     .multilineTextAlignment(.center)
                     .customText(fontSize: 16, textColor: .black)
+                    .disableAutocorrection(true)
             }
             .frame(width: UIScreen.main.bounds.width * 0.55)
             .customButtonStyle(color1: .lightAroundSphere, color2: .lightAroundSphere, shape: .capsule)
