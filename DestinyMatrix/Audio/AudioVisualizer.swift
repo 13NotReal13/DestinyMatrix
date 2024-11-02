@@ -13,17 +13,22 @@ final class AudioVisualizer: ObservableObject {
     
     private let audioEngine = AVAudioEngine()
     private let playerNode = AVAudioPlayerNode()
+    private let backgroundPlayerNode = AVAudioPlayerNode()
     
-    func start() {
+    init() {
+        setupAudioEngine()
+    }
+    
+    private func setupAudioEngine() {
         audioEngine.attach(playerNode)
+        audioEngine.attach(backgroundPlayerNode)
         
-        // Подключение playerNode к outputNode
         let format = audioEngine.mainMixerNode.outputFormat(forBus: 0)
         audioEngine.connect(playerNode, to: audioEngine.mainMixerNode, format: format)
+        audioEngine.connect(backgroundPlayerNode, to: audioEngine.mainMixerNode, format: format)
         
-        // Установка обработчика для playerNode, чтобы получать аудиоданные
-        let bufferSize: AVAudioFrameCount = 1024
-        audioEngine.mainMixerNode.installTap(onBus: 0, bufferSize: bufferSize, format: format) { buffer, _ in
+        // Установка tap на mainMixerNode для визуализации амплитуд
+        audioEngine.mainMixerNode.installTap(onBus: 0, bufferSize: 1024, format: format) { buffer, _ in
             self.updateAmplitudes(buffer: buffer)
         }
         
@@ -35,17 +40,39 @@ final class AudioVisualizer: ObservableObject {
     }
     
     func playAudio(url: URL, completion: @escaping () -> Void) {
-        let file = try! AVAudioFile(forReading: url)
-        playerNode.scheduleFile(file, at: nil) {
-            DispatchQueue.main.async {
-                completion()
+        do {
+            let file = try AVAudioFile(forReading: url)
+            playerNode.scheduleFile(file, at: nil) {
+                DispatchQueue.main.async {
+                    completion()
+                }
             }
+            playerNode.volume = 1.0
+            playerNode.play()
+        } catch {
+            print("Ошибка при загрузке аудиофайла: \(error.localizedDescription)")
         }
-        playerNode.play()
+    }
+    
+    func playBackgroundAudio() {
+        guard let backgroundAudioUrl = Bundle.main.url(forResource: "BackgroundMusic", withExtension: "mp3") else {
+            print("Фоновая музыка не найдена.")
+            return
+        }
+        
+        do {
+            let backgroundFile = try AVAudioFile(forReading: backgroundAudioUrl)
+            backgroundPlayerNode.scheduleFile(backgroundFile, at: nil)
+            backgroundPlayerNode.volume = 0.2 // Уровень громкости для фоновой музыки
+            backgroundPlayerNode.play()
+        } catch {
+            print("Ошибка при загрузке фоновой музыки: \(error.localizedDescription)")
+        }
     }
     
     func stop() {
         playerNode.stop()
+//        backgroundPlayerNode.stop()
         audioEngine.stop()
         audioEngine.mainMixerNode.removeTap(onBus: 0)
     }
@@ -55,7 +82,7 @@ final class AudioVisualizer: ObservableObject {
         
         let channelDataArray = Array(UnsafeBufferPointer(start: channelData[0], count: Int(buffer.frameLength)))
         
-        // Преобразуем значения в амплитуды, чтобы сильнее выделить изменения
+        // Преобразуем значения в амплитуды для визуализации
         let amplitude = channelDataArray.map { abs($0) }.max() ?? 0.0
         let scaledAmplitude = CGFloat(amplitude) * 4 // Увеличиваем коэффициент для видимого эффекта
         

@@ -8,22 +8,22 @@
 import SwiftUI
 
 struct NameTextFieldView: View {
-    @ObservedObject var viewModel: EnterDataViewModel
+    @ObservedObject var enterDataViewModel: EnterDataViewModel
     
     var body: some View {
         VStack {
             Text("Введите ваше полное имя (только имя)")
                 .customText(fontSize: 12, textColor: .white)
             
-            TextField("ПОЛНОЕ ИМЯ", text: $viewModel.name)
+            TextField("ПОЛНОЕ ИМЯ", text: $enterDataViewModel.name)
                 .multilineTextAlignment(.center)
                 .customText(fontSize: 16, textColor: .black)
-                .frame(width: UIScreen.main.bounds.width * 0.55)
                 .customButtonStyle(color1: .lightAroundSphere, color2: .lightAroundSphere, shape: .capsule)
         }
+        .frame(width: UIScreen.main.bounds.width * 0.55)
     }
 }
 
 #Preview {
-    NameTextFieldView(viewModel: EnterDataViewModel())
+    NameTextFieldView(enterDataViewModel: EnterDataViewModel())
 }

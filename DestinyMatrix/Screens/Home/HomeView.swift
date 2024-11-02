@@ -7,83 +7,47 @@
 
 import SwiftUI
 
+enum Screen {
+    case onboarding
+    case home
+    case enterData
+}
+
 struct HomeView: View {
     @EnvironmentObject private var audioVisualizer: AudioVisualizer
-    @StateObject private var viewModel = HomeViewModel()
+    @StateObject private var homeViewModel = HomeViewModel()
     
     private var screenHeight = UIScreen.main.bounds.height
     
     var body: some View {
-        NavigationView {
-            ZStack {
-                AnimatedStarryBackgroundView()
+        ZStack {
+            AnimatedStarryBackgroundView()
+            
+            VStack {
+                Completed3DSphere(
+                    viewModel: homeViewModel,
+                    amplitudes: audioVisualizer.amplitudes,
+                    onboardingIsFinished: homeViewModel.onboardingIsFinished
+                )
                 
-                VStack {
-                    VStack {
-                        if viewModel.onboardingIsFinished {
-                            Text("Матрица Судьбы")
-                                .customText(fontSize: 36, textColor: .white)
-                        }
-                    }
-                    .frame(height: screenHeight * 0.05)
-                    
-                    ZStack {                        
-                        Completed3DSphere(
-                            amplitudes: audioVisualizer.amplitudes,
-                            colorOfEqualizer: viewModel.colorOfEqualizer,
-                            shadowColorOfEqualizer: viewModel.shadowColorOfEqualizer,
-                            offsetDistanceOfEqualizer: viewModel.offsetDistanceOfEqualizer,
-                            imageName: viewModel.shape
-                        )
-                        
-                        VStack {
-                            if viewModel.onboardingIsFinished {
-                                DateAround3DSphere(customFont: viewModel.customFont)
-                                Spacer()
-                            }
-                        }
-                    }
-                    .frame(height: screenHeight * 0.4)
-                    
-                    VStack {
-                        if !viewModel.onboardingIsFinished {
-                            VStack {
-                                OnboardingTextView(
-                                    textOffset: $viewModel.onboardingTextOffset,
-                                    customFont: viewModel.customFont,
-                                    duration: viewModel.durationOfTextAnimation
-                                )
-                            }
-                            .frame(height: screenHeight * 0.35)
-                            
-                            VStack {
-                                if viewModel.audioIsFinished {
-                                    NextButtonOnboardingView(
-                                        audioIsFinished: $viewModel.audioIsFinished,
-                                        onboardingIsFinished: $viewModel.onboardingIsFinished,
-                                        customFont: viewModel.customFont
-                                    )
-                                }
-                            }
-                            .frame(height: screenHeight * 0.05)
-                        } else {
-                            HomeMenuButtonsView()
-                        }
-                    }
-                    .frame(height: screenHeight * 0.4)
+                if homeViewModel.currentScreen == .onboarding {
+                    OnboardingView(
+                        homeViewModel: homeViewModel,
+                        audioVisualizer: audioVisualizer
+                    )
+                } else if homeViewModel.currentScreen == .home {
+                    HomeMenuButtonsView(homeViewModel: homeViewModel, audioVisualizer: audioVisualizer)
+                } else if homeViewModel.currentScreen == .enterData {
+                    EnterDataView(
+                        audioVisualizer: audioVisualizer,
+                        homeViewModel: homeViewModel
+                    )
                 }
-                .padding()
-                .frame(height: screenHeight * 0.9)
-                    
             }
-            .onAppear {
-//                viewModel.startOnboardingAudio(audioVisualizer: audioVisualizer)
-            }
-            .onDisappear {
-                viewModel.stopAudio(audioVisualizer: audioVisualizer)
-            }
+            .padding()
+            .frame(height: screenHeight * 0.9)
+            
         }
-        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 
