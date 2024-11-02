@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 
 final class EnterDataViewModel: ObservableObject {
-    @Published var audioEnterDataIsFinished: Bool = false
+    @Published var audioEnterDataIsFinished: Bool = true
     @Published var name: String = ""
     @Published var dateBirthday: Date = Date()
     @Published var displayedDateText: String = "Выбрать дату"

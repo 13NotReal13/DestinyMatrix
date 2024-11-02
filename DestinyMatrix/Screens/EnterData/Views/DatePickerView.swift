@@ -58,6 +58,7 @@ struct DatePickerView: View {
                         }
                     }
                 }
+                .ignoresSafeArea()
             }
         }
     }

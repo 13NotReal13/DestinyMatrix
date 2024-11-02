@@ -39,6 +39,7 @@ struct OnboardingView: View {
                             }
                     }
                 }
+                .scrollDisabled(true)
                 .mask(
                     LinearGradient(
                         gradient: Gradient(stops: [
