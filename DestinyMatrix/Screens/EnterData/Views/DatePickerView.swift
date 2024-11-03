@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct DatePickerView: View {
-    @ObservedObject var viewModel: EnterDataViewModel
+    @ObservedObject var enterDataViewModel: EnterDataViewModel
     
     var body: some View {
         VStack {
@@ -17,40 +17,40 @@ struct DatePickerView: View {
                 .customText(fontSize: 12, textColor: .white)
             
             Button(action: {
-                viewModel.isDatePickerPresented.toggle()
+                enterDataViewModel.isDatePickerPresented.toggle()
             }) {
                 HStack {
-                    if viewModel.displayedDateText.lowercased() == "Выбрать дату".lowercased() {
-                        Text(viewModel.displayedDateText)
+                    if enterDataViewModel.displayedDateText.lowercased() == "Выбрать дату".lowercased() {
+                        Text(enterDataViewModel.displayedDateText)
                             .font(.custom(CustomFont.fontName.rawValue, size: 15))
                             .foregroundStyle(Color.gray.opacity(0.6))
-                            .frame(width: UIScreen.main.bounds.width * 0.55)
                     } else {
-                        Text(viewModel.displayedDateText)
+                        Text(enterDataViewModel.displayedDateText)
                             .customText(fontSize: 16, textColor: .black)
-                            .frame(width: UIScreen.main.bounds.width * 0.55)
                     }
                 }
+                .frame(width: UIScreen.main.bounds.width * 0.55)
                 .customButtonStyle(color1: .lightAroundSphere, color2: .lightAroundSphere, shape: .capsule)
             }
-            .sheet(isPresented: $viewModel.isDatePickerPresented) {
+            .sheet(isPresented: $enterDataViewModel.isDatePickerPresented) {
                 ZStack {
                     AnimatedStarryBackgroundView()
+                        .ignoresSafeArea()
                     
                     VStack {
-                        DatePicker("Дата рождения", selection: $viewModel.dateBirthday, displayedComponents: .date)
+                        DatePicker("Дата рождения", selection: $enterDataViewModel.dateBirthday, displayedComponents: .date)
                             .environment(\.locale, Locale(identifier: "ru"))
                             .datePickerStyle(.wheel)
                             .colorInvert()
                             .colorMultiply(Color.white)
                             .labelsHidden()
                             .padding()
-                            .onChange(of: viewModel.dateBirthday) { _, _ in
-                                viewModel.updateDisplayedDate()
+                            .onChange(of: enterDataViewModel.dateBirthday) { _ in
+                                enterDataViewModel.updateDisplayedDate()
                             }
                         
                         Button {
-                            viewModel.isDatePickerPresented = false
+                            enterDataViewModel.isDatePickerPresented = false
                         } label: {
                             Text("Готово")
                                 .padding(.horizontal)
@@ -59,11 +59,12 @@ struct DatePickerView: View {
                         }
                     }
                 }
+                .ignoresSafeArea()
             }
         }
     }
 }
 
 #Preview {
-    DatePickerView(viewModel: EnterDataViewModel())
+    DatePickerView(enterDataViewModel: EnterDataViewModel())
 }

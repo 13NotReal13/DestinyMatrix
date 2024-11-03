@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AnimatedStarryBackgroundView: View {
     @State private var stars: [(CGPoint, Double)] = []
+    @State private var lastSize: CGSize = .zero
     
     var body: some View {
         GeometryReader { geometry in
@@ -29,17 +30,12 @@ struct AnimatedStarryBackgroundView: View {
             )
             .ignoresSafeArea()
             .onAppear {
-                let screenWidth = geometry.size.width
-                let screenHeight = geometry.size.height
-                
-                stars = (0..<100).map { _ in
-                    (
-                        CGPoint(
-                            x: CGFloat.random(in: 0...screenWidth),
-                            y: CGFloat.random(in: 0...screenHeight)
-                        ),
-                        Double.random(in: 0.5...1.0)
-                    )
+                generateStars(in: geometry.size)
+            }
+            .onChange(of: geometry.size) { newSize in
+                if newSize != lastSize {
+                    lastSize = newSize
+                    generateStars(in: newSize)
                 }
             }
         }
@@ -48,6 +44,21 @@ struct AnimatedStarryBackgroundView: View {
                 let newBrightness = Double.random(in: 0.5...1.0)
                 return (star.0, newBrightness)
             }
+        }
+    }
+    
+    private func generateStars(in size: CGSize) {
+        let screenWidth = size.width
+        let screenHeight = size.height
+        
+        stars = (0..<100).map { _ in
+            (
+                CGPoint(
+                    x: CGFloat.random(in: 0...screenWidth),
+                    y: CGFloat.random(in: 0...screenHeight)
+                ),
+                Double.random(in: 0.5...1.0)
+            )
         }
     }
 }

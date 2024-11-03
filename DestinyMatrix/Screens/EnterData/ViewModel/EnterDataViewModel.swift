@@ -9,6 +9,7 @@ import SwiftUI
 import Combine
 
 final class EnterDataViewModel: ObservableObject {
+    @Published var audioEnterDataIsFinished: Bool = true
     @Published var name: String = ""
     @Published var dateBirthday: Date = Date()
     @Published var displayedDateText: String = "Выбрать дату"
@@ -19,6 +20,22 @@ final class EnterDataViewModel: ObservableObject {
         formatter.dateStyle = .medium
         formatter.locale = Locale(identifier: "ru")
         return formatter
+    }
+    
+    func startEnterDataAudio(audioVisualizer: AudioVisualizer) {
+        if !audioEnterDataIsFinished, let audioURL = Bundle.main.url(forResource: "CharlotteEnterData", withExtension: "mp3") {
+            audioVisualizer.playAudio(url: audioURL) { [weak self] in
+                DispatchQueue.main.async {
+                    withAnimation(.easeIn(duration: 1.5)) {
+                        self?.audioEnterDataIsFinished = true
+                    }
+                }
+            }
+        }
+    }
+    
+    func stopAudio(audioVisualizer: AudioVisualizer) {
+        audioVisualizer.stop()
     }
 
     func updateDisplayedDate() {

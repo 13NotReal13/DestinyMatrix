@@ -8,18 +8,19 @@
 import SwiftUI
 
 struct EnterDataView: View {
-    @StateObject private var viewModel = EnterDataViewModel()
+    @StateObject var audioVisualizer: AudioVisualizer
+    @StateObject var homeViewModel: HomeViewModel
+    
+    @StateObject private var enterDataViewModel = EnterDataViewModel()
     
     var body: some View {
-        ZStack {
-            AnimatedStarryBackgroundView()
-            
-            VStack(spacing: 20) {
+        VStack(spacing: 20) {
+            if enterDataViewModel.audioEnterDataIsFinished {
                 Spacer()
                 
-                NameTextFieldView(viewModel: viewModel)
+                NameTextFieldView(enterDataViewModel: enterDataViewModel)
                 
-                DatePickerView(viewModel: viewModel)
+                DatePickerView(enterDataViewModel: enterDataViewModel)
                 
                 Spacer()
                 
@@ -29,15 +30,25 @@ struct EnterDataView: View {
                     Text("Далее")
                         .padding(.horizontal)
                         .customText(fontSize: 16, textColor: .white)
-                        .customButtonStyle(color1: .backgroundColor1, color2: .buttonColor2, shape: .capsule)
+                        .customButtonStyle(color1: .backgroundColor2, color2: .buttonColor2, shape: .capsule)
                 }
                 
                 Spacer()
             }
         }
+        .frame(height: UIScreen.main.bounds.height * 0.4)
+        .onAppear {
+            enterDataViewModel.startEnterDataAudio(audioVisualizer: audioVisualizer)
+        }
+        .onDisappear {
+            enterDataViewModel.stopAudio(audioVisualizer: audioVisualizer)
+        }
     }
 }
 
 #Preview {
-    EnterDataView()
+    EnterDataView(
+        audioVisualizer: AudioVisualizer(),
+        homeViewModel: HomeViewModel()
+    )
 }

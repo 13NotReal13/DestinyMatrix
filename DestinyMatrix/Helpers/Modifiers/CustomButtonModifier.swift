@@ -5,7 +5,6 @@
 //  Created by Иван Семикин on 01/11/2024.
 //
 
-import Foundation
 import SwiftUI
 
 enum TypeShape {
@@ -19,23 +18,7 @@ struct CustomButtonStyleModifier: ViewModifier {
     var shape: TypeShape
 
     func body(content: Content) -> some View {
-        let overlayShape: AnyView = {
-            if shape == .capsule {
-                return AnyView(Capsule().stroke(Color.white, lineWidth: 2))
-            } else {
-                return AnyView(Circle().stroke(Color.white, lineWidth: 2))
-            }
-        }()
-
-        let clipShape: AnyShape = {
-            if shape == .capsule {
-                return AnyShape(Capsule())
-            } else {
-                return AnyShape(Circle())
-            }
-        }()
-
-        return content
+        content
             .padding()
             .background(
                 LinearGradient(
@@ -44,7 +27,27 @@ struct CustomButtonStyleModifier: ViewModifier {
                     endPoint: .top
                 )
             )
-            .overlay(overlayShape)
-            .clipShape(clipShape)
+            .overlay(
+                Group {
+                    if shape == .capsule {
+                        Capsule().stroke(Color.white, lineWidth: 2)
+                    } else {
+                        Circle().stroke(Color.white, lineWidth: 2)
+                    }
+                }
+            )
+            .modifier(ConditionalClipShape(shape: shape))
+    }
+}
+
+struct ConditionalClipShape: ViewModifier {
+    var shape: TypeShape
+
+    func body(content: Content) -> some View {
+        if shape == .capsule {
+            content.clipShape(Capsule())
+        } else {
+            content.clipShape(Circle())
+        }
     }
 }
