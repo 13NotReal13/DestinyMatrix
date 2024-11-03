@@ -37,7 +37,10 @@ struct HomeView: View {
                             audioVisualizer: audioVisualizer
                         )
                     } else if homeViewModel.currentScreen == .home {
-                        HomeMenuButtonsView(homeViewModel: homeViewModel, audioVisualizer: audioVisualizer)
+                        HomeMenuButtonsView(homeViewModel: homeViewModel)
+                            .onAppear {
+//                                audioVisualizer.playBackgroundAudio() 
+                            }
                     } else if homeViewModel.currentScreen == .enterData {
                         EnterDataView(
                             audioVisualizer: audioVisualizer,

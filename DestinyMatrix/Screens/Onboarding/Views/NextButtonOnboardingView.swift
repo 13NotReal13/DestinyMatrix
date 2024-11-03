@@ -18,7 +18,7 @@ struct NextButtonOnboardingView: View {
                 }
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                withAnimation(.easeIn(duration: 0.2)) {
+                withAnimation(.easeIn(duration: 0.7)) {
                     homeViewModel.currentScreen = .home
                 }
             }

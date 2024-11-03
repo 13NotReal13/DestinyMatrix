@@ -12,6 +12,8 @@ final class AudioVisualizer: ObservableObject {
     @Published var amplitudes: [CGFloat] = Array(repeating: 0.5, count: 120)
     @Published var isPlaying: Bool = false
     
+    @State var isNeedAmplitude: Bool = false
+    
     private let audioEngine = AVAudioEngine()
     private let playerNode = AVAudioPlayerNode()
     private let backgroundPlayerNode = AVAudioPlayerNode()
@@ -48,6 +50,7 @@ final class AudioVisualizer: ObservableObject {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     withAnimation(.easeOut(duration: 0.5)) {
                         self.isPlaying = false
+                        self.playerNode.stop()
                     }
                     completion()
                 }
@@ -84,17 +87,19 @@ final class AudioVisualizer: ObservableObject {
     }
     
     private func updateAmplitudes(buffer: AVAudioPCMBuffer) {
-        guard let channelData = buffer.floatChannelData else { return }
-        
-        let channelDataArray = Array(UnsafeBufferPointer(start: channelData[0], count: Int(buffer.frameLength)))
-        
-        // Преобразуем значения в амплитуды для визуализации
-        let amplitude = channelDataArray.map { abs($0) }.max() ?? 0.0
-        let scaledAmplitude = CGFloat(amplitude) * 4 // Увеличиваем коэффициент для видимого эффекта
-        
-        DispatchQueue.main.async {
-            self.amplitudes = self.amplitudes.map { _ in
-                CGFloat.random(in: scaledAmplitude * 0.5...scaledAmplitude)
+        if playerNode.isPlaying {
+            guard let channelData = buffer.floatChannelData else { return }
+            
+            let channelDataArray = Array(UnsafeBufferPointer(start: channelData[0], count: Int(buffer.frameLength)))
+            
+            // Преобразуем значения в амплитуды для визуализации
+            let amplitude = channelDataArray.map { abs($0) }.max() ?? 0.0
+            let scaledAmplitude = CGFloat(amplitude) * 4 // Увеличиваем коэффициент для видимого эффекта
+            
+            DispatchQueue.main.async {
+                self.amplitudes = self.amplitudes.map { _ in
+                    CGFloat.random(in: scaledAmplitude * 0.5...scaledAmplitude)
+                }
             }
         }
     }

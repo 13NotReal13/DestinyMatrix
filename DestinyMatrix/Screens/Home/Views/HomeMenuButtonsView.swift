@@ -9,7 +9,6 @@ import SwiftUI
 
 struct HomeMenuButtonsView: View {
     @StateObject var homeViewModel: HomeViewModel
-    @StateObject var audioVisualizer: AudioVisualizer
     @State var sliderValue: Double = 0.5
     
     var body: some View {
@@ -22,8 +21,8 @@ struct HomeMenuButtonsView: View {
                         homeViewModel.readyToGoToEnterData = true
                     }
                     
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                        withAnimation(.easeIn(duration: 0.2)) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        withAnimation(.easeIn(duration: 0.7)) {
                             homeViewModel.currentScreen = .enterData
                         }
                     }
@@ -56,9 +55,6 @@ struct HomeMenuButtonsView: View {
             }
         }
         .frame(height: UIScreen.main.bounds.height * 0.4)
-        .onAppear {
-            audioVisualizer.playBackgroundAudio()
-        }
     }
 }
 //

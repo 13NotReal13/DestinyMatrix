@@ -14,7 +14,7 @@ enum CustomFont: String {
     case inkverse = "Inkverse"
 }
 
-enum Shape: String {
+enum ShapeOfSphere: String {
     case shapeName = "Shape9" // main
     case shape10 = "Shape10"
     case shape11 = "Shape11"

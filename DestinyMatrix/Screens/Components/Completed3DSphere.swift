@@ -18,16 +18,19 @@ struct Completed3DSphere: View {
     
     var colorOfEqualizer: Color = .cyan
     var shadowColorOfEqualizer: Color = .white
-    var offsetDistanceOfEqualizer: CGFloat = -116
+    var offsetDistanceOfEqualizer: CGFloat = -121
     
-    var imageName: String = Shape.shapeName.rawValue
+    var imageName: String = ShapeOfSphere.shapeName.rawValue
     
     var body: some View {
         VStack {
-            VStack {
+            VStack(spacing: 10) {
                 if homeViewModel.currentScreen != .onboarding {
                     Text("Матрица Судьбы")
                         .customText(fontSize: 28, textColor: .white)
+                    
+                    Text("Ваш путь к успеху и изобилию")
+                        .customText(fontSize: 12, textColor: .white)
                 }
             }
             .frame(height: UIScreen.main.bounds.height * 0.05)
@@ -50,7 +53,6 @@ struct Completed3DSphere: View {
                     .frame(width: UIScreen.main.bounds.width * (size - 0.2))
                     .foregroundStyle(.lightAroundSphere)
                     .shadow(color: .yellow, radius: 10)
-                
                 
                 Circle()
                     .stroke(lineWidth: 0.1)

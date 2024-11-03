@@ -35,6 +35,7 @@ struct DatePickerView: View {
             .sheet(isPresented: $enterDataViewModel.isDatePickerPresented) {
                 ZStack {
                     AnimatedStarryBackgroundView()
+                        .ignoresSafeArea()
                     
                     VStack {
                         DatePicker("Дата рождения", selection: $enterDataViewModel.dateBirthday, displayedComponents: .date)
@@ -44,7 +45,7 @@ struct DatePickerView: View {
                             .colorMultiply(Color.white)
                             .labelsHidden()
                             .padding()
-                            .onChange(of: enterDataViewModel.dateBirthday) { _, _ in
+                            .onChange(of: enterDataViewModel.dateBirthday) { _ in
                                 enterDataViewModel.updateDisplayedDate()
                             }
                         
