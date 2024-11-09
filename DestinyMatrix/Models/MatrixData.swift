@@ -12,7 +12,7 @@ struct MatrixData {
     var karmicKnots: ArkanCategory
     var resourcesAndTalents: ArkanCategory
     var emotionalAndPersonalTraits: ArkanCategory
-    var areasOfInfluenceAndDevelopment: ArkanCategory
+    var professionsAndRolesData: ArkanCategory
     var recommendations: ArkanCategory
     var energyFlows: ArkanCategory
 }
