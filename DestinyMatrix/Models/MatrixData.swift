@@ -7,8 +7,6 @@
 
 import Foundation
 
-typealias ArkanDictionary = [Int: ArkanInfo]
-
 struct MatrixData {
     var lifeNumbers: LifeNumbers
     var karmicKnots: ArkanCategory
@@ -33,35 +31,18 @@ struct ArkanCategory {
     var arkanInfo: ArkanDictionary
 }
 
+typealias ArkanDictionary = [Int: ArkanInfo]
+
 struct ArkanInfo {
-    let title: String
     let shortDescription: String
     let mainDescription: String
     
     let positiveEnergyTitle: String = "Энергия в плюсе:"
-    private let positiveEnergyText: String
-    var positiveEnergy: String {
-        "Когда ваша энергия наполнена силой: \(positiveEnergyText)"
-    }
+    let positiveEnergyText: String
 
     let negativeEnergyTitle: String = "Энергия в минусе:"
-    private let negativeEnergyText: String
-    var negativeEnergy: String {
-        "Когда ваша энергия ослабевает: \(negativeEnergyText)"
-    }
+    let negativeEnergyText: String
     
     let adviceTitle: String = "Советы для восстановления энергии:"
-    private let adviceText: String
-    var advice: String {
-        "Чтобы гармонизировать вашу энергию: \(adviceText)"
-    }
-    
-    init(title: String, shortDescription: String, mainDescription: String, positiveEnergyText: String, negativeEnergyText: String, adviceText: String) {
-        self.title = title
-        self.shortDescription = shortDescription
-        self.mainDescription = mainDescription
-        self.positiveEnergyText = positiveEnergyText
-        self.negativeEnergyText = negativeEnergyText
-        self.adviceText = adviceText
-    }
+    let adviceText: String
 }
