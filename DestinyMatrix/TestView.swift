@@ -51,6 +51,8 @@ struct TestView: View {
                         
                         Text(DestinyNumberData.data.arkanInfo[1]!.adviceText)
                     }
+                    
+                    Text(RecommendationsData.data.arkanInfo[1]!.adviceText)
                 }
                 .padding()
                 .foregroundStyle(.white)
