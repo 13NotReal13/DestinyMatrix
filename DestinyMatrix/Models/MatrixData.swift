@@ -13,8 +13,9 @@ struct MatrixData {
     var resourcesAndTalents: ArkanCategory
     var emotionalAndPersonalTraits: ArkanCategory
     var professionsAndRolesData: ArkanCategory
-    var recommendations: ArkanCategory
+    var moneyFlows: ArkanCategory
     var energyFlows: ArkanCategory
+    var recommendations: ArkanCategory
 }
 
 struct LifeNumbers {
