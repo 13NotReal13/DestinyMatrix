@@ -29,12 +29,13 @@ struct LifeNumbers {
 
 struct ArkanCategory {
     var сategoryTitle: String
-    var arkanInfo: ArkanDictionary
+    var arkanInfo: ArkanInfo
 }
 
 typealias ArkanDictionary = [Int: ArkanInfo]
 
-struct ArkanInfo {
+struct ArkanInfo: Hashable {
+    let arkanNumber: Int
     let shortDescription: String
     let mainDescription: String
     
