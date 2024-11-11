@@ -15,8 +15,10 @@ struct MatrixView: View {
             AnimatedStarryBackgroundView()
             
             HStack {
-                VStack(spacing: 16) {
-                    ForEach(1..<12) { num in
+                VStack {
+                    ForEach(1..<13) { num in
+                        Spacer()
+                        
                         Text(String(num))
                             .customText(fontSize: 17, textColor: .white)
                             .foregroundStyle(.white)
@@ -34,8 +36,10 @@ struct MatrixView: View {
                 .padding(.leading)
                 
                 ScrollView {
-                    VStack {
+                    VStack(spacing: 30) {
                         DestinyNumberView(destinyNumber: matrixData.lifeNumbers.destinyNumber)
+                        
+                        LifePathNumberView(lifePathNumber: matrixData.lifeNumbers.lifePathNumber)
                     }
                     .padding(.trailing)
                 }
