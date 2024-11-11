@@ -19,24 +19,28 @@ struct DestinyNumberView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             
                 Text(destinyNumber.arkanInfo.mainDescription)
+                .frame(maxWidth: .infinity, alignment: .leading)
             
             VStack(spacing: 8) {
                 Text(destinyNumber.arkanInfo.positiveEnergyTitle)
                 Text(destinyNumber.arkanInfo.positiveEnergyText)
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
             
             VStack(spacing: 8) {
                 Text(destinyNumber.arkanInfo.negativeEnergyTitle)
                 Text(destinyNumber.arkanInfo.negativeEnergyText)
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
             
             VStack(spacing: 8) {
                 Text(destinyNumber.arkanInfo.adviceTitle)
+                    .frame(maxWidth: .infinity, alignment: .center)
                 Text(destinyNumber.arkanInfo.adviceText)
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
         .foregroundStyle(.white)
-        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 

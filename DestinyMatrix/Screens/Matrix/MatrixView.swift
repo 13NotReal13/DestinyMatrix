@@ -14,12 +14,33 @@ struct MatrixView: View {
         ZStack {
             AnimatedStarryBackgroundView()
             
-            ScrollView {
-                VStack {
-                    DestinyNumberView(destinyNumber: matrixData.lifeNumbers.destinyNumber)
+            HStack {
+                VStack(spacing: 16) {
+                    ForEach(1..<12) { num in
+                        Text(String(num))
+                            .customText(fontSize: 17, textColor: .white)
+                            .foregroundStyle(.white)
+                            .customButtonStyle(color1: .backgroundColor1, color2: .buttonColor1, shape: .circle)
+                            .clipShape(.circle)
+                            .overlay {
+                                if num == 1 {
+                                    Circle()
+                                        .stroke(Color.white, lineWidth: 2)
+                                }
+                            }
+                            .shadow(color: .white, radius: num == 1 ? 5 : 0)
+                    }
                 }
+                .padding(.leading)
+                
+                ScrollView {
+                    VStack {
+                        DestinyNumberView(destinyNumber: matrixData.lifeNumbers.destinyNumber)
+                    }
+                    .padding(.trailing)
+                }
+                .padding()
             }
-            .padding()
         }
     }
 }
