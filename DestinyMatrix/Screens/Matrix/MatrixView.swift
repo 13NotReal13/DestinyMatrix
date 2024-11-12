@@ -56,6 +56,8 @@ struct MatrixView: View {
                         ProfessionsAndRolesView(professionsAndRolesNumber: matrixData.professionsAndRolesData)
                         
                         MoneyFlowsView(moneyFlowsNumber: matrixData.moneyFlows)
+                        
+                        EnergyFlowsView(energyFlowsNumber: matrixData.energyFlows)
                     }
                     .padding(.trailing)
                 }
