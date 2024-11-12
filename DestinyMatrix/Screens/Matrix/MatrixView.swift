@@ -40,6 +40,10 @@ struct MatrixView: View {
                         DestinyNumberView(destinyNumber: matrixData.lifeNumbers.destinyNumber)
                         
                         LifePathNumberView(lifePathNumber: matrixData.lifeNumbers.lifePathNumber)
+                        
+                        SoulNumberView(soulNumber: matrixData.lifeNumbers.soulNumber)
+                        
+                        KarmaNumberView(karmaNumber: matrixData.lifeNumbers.karmaNumber)
                     }
                     .padding(.trailing)
                 }
