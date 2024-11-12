@@ -44,6 +44,8 @@ struct MatrixView: View {
                         SoulNumberView(soulNumber: matrixData.lifeNumbers.soulNumber)
                         
                         KarmaNumberView(karmaNumber: matrixData.lifeNumbers.karmaNumber)
+                        
+                        PersonalityNumberView(personalityNumber: matrixData.lifeNumbers.personalityNumber)
                     }
                     .padding(.trailing)
                 }
