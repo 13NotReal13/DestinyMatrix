@@ -8,64 +8,123 @@
 import SwiftUI
 
 struct MatrixView: View {
+    @Environment(\.dismiss) private var dismiss
+    
     @State var matrixData: MatrixData
+    
+    @State private var selectedSection = 1
     
     var body: some View {
         ZStack {
             AnimatedStarryBackgroundView()
             
-            HStack {
-                VStack {
-                    ForEach(1..<13) { num in
-                        Spacer()
-                        
-                        Text(String(num))
+            VStack {
+                HStack {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Text("Закрыть")
                             .customText(fontSize: 17, textColor: .white)
-                            .foregroundStyle(.white)
-                            .customButtonStyle(color1: .backgroundColor1, color2: .buttonColor1, shape: .circle)
-                            .clipShape(.circle)
-                            .overlay {
-                                if num == 1 {
-                                    Circle()
-                                        .stroke(Color.white, lineWidth: 2)
+                    }
+                    
+                    Spacer()
+                    
+                    Button {
+                        
+                    } label: {
+                        HStack {
+                            Image(systemName: "square.and.arrow.down")
+                            Text("Скачать .pdf")
+                        }
+                        .customText(fontSize: 17, textColor: .white)
+                    }
+                }
+                .padding(.horizontal)
+                
+                HStack {
+                    LeftNavigationButtonsView(selectedSection: $selectedSection)
+                    .padding(.leading)
+                    
+                    ScrollViewReader { proxy in
+                        ScrollView {
+                            VStack(spacing: 30) {
+                                sectionView(number: 1) {
+                                    DestinyNumberView(destinyNumber: matrixData.lifeNumbers.destinyNumber)
+                                }
+                                
+                                sectionView(number: 2) {
+                                    LifePathNumberView(lifePathNumber: matrixData.lifeNumbers.lifePathNumber)
+                                }
+                                
+                                sectionView(number: 3) {
+                                    SoulNumberView(soulNumber: matrixData.lifeNumbers.soulNumber)
+                                }
+                                
+                                sectionView(number: 4) {
+                                    KarmaNumberView(karmaNumber: matrixData.lifeNumbers.karmaNumber)
+                                }
+                                
+                                sectionView(number: 5) {
+                                    PersonalityNumberView(personalityNumber: matrixData.lifeNumbers.personalityNumber)
+                                }
+                                
+                                sectionView(number: 6) {
+                                    KarmicKnotsView(karmicKnotsNumber: matrixData.karmicKnots)
+                                }
+                                
+                                sectionView(number: 7) {
+                                    ResourcesAndTalentsView(resourcesAndTalentsNumber: matrixData.resourcesAndTalents)
+                                }
+                                
+                                sectionView(number: 8) {
+                                    EmotionalAndPersonalTraitsView(emotionalAndPersonalTraitsNumber: matrixData.emotionalAndPersonalTraits)
+                                }
+                                
+                                sectionView(number: 9) {
+                                    ProfessionsAndRolesView(professionsAndRolesNumber: matrixData.professionsAndRolesData)
+                                }
+                                
+                                sectionView(number: 10) {
+                                    MoneyFlowsView(moneyFlowsNumber: matrixData.moneyFlows)
+                                }
+                                
+                                sectionView(number: 11) {
+                                    EnergyFlowsView(energyFlowsNumber: matrixData.energyFlows)
+                                }
+                                
+                                sectionView(number: 12) {
+                                    RecommendationsView(recommendationsNumber: matrixData.recommendations)
                                 }
                             }
-                            .shadow(color: .white, radius: num == 1 ? 5 : 0)
+                            .padding(.trailing)
+                        }
+                        .padding()
+                        .onChange(of: selectedSection) { section in
+                            proxy.scrollTo(section, anchor: .top)
+                        }
                     }
                 }
-                .padding(.leading)
-                
-                ScrollView {
-                    VStack(spacing: 30) {
-                        DestinyNumberView(destinyNumber: matrixData.lifeNumbers.destinyNumber)
-                        
-                        LifePathNumberView(lifePathNumber: matrixData.lifeNumbers.lifePathNumber)
-                        
-                        SoulNumberView(soulNumber: matrixData.lifeNumbers.soulNumber)
-                        
-                        KarmaNumberView(karmaNumber: matrixData.lifeNumbers.karmaNumber)
-                        
-                        PersonalityNumberView(personalityNumber: matrixData.lifeNumbers.personalityNumber)
-                        
-                        KarmicKnotsView(karmicKnotsNumber: matrixData.karmicKnots)
-                        
-                        ResourcesAndTalentsView(resourcesAndTalentsNumber: matrixData.resourcesAndTalents)
-                        
-                        EmotionalAndPersonalTraitsView(emotionalAndPersonalTraitsNumber: matrixData.emotionalAndPersonalTraits)
-                        
-                        ProfessionsAndRolesView(professionsAndRolesNumber: matrixData.professionsAndRolesData)
-                        
-                        MoneyFlowsView(moneyFlowsNumber: matrixData.moneyFlows)
-                        
-                        EnergyFlowsView(energyFlowsNumber: matrixData.energyFlows)
-                        
-                        RecommendationsView(recommendationsNumber: matrixData.recommendations)
-                    }
-                    .padding(.trailing)
-                }
-                .padding()
             }
         }
+    }
+    
+    @ViewBuilder
+    private func sectionView<Content: View>(number: Int, @ViewBuilder content: () -> Content) -> some View {
+        VStack {
+            content()
+        }
+        .id(number)
+        .background(
+            GeometryReader { geometry in
+                Color.clear
+                    .onChange(of: geometry.frame(in: .global).midY) { newPosition in
+                        let screenMidY = UIScreen.main.bounds.height / 2
+                        if abs(newPosition - screenMidY) < 50 {
+                            selectedSection = number
+                        }
+                    }
+            }
+        )
     }
 }
 
