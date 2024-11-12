@@ -61,10 +61,19 @@ struct DatePickerView: View {
                 }
                 .ignoresSafeArea()
             }
+            
+            if !enterDataViewModel.isDateValid {
+                Text("Выберите дату")
+                    .customText(fontSize: 12, textColor: .red)
+            }
         }
     }
 }
 
 #Preview {
-    DatePickerView(enterDataViewModel: EnterDataViewModel())
+    ZStack {
+        AnimatedStarryBackgroundView()
+        
+        DatePickerView(enterDataViewModel: EnterDataViewModel())
+    }
 }

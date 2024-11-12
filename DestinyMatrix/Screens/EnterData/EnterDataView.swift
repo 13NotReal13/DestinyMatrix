@@ -13,6 +13,8 @@ struct EnterDataView: View {
     
     @StateObject private var enterDataViewModel = EnterDataViewModel()
     
+    @State private var showMatrixView: Bool = false
+    
     var body: some View {
         VStack(spacing: 20) {
             if enterDataViewModel.audioEnterDataIsFinished {
@@ -25,7 +27,12 @@ struct EnterDataView: View {
                 Spacer()
                 
                 Button {
+                    enterDataViewModel.validateName()
+                    enterDataViewModel.validateDate()
                     
+                    if enterDataViewModel.isNameValid && enterDataViewModel.isDateValid {
+                        showMatrixView = true
+                    }
                 } label: {
                     Text("Далее")
                         .padding(.horizontal)
@@ -43,12 +50,25 @@ struct EnterDataView: View {
         .onDisappear {
             enterDataViewModel.stopAudio(audioVisualizer: audioVisualizer)
         }
+        .fullScreenCover(isPresented: $showMatrixView) {
+            MatrixView(
+                matrixData: MatrixCalculation(
+                    name: enterDataViewModel.name,
+                    dateOfBirthday: enterDataViewModel.dateBirthday
+                )
+                .matrixData
+            )
+        }
     }
 }
 
 #Preview {
-    EnterDataView(
-        audioVisualizer: AudioVisualizer(),
-        homeViewModel: HomeViewModel()
-    )
+    ZStack {
+        AnimatedStarryBackgroundView()
+        
+        EnterDataView(
+            audioVisualizer: AudioVisualizer(),
+            homeViewModel: HomeViewModel()
+        )
+    }
 }

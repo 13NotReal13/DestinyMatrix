@@ -10,8 +10,13 @@ import Combine
 
 final class EnterDataViewModel: ObservableObject {
     @Published var audioEnterDataIsFinished: Bool = true
+    
     @Published var name: String = ""
+    @Published var isNameValid: Bool = true
+    
     @Published var dateBirthday: Date = Date()
+    @Published var isDateValid: Bool = true
+    
     @Published var displayedDateText: String = "Выбрать дату"
     @Published var isDatePickerPresented: Bool = false
 
@@ -20,6 +25,19 @@ final class EnterDataViewModel: ObservableObject {
         formatter.dateStyle = .medium
         formatter.locale = Locale(identifier: "ru")
         return formatter
+    }
+    
+    func validateName() {
+        isNameValid = name.isCyrillicOnly
+    }
+    
+    func validateDate() {
+        isDateValid = displayedDateText.lowercased() != "Выбрать дату".lowercased()
+    }
+    
+    func updateDisplayedDate() {
+        displayedDateText = dateFormatter.string(from: dateBirthday)
+        isDateValid = true
     }
     
     func startEnterDataAudio(audioVisualizer: AudioVisualizer) {
@@ -38,10 +56,6 @@ final class EnterDataViewModel: ObservableObject {
         audioVisualizer.stop()
     }
 
-    func updateDisplayedDate() {
-        displayedDateText = dateFormatter.string(from: dateBirthday)
-    }
-    
     func toggleDatePicker() {
         isDatePickerPresented.toggle()
     }

@@ -17,16 +17,29 @@ struct NameTextFieldView: View {
             
             VStack {
                 TextField("ПОЛНОЕ ИМЯ", text: $enterDataViewModel.name)
+                    .textContentType(.none)
+                    .disableAutocorrection(true)
                     .multilineTextAlignment(.center)
                     .customText(fontSize: 16, textColor: .black)
-                    .disableAutocorrection(true)
+                    .onChange(of: enterDataViewModel.name) { _ in
+                        enterDataViewModel.validateName()
+                    }
             }
             .frame(width: UIScreen.main.bounds.width * 0.55)
             .customButtonStyle(color1: .lightAroundSphere, color2: .lightAroundSphere, shape: .capsule)
+            
+            if !enterDataViewModel.isNameValid {
+                Text("Допустимы только символы \"А-Я\"")
+                    .customText(fontSize: 12, textColor: .red)
+            }
         }
     }
 }
 
 #Preview {
-    NameTextFieldView(enterDataViewModel: EnterDataViewModel())
+    ZStack {
+        AnimatedStarryBackgroundView()
+        
+        NameTextFieldView(enterDataViewModel: EnterDataViewModel())
+    }
 }
