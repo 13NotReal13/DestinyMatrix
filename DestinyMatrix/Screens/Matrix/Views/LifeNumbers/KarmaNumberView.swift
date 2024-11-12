@@ -1,42 +1,42 @@
 //
-//  SoulNumberView.swift
+//  KarmaNumberView.swift
 //  DestinyMatrix
 //
-//  Created by Иван Семикин on 11/11/2024.
+//  Created by Иван Семикин on 12/11/2024.
 //
 
 import SwiftUI
 
-struct SoulNumberView: View {
-    @State var soulNumber: ArkanCategory
+struct KarmaNumberView: View {
+    @State var karmaNumber: ArkanCategory
     
     var body: some View {
         VStack(spacing: 16) {
-            Text(soulNumber.сategoryTitle)
+            Text(karmaNumber.сategoryTitle)
                 .font(.title)
-
-            Text(soulNumber.arkanInfo.shortDescription)
+            
+            Text(karmaNumber.arkanInfo.shortDescription)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
-                Text(soulNumber.arkanInfo.mainDescription)
+            Text(karmaNumber.arkanInfo.mainDescription)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
             VStack(spacing: 8) {
-                Text(soulNumber.arkanInfo.positiveEnergyTitle)
-                Text(soulNumber.arkanInfo.positiveEnergyText)
+                Text(karmaNumber.arkanInfo.positiveEnergyTitle)
+                Text(karmaNumber.arkanInfo.positiveEnergyText)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             
             VStack(spacing: 8) {
-                Text(soulNumber.arkanInfo.negativeEnergyTitle)
-                Text(soulNumber.arkanInfo.negativeEnergyText)
+                Text(karmaNumber.arkanInfo.negativeEnergyTitle)
+                Text(karmaNumber.arkanInfo.negativeEnergyText)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             
             VStack(spacing: 8) {
-                Text(soulNumber.arkanInfo.adviceTitle)
+                Text(karmaNumber.arkanInfo.adviceTitle)
                     .frame(maxWidth: .infinity, alignment: .center)
-                Text(soulNumber.arkanInfo.adviceText)
+                Text(karmaNumber.arkanInfo.adviceText)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
@@ -48,10 +48,10 @@ struct SoulNumberView: View {
     ZStack {
         AnimatedStarryBackgroundView()
         
-        SoulNumberView(
-            soulNumber: ArkanCategory(
-                сategoryTitle: "Число Души",
-                arkanInfo: LifePathNumberData.allArkans[3]!
+        KarmaNumberView(
+            karmaNumber: ArkanCategory(
+                сategoryTitle: "Число Кармы",
+                arkanInfo: KarmaNumberData.allArkans[3]!
             )
         )
     }

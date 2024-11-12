@@ -46,6 +46,8 @@ struct MatrixView: View {
                         KarmaNumberView(karmaNumber: matrixData.lifeNumbers.karmaNumber)
                         
                         PersonalityNumberView(personalityNumber: matrixData.lifeNumbers.personalityNumber)
+                        
+                        KarmicKnotsView(karmicKnotsNumber: matrixData.karmicKnots)
                     }
                     .padding(.trailing)
                 }

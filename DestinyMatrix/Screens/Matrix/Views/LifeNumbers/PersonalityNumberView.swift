@@ -14,11 +14,11 @@ struct PersonalityNumberView: View {
         VStack(spacing: 16) {
             Text(personalityNumber.сategoryTitle)
                 .font(.title)
-
+            
             Text(personalityNumber.arkanInfo.shortDescription)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
-                Text(personalityNumber.arkanInfo.mainDescription)
+            Text(personalityNumber.arkanInfo.mainDescription)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
             VStack(spacing: 8) {
@@ -51,7 +51,7 @@ struct PersonalityNumberView: View {
         PersonalityNumberView(
             personalityNumber: ArkanCategory(
                 сategoryTitle: "Число Личности",
-                arkanInfo: KarmaNumberData.allArkans[3]!
+                arkanInfo: PersonalityNumberData.allArkans[3]!
             )
         )
     }

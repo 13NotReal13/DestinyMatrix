@@ -14,11 +14,11 @@ struct LifePathNumberView: View {
         VStack(spacing: 16) {
             Text(lifePathNumber.сategoryTitle)
                 .font(.title)
-
+            
             Text(lifePathNumber.arkanInfo.shortDescription)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
-                Text(lifePathNumber.arkanInfo.mainDescription)
+            Text(lifePathNumber.arkanInfo.mainDescription)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
             VStack(spacing: 8) {
