@@ -8,11 +8,51 @@
 import SwiftUI
 
 struct ProfessionsAndRolesView: View {
+    @State var professionsAndRolesNumber: ArkanCategory
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(spacing: 16) {
+            Text(professionsAndRolesNumber.сategoryTitle)
+                .font(.title)
+            
+            Text(professionsAndRolesNumber.arkanInfo.shortDescription)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            
+            Text(professionsAndRolesNumber.arkanInfo.mainDescription)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            
+            VStack(spacing: 8) {
+                Text(professionsAndRolesNumber.arkanInfo.positiveEnergyTitle)
+                Text(professionsAndRolesNumber.arkanInfo.positiveEnergyText)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            
+            VStack(spacing: 8) {
+                Text(professionsAndRolesNumber.arkanInfo.negativeEnergyTitle)
+                Text(professionsAndRolesNumber.arkanInfo.negativeEnergyText)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            
+            VStack(spacing: 8) {
+                Text(professionsAndRolesNumber.arkanInfo.adviceTitle)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                Text(professionsAndRolesNumber.arkanInfo.adviceText)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+        }
+        .foregroundStyle(.white)
     }
 }
 
 #Preview {
-    ProfessionsAndRolesView()
+    ZStack {
+        AnimatedStarryBackgroundView()
+        
+        ProfessionsAndRolesView(
+            professionsAndRolesNumber: ArkanCategory(
+                сategoryTitle: "Подходящие Профессии и Жизненные Роли",
+                arkanInfo: ProfessionsAndRolesData.allArkans[4]!
+            )
+        )
+    }
 }
