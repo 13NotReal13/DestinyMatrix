@@ -50,6 +50,8 @@ struct MatrixView: View {
                         KarmicKnotsView(karmicKnotsNumber: matrixData.karmicKnots)
                         
                         ResourcesAndTalentsView(resourcesAndTalentsNumber: matrixData.resourcesAndTalents)
+                        
+                        EmotionalAndPersonalTraitsView(emotionalAndPersonalTraitsNumber: matrixData.emotionalAndPersonalTraits)
                     }
                     .padding(.trailing)
                 }
