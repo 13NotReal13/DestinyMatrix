@@ -8,40 +8,39 @@
 import SwiftUI
 
 struct EnterDataView: View {
-    @StateObject var audioVisualizer: AudioVisualizer
-    @StateObject var homeViewModel: HomeViewModel
+    @EnvironmentObject private var enterDataViewModel: EnterDataViewModel
     
-    @StateObject private var enterDataViewModel = EnterDataViewModel()
+    @EnvironmentObject private var audioVisualizer: AudioVisualizer
+    @EnvironmentObject private var homeViewModel: HomeViewModel
     
     @State private var showMatrixView: Bool = false
     
     var body: some View {
         VStack(spacing: 20) {
-            if enterDataViewModel.audioEnterDataIsFinished {
-                Spacer()
+            Spacer()
+            
+            NameTextFieldView()
+            
+            DatePickerView()
+            
+            Spacer()
+            
+            Button {
+                enterDataViewModel.validateName()
+                enterDataViewModel.validateDate()
                 
-                NameTextFieldView(enterDataViewModel: enterDataViewModel)
-                
-                DatePickerView(enterDataViewModel: enterDataViewModel)
-                
-                Spacer()
-                
-                Button {
-                    enterDataViewModel.validateName()
-                    enterDataViewModel.validateDate()
-                    
-                    if enterDataViewModel.isNameValid && enterDataViewModel.isDateValid {
-                        showMatrixView = true
-                    }
-                } label: {
-                    Text("Далее")
-                        .padding(.horizontal)
-                        .customText(fontSize: 16, textColor: .white)
-                        .customButtonStyle(color1: .backgroundColor2, color2: .buttonColor2, shape: .capsule)
+                if enterDataViewModel.isNameValid && enterDataViewModel.isDateValid {
+                    showMatrixView = true
+                    enterDataViewModel.stopAudio(audioVisualizer: audioVisualizer)
                 }
-                
-                Spacer()
+            } label: {
+                Text("Далее")
+                    .padding(.horizontal)
+                    .customText(fontSize: 16, textColor: .white)
+                    .customButtonStyle(color1: .backgroundColor2, color2: .buttonColor2, shape: .capsule)
             }
+            
+            Spacer()
         }
         .frame(height: UIScreen.main.bounds.height * 0.4)
         .onAppear {
@@ -66,9 +65,9 @@ struct EnterDataView: View {
     ZStack {
         AnimatedStarryBackgroundView()
         
-        EnterDataView(
-            audioVisualizer: AudioVisualizer(),
-            homeViewModel: HomeViewModel()
-        )
+        EnterDataView()
+            .environmentObject(EnterDataViewModel())
+            .environmentObject(AudioVisualizer())
+            .environmentObject(HomeViewModel())
     }
 }

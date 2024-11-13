@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LeftNavigationButtonsView: View {
     @Binding var selectedSection: Int
+    @Binding var selectedSectionForLeftButtons: Int
     
     var body: some View {
         VStack {
@@ -22,12 +23,12 @@ struct LeftNavigationButtonsView: View {
                     .customButtonStyle(color1: .backgroundColor1, color2: .buttonColor1, shape: .circle)
                     .clipShape(.circle)
                     .overlay {
-                        if num == selectedSection {
+                        if num == selectedSectionForLeftButtons {
                             Circle()
                                 .stroke(Color.white, lineWidth: 2)
                         }
                     }
-                    .shadow(color: .white, radius: num == selectedSection ? 5 : 0)
+                    .shadow(color: .white, radius: num == selectedSectionForLeftButtons ? 5 : 0)
                     .onTapGesture {
                         withAnimation {
                             selectedSection = num
@@ -39,5 +40,5 @@ struct LeftNavigationButtonsView: View {
 }
 
 #Preview {
-    LeftNavigationButtonsView(selectedSection: .constant(1))
+    LeftNavigationButtonsView(selectedSection: .constant(1), selectedSectionForLeftButtons: .constant(1))
 }

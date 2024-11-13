@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct HomeMenuButtonsView: View {
-    @StateObject var homeViewModel: HomeViewModel
-    @State var sliderValue: Double = 0.5
+    @EnvironmentObject private var homeViewModel: HomeViewModel
+    @State private var sliderValue: Double = 0.5
     
     var body: some View {
         VStack {

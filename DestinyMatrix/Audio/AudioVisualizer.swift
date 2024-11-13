@@ -94,10 +94,10 @@ final class AudioVisualizer: ObservableObject {
         backgroundPlayerNode.play()
     }
     
-    func stop() {
+    func stopVoice() {
         playerNode.stop()
-        audioEngine.stop()
-        audioEngine.mainMixerNode.removeTap(onBus: 0)
+//        audioEngine.stop()
+//        audioEngine.mainMixerNode.removeTap(onBus: 0)
     }
     
     private func updateAmplitudes(buffer: AVAudioPCMBuffer) {

@@ -8,19 +8,16 @@
 import SwiftUI
 
 struct Completed3DSphere: View {
-    @StateObject var homeViewModel: HomeViewModel
-    @StateObject var audioVusualizer: AudioVisualizer
+    @EnvironmentObject private var homeViewModel: HomeViewModel
+    @EnvironmentObject private var audioVusualizer: AudioVisualizer
     
     @State private var size: CGFloat = 0.8
     
-    var amplitudes: [CGFloat]
-    var onboardingIsFinished: Bool
+    private var colorOfEqualizer: Color = .cyan
+    private var shadowColorOfEqualizer: Color = .white
+    private var offsetDistanceOfEqualizer: CGFloat = -121
     
-    var colorOfEqualizer: Color = .cyan
-    var shadowColorOfEqualizer: Color = .white
-    var offsetDistanceOfEqualizer: CGFloat = -121
-    
-    var imageName: String = ShapeOfSphere.shapeName.rawValue
+    private var imageName: String = ShapeOfSphere.shapeName.rawValue
     
     var body: some View {
         VStack {
@@ -38,7 +35,6 @@ struct Completed3DSphere: View {
             ZStack {
                 if audioVusualizer.isPlaying {
                     CircularEqualizerView(
-                        amplitudes: amplitudes,
                         color: colorOfEqualizer,
                         shadowColor: shadowColorOfEqualizer,
                         offsetDistance: offsetDistanceOfEqualizer
@@ -72,10 +68,7 @@ struct Completed3DSphere: View {
 }
 
 #Preview {
-    Completed3DSphere(
-        homeViewModel: HomeViewModel(),
-        audioVusualizer: AudioVisualizer(),
-        amplitudes: [],
-        onboardingIsFinished: true
-    )
+    Completed3DSphere()
+        .environmentObject(HomeViewModel())
+        .environmentObject(AudioVisualizer())
 }

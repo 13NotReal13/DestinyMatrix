@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct NameTextFieldView: View {
-    @ObservedObject var enterDataViewModel: EnterDataViewModel
+    @EnvironmentObject private var enterDataViewModel: EnterDataViewModel
     
     var body: some View {
         VStack {
@@ -40,6 +40,7 @@ struct NameTextFieldView: View {
     ZStack {
         AnimatedStarryBackgroundView()
         
-        NameTextFieldView(enterDataViewModel: EnterDataViewModel())
+        NameTextFieldView()
+            .environmentObject(EnterDataViewModel())
     }
 }

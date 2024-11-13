@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct DatePickerView: View {
-    @ObservedObject var enterDataViewModel: EnterDataViewModel
+    @EnvironmentObject private var enterDataViewModel: EnterDataViewModel
     
     var body: some View {
         VStack {
@@ -74,6 +74,7 @@ struct DatePickerView: View {
     ZStack {
         AnimatedStarryBackgroundView()
         
-        DatePickerView(enterDataViewModel: EnterDataViewModel())
+        DatePickerView()
+            .environmentObject(EnterDataViewModel())
     }
 }

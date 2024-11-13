@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct NextButtonOnboardingView: View {
-    @StateObject var onboardingViewModel: OnboardingViewModel
-    @StateObject var homeViewModel: HomeViewModel
+    @EnvironmentObject private var onboardingViewModel: OnboardingViewModel
+    @EnvironmentObject private var homeViewModel: HomeViewModel
     
     var body: some View {
         Button {
@@ -35,8 +35,7 @@ struct NextButtonOnboardingView: View {
 }
 
 #Preview {
-    NextButtonOnboardingView(
-        onboardingViewModel: OnboardingViewModel(),
-        homeViewModel: HomeViewModel()
-    )
+    NextButtonOnboardingView()
+        .environmentObject(OnboardingViewModel())
+        .environmentObject(HomeViewModel())
 }

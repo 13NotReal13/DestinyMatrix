@@ -25,6 +25,6 @@ final class OnboardingViewModel: ObservableObject {
     }
     
     func stopAudio(audioVisualizer: AudioVisualizer) {
-        audioVisualizer.stop()
+        audioVisualizer.stopVoice()
     }
 }

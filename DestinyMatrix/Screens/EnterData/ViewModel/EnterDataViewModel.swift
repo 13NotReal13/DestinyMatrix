@@ -53,7 +53,7 @@ final class EnterDataViewModel: ObservableObject {
     }
     
     func stopAudio(audioVisualizer: AudioVisualizer) {
-        audioVisualizer.stop()
+        audioVisualizer.stopVoice()
     }
 
     func toggleDatePicker() {

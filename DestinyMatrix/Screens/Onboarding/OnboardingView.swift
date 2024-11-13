@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct OnboardingView: View {
-    @StateObject var onboardingViewModel = OnboardingViewModel()
-    @StateObject var homeViewModel: HomeViewModel
-    @StateObject var audioVisualizer: AudioVisualizer
-    @State var textOffset: CGFloat = UIScreen.main.bounds.height * 0.3
+    @EnvironmentObject private var onboardingViewModel: OnboardingViewModel
+    @EnvironmentObject private var homeViewModel: HomeViewModel
+    @EnvironmentObject private var audioVisualizer: AudioVisualizer
     
-    var duration: CGFloat = 54
+    @State private var textOffset: CGFloat = UIScreen.main.bounds.height * 0.3
+    
+    private var duration: CGFloat = 54
     
     var body: some View {
         VStack {
@@ -55,10 +56,7 @@ struct OnboardingView: View {
                 
                 VStack {
                     if onboardingViewModel.audioIsFinished {
-                        NextButtonOnboardingView(
-                            onboardingViewModel: onboardingViewModel,
-                            homeViewModel: homeViewModel
-                        )
+                        NextButtonOnboardingView()
                     }
                 }
                 .frame(height: UIScreen.main.bounds.height * 0.05)
@@ -72,9 +70,8 @@ struct OnboardingView: View {
 }
 
 #Preview {
-    OnboardingView(
-        onboardingViewModel: OnboardingViewModel(),
-        homeViewModel: HomeViewModel(),
-        audioVisualizer: AudioVisualizer()
-    )
+    OnboardingView()
+        .environmentObject(OnboardingViewModel())
+        .environmentObject(HomeViewModel())
+        .environmentObject(AudioVisualizer())
 }

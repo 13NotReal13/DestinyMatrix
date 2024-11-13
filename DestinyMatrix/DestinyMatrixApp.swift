@@ -11,12 +11,19 @@ import SwiftUI
 @main
 struct DestinyMatrixApp: App {
     @StateObject private var audioVisualizer = AudioVisualizer()
+    
+    @StateObject private var onboardingViewModel = OnboardingViewModel()
+    @StateObject private var homeViewModel = HomeViewModel()
+    @StateObject private var enterDataViewModel = EnterDataViewModel()
 
     var body: some Scene {
         WindowGroup {
             ZStack {
                 HomeView()
                     .environmentObject(audioVisualizer)
+                    .environmentObject(homeViewModel)
+                    .environmentObject(onboardingViewModel)
+                    .environmentObject(enterDataViewModel)
                 
                 // Preload keyboard
                 PreloadKeyboardView()

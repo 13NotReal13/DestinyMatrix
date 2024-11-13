@@ -13,6 +13,7 @@ struct MatrixView: View {
     @State var matrixData: MatrixData
     
     @State private var selectedSection = 1
+    @State private var selectedSectionForLeftButtons = 1
     
     var body: some View {
         ZStack {
@@ -42,11 +43,14 @@ struct MatrixView: View {
                 .padding(.horizontal)
                 
                 HStack {
-                    LeftNavigationButtonsView(selectedSection: $selectedSection)
+                    LeftNavigationButtonsView(
+                        selectedSection: $selectedSection,
+                        selectedSectionForLeftButtons: $selectedSectionForLeftButtons
+                    )
                     .padding(.leading)
                     
                     ScrollViewReader { proxy in
-                        ScrollView {
+                        ScrollView(showsIndicators: false) {
                             VStack(spacing: 30) {
                                 sectionView(number: 1) {
                                     DestinyNumberView(destinyNumber: matrixData.lifeNumbers.destinyNumber)
@@ -100,7 +104,9 @@ struct MatrixView: View {
                         }
                         .padding()
                         .onChange(of: selectedSection) { section in
-                            proxy.scrollTo(section, anchor: .top)
+                            withAnimation {
+                                proxy.scrollTo(section, anchor: .top)
+                            }
                         }
                     }
                 }
@@ -120,7 +126,9 @@ struct MatrixView: View {
                     .onChange(of: geometry.frame(in: .global).midY) { newPosition in
                         let screenMidY = UIScreen.main.bounds.height / 2
                         if abs(newPosition - screenMidY) < 50 {
-                            selectedSection = number
+                            if selectedSectionForLeftButtons != number {
+                                selectedSectionForLeftButtons = number
+                            }
                         }
                     }
             }
