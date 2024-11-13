@@ -18,8 +18,32 @@ final class AudioVisualizer: ObservableObject {
     private let playerNode = AVAudioPlayerNode()
     private let backgroundPlayerNode = AVAudioPlayerNode()
     
+    private var backgroundFile: AVAudioFile?
+    
     init() {
+        setupAudioSession()
         setupAudioEngine()
+        prepareBackgroundAudioFile()
+    }
+    
+    private func prepareBackgroundAudioFile() {
+        if let backgroundAudioUrl = Bundle.main.url(forResource: "BackgroundMusic", withExtension: "mp3") {
+            do {
+                backgroundFile = try AVAudioFile(forReading: backgroundAudioUrl)
+            } catch {
+                print("Ошибка при загрузке фоновой музыки: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func setupAudioSession() {
+        let session = AVAudioSession.sharedInstance()
+        do {
+            try session.setCategory(.playback, options: [.mixWithOthers, .duckOthers])
+            try session.setActive(true)
+        } catch {
+            print("Ошибка настройки аудиосессии: \(error)")
+        }
     }
     
     private func setupAudioEngine() {
@@ -63,21 +87,11 @@ final class AudioVisualizer: ObservableObject {
     }
     
     func playBackgroundAudio() {
-        DispatchQueue.global(qos: .background).async {
-            guard let backgroundAudioUrl = Bundle.main.url(forResource: "BackgroundMusic", withExtension: "mp3") else {
-                print("Фоновая музыка не найдена.")
-                return
-            }
-            
-            do {
-                let backgroundFile = try AVAudioFile(forReading: backgroundAudioUrl)
-                self.backgroundPlayerNode.scheduleFile(backgroundFile, at: nil)
-                self.backgroundPlayerNode.volume = 0.2 // Уровень громкости для фоновой музыки
-                self.backgroundPlayerNode.play()
-            } catch {
-                print("Ошибка при загрузке фоновой музыки: \(error.localizedDescription)")
-            }
-        }
+        guard let backgroundFile = backgroundFile else { return }
+        backgroundPlayerNode.stop()
+        backgroundPlayerNode.scheduleFile(backgroundFile, at: nil)
+        backgroundPlayerNode.volume = 0.2
+        backgroundPlayerNode.play()
     }
     
     func stop() {
