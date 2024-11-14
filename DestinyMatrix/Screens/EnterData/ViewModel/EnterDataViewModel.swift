@@ -19,13 +19,6 @@ final class EnterDataViewModel: ObservableObject {
     
     @Published var displayedDateText: String = "Выбрать дату"
     @Published var isDatePickerPresented: Bool = false
-
-    private var dateFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.locale = Locale(identifier: "ru")
-        return formatter
-    }
     
     func validateName() {
         isNameValid = name.isCyrillicOnly
@@ -36,7 +29,7 @@ final class EnterDataViewModel: ObservableObject {
     }
     
     func updateDisplayedDate() {
-        displayedDateText = dateFormatter.string(from: dateBirthday)
+        displayedDateText = dateBirthday.formattedDate()
         isDateValid = true
     }
     

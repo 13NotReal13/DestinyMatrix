@@ -10,6 +10,7 @@ import Foundation
 struct MatrixData: Hashable {
     var name: String
     var dateOfBirthday: Date
+    var dateCreationMatrix: Date
     
     var lifeNumbers: LifeNumbers
     var karmicKnots: ArkanCategory

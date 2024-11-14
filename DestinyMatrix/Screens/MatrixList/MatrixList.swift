@@ -57,20 +57,7 @@ struct MatrixList: View {
 }
 
 #Preview {
-    MatrixList(matrixList: [
-        MatrixCalculation(name: "Иван", dateOfBirthday: .now).matrixData,
-        MatrixCalculation(name: "Марина", dateOfBirthday: .now).matrixData,
-        MatrixCalculation(name: "Иван", dateOfBirthday: .now).matrixData,
-        MatrixCalculation(name: "Марина", dateOfBirthday: .now).matrixData,
-        MatrixCalculation(name: "Иван", dateOfBirthday: .now).matrixData,
-        MatrixCalculation(name: "Марина", dateOfBirthday: .now).matrixData,
-        MatrixCalculation(name: "Иван", dateOfBirthday: .now).matrixData,
-        MatrixCalculation(name: "Марина", dateOfBirthday: .now).matrixData,
-        MatrixCalculation(name: "Иван", dateOfBirthday: .now).matrixData,
-        MatrixCalculation(name: "Марина", dateOfBirthday: .now).matrixData,
-        MatrixCalculation(name: "Иван", dateOfBirthday: .now).matrixData,
-        MatrixCalculation(name: "Марина", dateOfBirthday: .now).matrixData,
-        MatrixCalculation(name: "Иван", dateOfBirthday: .now).matrixData,
-        MatrixCalculation(name: "Марина", dateOfBirthday: .now).matrixData
-    ])
+    MatrixList(
+        matrixList: Array(repeating: MatrixCalculation(name: "Иван", dateOfBirthday: .now, dateCreationMatrix: .now).matrixData, count: 15)
+    )
 }

@@ -10,6 +10,7 @@ import Foundation
 struct MatrixCalculation {
     let name: String
     let dateOfBirthday: Date
+    let dateCreationMatrix: Date
     
     private let day: Int
     private let month: Int
@@ -19,6 +20,7 @@ struct MatrixCalculation {
         return MatrixData(
             name: name,
             dateOfBirthday: dateOfBirthday,
+            dateCreationMatrix: .now,
             
             lifeNumbers: LifeNumbers(
                 destinyNumber: calculateDestinyNumber(),
@@ -37,9 +39,10 @@ struct MatrixCalculation {
         )
     }
     
-    init(name: String, dateOfBirthday: Date) {
+    init(name: String, dateOfBirthday: Date, dateCreationMatrix: Date) {
         self.name = name
         self.dateOfBirthday = dateOfBirthday
+        self.dateCreationMatrix = dateCreationMatrix
         
         let calendar = Calendar.current
         self.day = calendar.component(.day, from: dateOfBirthday)

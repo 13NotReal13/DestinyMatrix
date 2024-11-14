@@ -53,7 +53,8 @@ struct EnterDataView: View {
             MatrixView(
                 matrixData: MatrixCalculation(
                     name: enterDataViewModel.name,
-                    dateOfBirthday: enterDataViewModel.dateBirthday
+                    dateOfBirthday: enterDataViewModel.dateBirthday,
+                    dateCreationMatrix: .now
                 )
                 .matrixData
             )

@@ -43,6 +43,16 @@ struct MatrixView: View {
                 .padding(.horizontal)
                 
                 HStack {
+                    Text(matrixData.name)
+                    Text(" - ")
+                    Text(matrixData.dateOfBirthday.formattedDate())
+                }
+                .customText(fontSize: 24, textColor: .white)
+                .padding(.horizontal)
+                .padding(.top, 8)
+                .frame(maxWidth: .infinity)
+                
+                HStack {
                     LeftNavigationButtonsView(
                         selectedSection: $selectedSection,
                         selectedSectionForLeftButtons: $selectedSectionForLeftButtons
@@ -141,7 +151,11 @@ struct MatrixView: View {
     let calendar = Calendar.current
     let date = calendar.date(from: dateComponents)!
     
-    let matrixData = MatrixCalculation(name: "Иван", dateOfBirthday: date)
+    let matrixData = MatrixCalculation(
+        name: "Иван",
+        dateOfBirthday: date,
+        dateCreationMatrix: .now
+    )
     
     MatrixView(matrixData: matrixData.matrixData)
 }
