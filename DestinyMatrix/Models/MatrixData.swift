@@ -7,7 +7,10 @@
 
 import Foundation
 
-struct MatrixData {
+struct MatrixData: Hashable {
+    var name: String
+    var dateOfBirthday: Date
+    
     var lifeNumbers: LifeNumbers
     var karmicKnots: ArkanCategory
     var resourcesAndTalents: ArkanCategory
@@ -18,7 +21,7 @@ struct MatrixData {
     var recommendations: ArkanCategory
 }
 
-struct LifeNumbers {
+struct LifeNumbers: Hashable {
     let сategoryTitle: String = "Жизненные Числа"
     var destinyNumber: ArkanCategory
     var lifePathNumber: ArkanCategory
@@ -27,7 +30,7 @@ struct LifeNumbers {
     var personalityNumber: ArkanCategory
 }
 
-struct ArkanCategory {
+struct ArkanCategory: Hashable {
     var сategoryTitle: String
     var arkanInfo: ArkanInfo
 }

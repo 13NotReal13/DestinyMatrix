@@ -17,6 +17,9 @@ struct MatrixCalculation {
 
     var matrixData: MatrixData {
         return MatrixData(
+            name: name,
+            dateOfBirthday: dateOfBirthday,
+            
             lifeNumbers: LifeNumbers(
                 destinyNumber: calculateDestinyNumber(),
                 lifePathNumber: calculateLifePathNumber(),
