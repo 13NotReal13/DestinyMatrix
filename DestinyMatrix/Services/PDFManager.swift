@@ -46,4 +46,9 @@ final class PDFManager {
             return nil
         }
     }
+    
+    func sharePDF(from fileURL: URL, in viewController: UIViewController) {
+        let activityViewController = UIActivityViewController(activityItems: [fileURL], applicationActivities: nil)
+        viewController.present(activityViewController, animated: true, completion: nil)
+    }
 }
