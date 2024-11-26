@@ -31,4 +31,19 @@ final class PDFManager {
         scrollView.frame = originalFrame
         return pdfData as Data
     }
+    
+    func savePDF(name: String, dateOfBirthday: String, data: Data) -> URL? {
+        let fileName = "\(name)-\(dateOfBirthday).pdf"
+        let fileManager = FileManager.default
+        let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let fileURL = documentsURL.appendingPathComponent(fileName, conformingTo: .pdf)
+        
+        do {
+            try data.write(to: fileURL)
+            return fileURL
+        } catch {
+            print("Ошибка при сохранении PDF: \(error)")
+            return nil
+        }
+    }
 }
