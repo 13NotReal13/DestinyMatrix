@@ -51,4 +51,23 @@ final class PDFManager {
         let activityViewController = UIActivityViewController(activityItems: [fileURL], applicationActivities: nil)
         viewController.present(activityViewController, animated: true, completion: nil)
     }
+    
+    func exportScrollViewToPDF(name: String, dateOfBirthday: String, scrollView: UIScrollView, viewController: UIViewController) {
+
+        guard let pdfData = createPDF(from: scrollView) else {
+            print("Не удалось создать PDF")
+            return
+        }
+
+        guard let fileURL = savePDF(
+            name: name,
+            dateOfBirthday: dateOfBirthday,
+            data: pdfData
+        ) else {
+            print("Ошибка при сохранении PDF")
+            return
+        }
+
+        sharePDF(from: fileURL, in: viewController)
+    }
 }
