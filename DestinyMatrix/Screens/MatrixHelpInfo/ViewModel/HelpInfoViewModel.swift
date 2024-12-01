@@ -17,7 +17,7 @@ struct Category {
     let subcategories: [Subcategory]
 }
 
-final class MatrixHelpInfoViewModel {
+final class HelpInfoViewModel {
     let categories: [Category] = [
         Category(title: "1. Число Судьбы", subcategories: [
             Subcategory(title: "Расчет числа судьбы", description: "Методика вычисления числа судьбы на основе вашего имени и даты рождения."),

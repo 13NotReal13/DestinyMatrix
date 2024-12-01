@@ -34,7 +34,7 @@ struct HomeMenuButtonsView: View {
                 
                 HStack {
                     Button {
-                        
+                        homeViewModel.showHelpInfoView = true
                     } label: {
                         Image(systemName: "questionmark")
                             .customText(fontSize: 34, textColor: .white)
@@ -55,6 +55,9 @@ struct HomeMenuButtonsView: View {
             }
         }
         .frame(height: UIScreen.main.bounds.height * 0.4)
+        .fullScreenCover(isPresented: $homeViewModel.showHelpInfoView) {
+            HelpInfoView()
+        }
     }
 }
 //

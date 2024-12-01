@@ -1,5 +1,5 @@
 //
-//  MatrixHelpInfoView.swift
+//  HelpInfoView.swift
 //  DestinyMatrix
 //
 //  Created by Иван Семикин on 01/12/2024.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MatrixHelpInfoView: View {
+struct HelpInfoView: View {
     @Environment(\.dismiss) var dismiss
     
     private let categories = HelpInfoViewModel().categories
@@ -29,13 +29,14 @@ struct MatrixHelpInfoView: View {
                 }
                 .padding(.horizontal)
                 
-                Text("Содержание:")
-                    .font(.system(size: 28))
-                    .foregroundStyle(.white)
-                    .padding(.bottom, 16)
-                
                 ScrollView {
                     VStack(spacing: 8) {
+                        Text("Содержание:")
+                            .font(.system(size: 28))
+                            .foregroundStyle(.white)
+                            .padding(.bottom, 16)
+                            .padding(.top, 30)
+                        
                         ForEach(categories, id: \.title) { category in
                             Text(category.title)
                                 .foregroundStyle(.white)
@@ -70,11 +71,23 @@ struct MatrixHelpInfoView: View {
                     }
                     .padding()
                 }
+                .mask(
+                    LinearGradient(
+                        gradient: Gradient(stops: [
+                            .init(color: .clear, location: 0),
+                            .init(color: .white, location: 0.1),
+                            .init(color: .white, location: 0.9),
+                            .init(color: .clear, location: 1)
+                        ]),
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                )
             }
         }
     }
 }
 
 #Preview {
-    MatrixHelpInfoView()
+    HelpInfoView()
 }
