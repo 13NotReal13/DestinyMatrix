@@ -10,7 +10,7 @@ import SwiftUI
 struct MatrixHelpInfoView: View {
     @Environment(\.dismiss) var dismiss
     
-    private let categories = MatrixHelpInfoViewModel().categories
+    private let categories = HelpInfoViewModel().categories
     
     var body: some View {
         ZStack {
