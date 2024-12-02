@@ -20,7 +20,6 @@ struct Category {
 final class HelpInfoViewModel {
     let categories: [Category] = [
         Category(title: "1. Число Судьбы", subcategories: [
-            Subcategory(title: "Расчет числа судьбы", description: "Методика вычисления числа судьбы на основе вашего имени и даты рождения."),
             Subcategory(title: "Значение числа судьбы", description: "Общее описание и характеристика полученного числа судьбы."),
             Subcategory(title: "Влияние на личность", description: "Как число судьбы формирует ваши черты характера и поведение."),
             Subcategory(title: "Совместимость с другими числами", description: "Анализ взаимодействия вашего числа судьбы с числами судьбы других людей."),
