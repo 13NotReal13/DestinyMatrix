@@ -51,18 +51,19 @@ struct HelpInfoView: View {
                             Text(category.title)
                                 .font(.system(size: 24))
                                 .foregroundStyle(.white)
+                                .padding(.top)
                             
                             VStack(spacing: 16) {
                                 ForEach(category.subcategories, id: \.title) { subcategory in
                                     VStack(alignment: .leading, spacing: 4) {
                                         // Заголовок подкатегории
-                                        Text(subcategory.title + ":")
+                                        Text(subcategory.title)
                                             .font(.system(size: 20))
                                             .foregroundStyle(.white)
                                         // Описание подкатегории
-                                        Text(subcategory.description)
+                                        Text(subcategory.shortDescription)
                                             .font(.system(size: 17))
-                                            .foregroundStyle(.white.opacity(0.8))
+                                            .foregroundStyle(.white.opacity(0.7))
                                     }
                                 }
                                 .frame(maxWidth: .infinity, alignment: .leading)

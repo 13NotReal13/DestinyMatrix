@@ -11,33 +11,17 @@ struct DestinyNumberView: View {
     @State var destinyNumber: ArkanCategory
     
     var body: some View {
-        VStack(spacing: 16) {
-            Text(destinyNumber.сategoryTitle)
+        VStack(alignment: .leading, spacing: 16) {
+            Text(DestinyNumberArkans.allArkans[1]!.title)
                 .font(.title)
             
-            Text(destinyNumber.arkanInfo.shortDescription)
-                .frame(maxWidth: .infinity, alignment: .leading)
-            
-            Text(destinyNumber.arkanInfo.mainDescription)
-                .frame(maxWidth: .infinity, alignment: .leading)
-            
-            VStack(spacing: 8) {
-                Text(destinyNumber.arkanInfo.positiveEnergyTitle)
-                Text(destinyNumber.arkanInfo.positiveEnergyText)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            }
-            
-            VStack(spacing: 8) {
-                Text(destinyNumber.arkanInfo.negativeEnergyTitle)
-                Text(destinyNumber.arkanInfo.negativeEnergyText)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            }
-            
-            VStack(spacing: 8) {
-                Text(destinyNumber.arkanInfo.adviceTitle)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                Text(destinyNumber.arkanInfo.adviceText)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+            ForEach(DestinyNumberArkans.allArkans[1]!.subcategories, id: \.self) { subcategorie in
+                Text(subcategorie.title)
+                    .font(.title2)
+                    .padding(.top)
+                Text(subcategorie.shortDescription)
+                    .opacity(0.7)
+                Text(subcategorie.mainDescription)
             }
         }
         .foregroundStyle(.white)

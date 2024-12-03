@@ -27,5 +27,5 @@ struct MatrixDataNew {
     var futureProspects: ArkanInfoNew // Будущее
 }
 
-typealias ArkanDictionaryNew = [Int: ArkanInfo]
+typealias ArkanDictionaryNew = [Int: ArkanInfoNew]
 
