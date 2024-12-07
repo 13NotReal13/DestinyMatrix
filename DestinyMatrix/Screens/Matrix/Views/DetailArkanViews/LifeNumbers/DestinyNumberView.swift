@@ -12,10 +12,10 @@ struct DestinyNumberView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text(LifePathArkans.allArkans[1]!.title)
+            Text(RelationshipsArkans.allArkans[1]!.title)
                 .font(.title)
             
-            ForEach(LifePathArkans.allArkans[1]!.subcategories, id: \.self) { subcategorie in
+            ForEach(RelationshipsArkans.allArkans[1]!.subcategories, id: \.self) { subcategorie in
                 Text(subcategorie.title)
                     .font(.title2)
                     .padding(.top)
