@@ -29,3 +29,15 @@ struct MatrixDataNew {
 
 typealias ArkanDictionaryNew = [Int: ArkanInfoNew]
 
+struct ArkanInfoNew {
+    let arkanNumber: Int = 0
+    let title: String
+    let subcategories: [Subcategory]
+}
+
+struct Subcategory: Hashable {
+    let title: String
+    let shortDescription: String
+    var mainDescription: String = ""
+}
+

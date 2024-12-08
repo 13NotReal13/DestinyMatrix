@@ -7,18 +7,6 @@
 
 import Foundation
 
-struct ArkanInfoNew {
-    let arkanNumber: Int = 0
-    let title: String
-    let subcategories: [Subcategory]
-}
-
-struct Subcategory: Hashable {
-    let title: String
-    let shortDescription: String
-    var mainDescription: String = ""
-}
-
 final class HelpInfoViewModel {
     let categories: [ArkanInfoNew] = [
         ArkanInfoNew(title: "1. Число Судьбы", subcategories: [
