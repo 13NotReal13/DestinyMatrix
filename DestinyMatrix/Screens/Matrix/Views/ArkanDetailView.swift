@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ArkanDetailView: View {
-    @State var destinyNumber: ArkanInfoNew
+    @State var destinyNumber: ArkanInfo
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {

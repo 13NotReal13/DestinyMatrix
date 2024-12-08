@@ -1,5 +1,5 @@
 //
-//  MatrixCalculationNew.swift
+//  MatrixCalculation.swift
 //  DestinyMatrix
 //
 //  Created by Иван Семикин on 08/12/2024.
@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct MatrixCalculationNew {
+struct MatrixCalculation {
     let name: String
     let dateOfBirthday: Date
     let dateCreationMatrix: Date
     
-    var matrixDataNew: MatrixDataNew {
-        return MatrixDataNew(
+    var matrixData: MatrixData {
+        return MatrixData(
             name: name,
             dateOfBirthday: dateOfBirthday,
             dateCreationMatrix: dateCreationMatrix,

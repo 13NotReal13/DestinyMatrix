@@ -13,7 +13,7 @@ struct LeftNavigationButtonsView: View {
     
     var body: some View {
         VStack {
-            ForEach(1..<13) { num in
+            ForEach(1..<14) { num in
                 Spacer()
                 
                 Text(String(num))

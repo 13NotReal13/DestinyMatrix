@@ -8,9 +8,9 @@
 import Foundation
 
 struct ChallengesArkans {
-    static let allArkans: ArkanDictionaryNew = [
+    static let allArkans: ArkanDictionary = [
         // MARK: - 1 Arkan
-        1: ArkanInfoNew(
+        1: ArkanInfo(
             title: "8. Испытания и Препятствия (1 Аркан)",
             subcategories: [
                 Subcategory(
@@ -71,7 +71,7 @@ struct ChallengesArkans {
             ]
         ),
         // MARK: - 2 Arkan
-        2: ArkanInfoNew(
+        2: ArkanInfo(
             title: "8. Испытания и Препятствия (2 Аркан)",
             subcategories: [
                 Subcategory(
@@ -132,7 +132,7 @@ struct ChallengesArkans {
             ]
         ),
         // MARK: - 3 Arkan
-        3: ArkanInfoNew(
+        3: ArkanInfo(
             title: "8. Испытания и Препятствия (3 Аркан)",
             subcategories: [
                 Subcategory(
@@ -193,7 +193,7 @@ struct ChallengesArkans {
             ]
         ),
         // MARK: - 4 Arkan
-        4: ArkanInfoNew(
+        4: ArkanInfo(
             title: "8. Испытания и Препятствия (4 Аркан)",
             subcategories: [
                 Subcategory(
@@ -254,7 +254,7 @@ struct ChallengesArkans {
             ]
         ),
         // MARK: - 5 Arkan
-        5: ArkanInfoNew(
+        5: ArkanInfo(
             title: "8. Испытания и Препятствия (5 Аркан)",
             subcategories: [
                 Subcategory(
@@ -315,7 +315,7 @@ struct ChallengesArkans {
             ]
         ),
         // MARK: - 6 Arkan
-        6: ArkanInfoNew(
+        6: ArkanInfo(
             title: "8. Испытания и Препятствия (6 Аркан)",
             subcategories: [
                 Subcategory(
@@ -376,7 +376,7 @@ struct ChallengesArkans {
             ]
         ),
         // MARK: - 7 Arkan
-        7: ArkanInfoNew(
+        7: ArkanInfo(
             title: "8. Испытания и Препятствия (7 Аркан)",
             subcategories: [
                 Subcategory(
@@ -437,7 +437,7 @@ struct ChallengesArkans {
             ]
         ),
         // MARK: - 8 Arkan
-        8: ArkanInfoNew(
+        8: ArkanInfo(
             title: "8. Испытания и Препятствия (8 Аркан)",
             subcategories: [
                 Subcategory(
@@ -498,7 +498,7 @@ struct ChallengesArkans {
             ]
         ),
         // MARK: - 9 Arkan
-        9: ArkanInfoNew(
+        9: ArkanInfo(
             title: "8. Испытания и Препятствия (9 Аркан)",
             subcategories: [
                 Subcategory(
@@ -559,7 +559,7 @@ struct ChallengesArkans {
             ]
         ),
         // MARK: - 10 Arkan
-        10: ArkanInfoNew(
+        10: ArkanInfo(
             title: "8. Испытания и Препятствия (10 Аркан)",
             subcategories: [
                 Subcategory(
@@ -620,7 +620,7 @@ struct ChallengesArkans {
             ]
         ),
         // MARK: - 11 Arkan
-        11: ArkanInfoNew(
+        11: ArkanInfo(
             title: "8. Испытания и Препятствия (11 Аркан)",
             subcategories: [
                 Subcategory(
@@ -681,7 +681,7 @@ struct ChallengesArkans {
             ]
         ),
         // MARK: - 12 Arkan
-        12: ArkanInfoNew(
+        12: ArkanInfo(
             title: "8. Испытания и Препятствия (12 Аркан)",
             subcategories: [
                 Subcategory(
@@ -742,7 +742,7 @@ struct ChallengesArkans {
             ]
         ),
         // MARK: - 13 Arkan
-        13: ArkanInfoNew(
+        13: ArkanInfo(
             title: "8. Испытания и Препятствия (13 Аркан)",
             subcategories: [
                 Subcategory(
@@ -803,7 +803,7 @@ struct ChallengesArkans {
             ]
         ),
         // MARK: - 14 Arkan
-        14: ArkanInfoNew(
+        14: ArkanInfo(
             title: "8. Испытания и Препятствия (14 Аркан)",
             subcategories: [
                 Subcategory(
@@ -864,7 +864,7 @@ struct ChallengesArkans {
             ]
         ),
         // MARK: - 15 Arkan
-        15: ArkanInfoNew(
+        15: ArkanInfo(
             title: "8. Испытания и Препятствия (15 Аркан)",
             subcategories: [
                 Subcategory(
@@ -925,7 +925,7 @@ struct ChallengesArkans {
             ]
         ),
         // MARK: - 16 Arkan
-        16: ArkanInfoNew(
+        16: ArkanInfo(
             title: "8. Испытания и Препятствия (16 Аркан)",
             subcategories: [
                 Subcategory(
@@ -986,7 +986,7 @@ struct ChallengesArkans {
             ]
         ),
         // MARK: - 17 Arkan
-        17: ArkanInfoNew(
+        17: ArkanInfo(
             title: "8. Испытания и Препятствия (17 Аркан)",
             subcategories: [
                 Subcategory(
@@ -1047,7 +1047,7 @@ struct ChallengesArkans {
             ]
         ),
         // MARK: - 18 Arkan
-        18: ArkanInfoNew(
+        18: ArkanInfo(
             title: "8. Испытания и Препятствия (18 Аркан)",
             subcategories: [
                 Subcategory(
@@ -1108,7 +1108,7 @@ struct ChallengesArkans {
             ]
         ),
         // MARK: - 19 Arkan
-        19: ArkanInfoNew(
+        19: ArkanInfo(
             title: "8. Испытания и Препятствия (19 Аркан)",
             subcategories: [
                 Subcategory(
@@ -1169,7 +1169,7 @@ struct ChallengesArkans {
             ]
         ),
         // MARK: - 20 Arkan
-        20: ArkanInfoNew(
+        20: ArkanInfo(
             title: "8. Испытания и Препятствия (20 Аркан)",
             subcategories: [
                 Subcategory(
@@ -1230,7 +1230,7 @@ struct ChallengesArkans {
             ]
         ),
         // MARK: - 21 Arkan
-        21: ArkanInfoNew(
+        21: ArkanInfo(
             title: "8. Испытания и Препятствия (21 Аркан)",
             subcategories: [
                 Subcategory(
@@ -1291,7 +1291,7 @@ struct ChallengesArkans {
             ]
         ),
         // MARK: - 22 Arkan
-        22: ArkanInfoNew(
+        22: ArkanInfo(
             title: "8. Испытания и Препятствия (22 Аркан)",
             subcategories: [
                 Subcategory(

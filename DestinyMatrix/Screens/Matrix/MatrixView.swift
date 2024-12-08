@@ -10,7 +10,7 @@ import SwiftUI
 struct MatrixView: View {
     @Environment(\.dismiss) private var dismiss
     
-    @State var matrixData: MatrixDataNew
+    @State var matrixData: MatrixData
     
     @State private var selectedSection = 1
     @State private var selectedSectionForLeftButtons = 1
@@ -151,11 +151,11 @@ struct MatrixView: View {
     let calendar = Calendar.current
     let date = calendar.date(from: dateComponents)!
     
-    let matrixData = MatrixCalculationNew(
+    let matrixData = MatrixCalculation(
         name: "Иван",
         dateOfBirthday: date,
         dateCreationMatrix: .now
     )
     
-    MatrixView(matrixData: matrixData.matrixDataNew)
+    MatrixView(matrixData: matrixData.matrixData)
 }

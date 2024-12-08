@@ -51,12 +51,12 @@ struct EnterDataView: View {
         }
         .fullScreenCover(isPresented: $showMatrixView) {
             MatrixView(
-                matrixData: MatrixCalculationNew(
+                matrixData: MatrixCalculation(
                     name: enterDataViewModel.name,
                     dateOfBirthday: enterDataViewModel.dateBirthday,
                     dateCreationMatrix: .now
                 )
-                .matrixDataNew
+                .matrixData
             )
         }
     }

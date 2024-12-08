@@ -8,9 +8,9 @@
 import Foundation
 
 struct RelationshipsArkans {
-    static let allArkans: ArkanDictionaryNew = [
+    static let allArkans: ArkanDictionary = [
         // MARK: - 1 Arkan
-        1: ArkanInfoNew(
+        1: ArkanInfo(
             title: "3. Отношения (1 Аркан)",
             subcategories: [
                 Subcategory(
@@ -71,7 +71,7 @@ struct RelationshipsArkans {
             ]
         ),
         // MARK: - 2 Arkan
-        2: ArkanInfoNew(
+        2: ArkanInfo(
             title: "3. Отношения (2 Аркан)",
             subcategories: [
                 Subcategory(
@@ -132,7 +132,7 @@ struct RelationshipsArkans {
             ]
         ),
         // MARK: - 3 Arkan
-        3: ArkanInfoNew(
+        3: ArkanInfo(
             title: "3. Отношения (3 Аркан)",
             subcategories: [
                 Subcategory(
@@ -193,7 +193,7 @@ struct RelationshipsArkans {
             ]
         ),
         // MARK: - 4 Arkan
-        4: ArkanInfoNew(
+        4: ArkanInfo(
             title: "3. Отношения (4 Аркан)",
             subcategories: [
                 Subcategory(
@@ -254,7 +254,7 @@ struct RelationshipsArkans {
             ]
         ),
         // MARK: - 5 Arkan
-        5: ArkanInfoNew(
+        5: ArkanInfo(
             title: "3. Отношения (5 Аркан)",
             subcategories: [
                 Subcategory(
@@ -315,7 +315,7 @@ struct RelationshipsArkans {
             ]
         ),
         // MARK: - 6 Arkan
-        6: ArkanInfoNew(
+        6: ArkanInfo(
             title: "3. Отношения (6 Аркан)",
             subcategories: [
                 Subcategory(
@@ -376,7 +376,7 @@ struct RelationshipsArkans {
             ]
         ),
         // MARK: - 7 Arkan
-        7: ArkanInfoNew(
+        7: ArkanInfo(
             title: "3. Отношения (7 Аркан)",
             subcategories: [
                 Subcategory(
@@ -437,7 +437,7 @@ struct RelationshipsArkans {
             ]
         ),
         // MARK: - 8 Arkan
-        8: ArkanInfoNew(
+        8: ArkanInfo(
             title: "3. Отношения (8 Аркан)",
             subcategories: [
                 Subcategory(
@@ -498,7 +498,7 @@ struct RelationshipsArkans {
             ]
         ),
         // MARK: - 9 Arkan
-        9: ArkanInfoNew(
+        9: ArkanInfo(
             title: "3. Отношения (9 Аркан)",
             subcategories: [
                 Subcategory(
@@ -559,7 +559,7 @@ struct RelationshipsArkans {
             ]
         ),
         // MARK: - 10 Arkan
-        10: ArkanInfoNew(
+        10: ArkanInfo(
             title: "3. Отношения (10 Аркан)",
             subcategories: [
                 Subcategory(
@@ -620,7 +620,7 @@ struct RelationshipsArkans {
             ]
         ),
         // MARK: - 11 Arkan
-        11: ArkanInfoNew(
+        11: ArkanInfo(
             title: "3. Отношения (11 Аркан)",
             subcategories: [
                 Subcategory(
@@ -681,7 +681,7 @@ struct RelationshipsArkans {
             ]
         ),
         // MARK: - 12 Arkan
-        12: ArkanInfoNew(
+        12: ArkanInfo(
             title: "3. Отношения (12 Аркан)",
             subcategories: [
                 Subcategory(
@@ -742,7 +742,7 @@ struct RelationshipsArkans {
             ]
         ),
         // MARK: - 13 Arkan
-        13: ArkanInfoNew(
+        13: ArkanInfo(
             title: "3. Отношения (13 Аркан)",
             subcategories: [
                 Subcategory(
@@ -803,7 +803,7 @@ struct RelationshipsArkans {
             ]
         ),
         // MARK: - 14 Arkan
-        14: ArkanInfoNew(
+        14: ArkanInfo(
             title: "3. Отношения (14 Аркан)",
             subcategories: [
                 Subcategory(
@@ -864,7 +864,7 @@ struct RelationshipsArkans {
             ]
         ),
         // MARK: - 15 Arkan
-        15: ArkanInfoNew(
+        15: ArkanInfo(
             title: "3. Отношения (15 Аркан)",
             subcategories: [
                 Subcategory(
@@ -925,7 +925,7 @@ struct RelationshipsArkans {
             ]
         ),
         // MARK: - 16 Arkan
-        16: ArkanInfoNew(
+        16: ArkanInfo(
             title: "3. Отношения (16 Аркан)",
             subcategories: [
                 Subcategory(
@@ -986,7 +986,7 @@ struct RelationshipsArkans {
             ]
         ),
         // MARK: - 17 Arkan
-        17: ArkanInfoNew(
+        17: ArkanInfo(
             title: "3. Отношения (17 Аркан)",
             subcategories: [
                 Subcategory(
@@ -1047,7 +1047,7 @@ struct RelationshipsArkans {
             ]
         ),
         // MARK: - 18 Arkan
-        18: ArkanInfoNew(
+        18: ArkanInfo(
             title: "3. Отношения (18 Аркан)",
             subcategories: [
                 Subcategory(
@@ -1108,7 +1108,7 @@ struct RelationshipsArkans {
             ]
         ),
         // MARK: - 19 Arkan
-        19: ArkanInfoNew(
+        19: ArkanInfo(
             title: "3. Отношения (19 Аркан)",
             subcategories: [
                 Subcategory(
@@ -1169,7 +1169,7 @@ struct RelationshipsArkans {
             ]
         ),
         // MARK: - 20 Arkan
-        20: ArkanInfoNew(
+        20: ArkanInfo(
             title: "3. Отношения (20 Аркан)",
             subcategories: [
                 Subcategory(
@@ -1230,7 +1230,7 @@ struct RelationshipsArkans {
             ]
         ),
         // MARK: - 21 Arkan
-        21: ArkanInfoNew(
+        21: ArkanInfo(
             title: "3. Отношения (21 Аркан)",
             subcategories: [
                 Subcategory(
@@ -1291,7 +1291,7 @@ struct RelationshipsArkans {
             ]
         ),
         // MARK: - 22 Arkan
-        22: ArkanInfoNew(
+        22: ArkanInfo(
             title: "3. Отношения (22 Аркан)",
             subcategories: [
                 Subcategory(
