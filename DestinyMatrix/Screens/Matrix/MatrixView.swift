@@ -10,7 +10,7 @@ import SwiftUI
 struct MatrixView: View {
     @Environment(\.dismiss) private var dismiss
     
-    @State var matrixData: MatrixData
+    @State var matrixData: MatrixDataNew
     
     @State private var selectedSection = 1
     @State private var selectedSectionForLeftButtons = 1
@@ -62,53 +62,53 @@ struct MatrixView: View {
                     ScrollViewReader { proxy in
                         ScrollView(showsIndicators: false) {
                             VStack(spacing: 30) {
-                                sectionView(number: 1) {
-                                    DestinyNumberView(destinyNumber: matrixData.lifeNumbers.destinyNumber)
-                                }
-                                
-                                sectionView(number: 2) {
-                                    LifePathNumberView(lifePathNumber: matrixData.lifeNumbers.lifePathNumber)
-                                }
-                                
-                                sectionView(number: 3) {
-                                    SoulNumberView(soulNumber: matrixData.lifeNumbers.soulNumber)
-                                }
-                                
-                                sectionView(number: 4) {
-                                    KarmaNumberView(karmaNumber: matrixData.lifeNumbers.karmaNumber)
-                                }
-                                
-                                sectionView(number: 5) {
-                                    PersonalityNumberView(personalityNumber: matrixData.lifeNumbers.personalityNumber)
-                                }
-                                
-                                sectionView(number: 6) {
-                                    KarmicKnotsView(karmicKnotsNumber: matrixData.karmicKnots)
-                                }
-                                
-                                sectionView(number: 7) {
-                                    ResourcesAndTalentsView(resourcesAndTalentsNumber: matrixData.resourcesAndTalents)
-                                }
-                                
-                                sectionView(number: 8) {
-                                    EmotionalAndPersonalTraitsView(emotionalAndPersonalTraitsNumber: matrixData.emotionalAndPersonalTraits)
-                                }
-                                
-                                sectionView(number: 9) {
-                                    ProfessionsAndRolesView(professionsAndRolesNumber: matrixData.professionsAndRolesData)
-                                }
-                                
-                                sectionView(number: 10) {
-                                    MoneyFlowsView(moneyFlowsNumber: matrixData.moneyFlows)
-                                }
-                                
-                                sectionView(number: 11) {
-                                    EnergyFlowsView(energyFlowsNumber: matrixData.energyFlows)
-                                }
-                                
-                                sectionView(number: 12) {
-                                    RecommendationsView(recommendationsNumber: matrixData.recommendations)
-                                }
+//                                sectionView(number: 1) {
+//                                    DestinyNumberView(destinyNumber: matrixData.lifeNumbers.destinyNumber)
+//                                }
+//                                
+//                                sectionView(number: 2) {
+//                                    LifePathNumberView(lifePathNumber: matrixData.lifeNumbers.lifePathNumber)
+//                                }
+//                                
+//                                sectionView(number: 3) {
+//                                    SoulNumberView(soulNumber: matrixData.lifeNumbers.soulNumber)
+//                                }
+//                                
+//                                sectionView(number: 4) {
+//                                    KarmaNumberView(karmaNumber: matrixData.lifeNumbers.karmaNumber)
+//                                }
+//                                
+//                                sectionView(number: 5) {
+//                                    PersonalityNumberView(personalityNumber: matrixData.lifeNumbers.personalityNumber)
+//                                }
+//                                
+//                                sectionView(number: 6) {
+//                                    KarmicKnotsView(karmicKnotsNumber: matrixData.karmicKnots)
+//                                }
+//                                
+//                                sectionView(number: 7) {
+//                                    ResourcesAndTalentsView(resourcesAndTalentsNumber: matrixData.resourcesAndTalents)
+//                                }
+//                                
+//                                sectionView(number: 8) {
+//                                    EmotionalAndPersonalTraitsView(emotionalAndPersonalTraitsNumber: matrixData.emotionalAndPersonalTraits)
+//                                }
+//                                
+//                                sectionView(number: 9) {
+//                                    ProfessionsAndRolesView(professionsAndRolesNumber: matrixData.professionsAndRolesData)
+//                                }
+//                                
+//                                sectionView(number: 10) {
+//                                    MoneyFlowsView(moneyFlowsNumber: matrixData.moneyFlows)
+//                                }
+//                                
+//                                sectionView(number: 11) {
+//                                    EnergyFlowsView(energyFlowsNumber: matrixData.energyFlows)
+//                                }
+//                                
+//                                sectionView(number: 12) {
+//                                    RecommendationsView(recommendationsNumber: matrixData.recommendations)
+//                                }
                             }
                             .padding(.trailing)
                         }
@@ -151,11 +151,11 @@ struct MatrixView: View {
     let calendar = Calendar.current
     let date = calendar.date(from: dateComponents)!
     
-    let matrixData = MatrixCalculation(
+    let matrixData = MatrixCalculationNew(
         name: "Иван",
         dateOfBirthday: date,
         dateCreationMatrix: .now
     )
     
-    MatrixView(matrixData: matrixData.matrixData)
+    MatrixView(matrixData: matrixData.matrixDataNew)
 }

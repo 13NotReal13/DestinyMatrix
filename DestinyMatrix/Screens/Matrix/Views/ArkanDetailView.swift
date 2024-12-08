@@ -1,5 +1,5 @@
 //
-//  DestinyNumberView.swift
+//  ArkanDetailView.swift
 //  DestinyMatrix
 //
 //  Created by Иван Семикин on 11/11/2024.
@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct DestinyNumberView: View {
-    @State var destinyNumber: ArkanCategory
+struct ArkanDetailView: View {
+    @State var destinyNumber: ArkanInfoNew
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -32,11 +32,6 @@ struct DestinyNumberView: View {
     ZStack {
         AnimatedStarryBackgroundView()
         
-        DestinyNumberView(
-            destinyNumber: ArkanCategory(
-                сategoryTitle: "Число Судьбы",
-                arkanInfo: DestinyNumberData.allArkans[4]!
-            )
-        )
+        ArkanDetailView(destinyNumber: DestinyNumberArkans.allArkans[1]!)
     }
 }

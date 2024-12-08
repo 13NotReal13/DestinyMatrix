@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MatrixDataNew {
+struct MatrixDataNew: Hashable {
     var name: String
     var dateOfBirthday: Date
     var dateCreationMatrix: Date
@@ -29,7 +29,7 @@ struct MatrixDataNew {
 
 typealias ArkanDictionaryNew = [Int: ArkanInfoNew]
 
-struct ArkanInfoNew {
+struct ArkanInfoNew: Hashable {
     let arkanNumber: Int = 0
     let title: String
     let subcategories: [Subcategory]

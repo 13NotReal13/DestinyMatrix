@@ -10,7 +10,7 @@ import SwiftUI
 struct MatrixList: View {
     @Environment(\.dismiss) private var dismiss
     
-    let matrixList: [MatrixData]
+    let matrixList: [MatrixDataNew]
     
     var body: some View {
         ZStack {
@@ -58,6 +58,6 @@ struct MatrixList: View {
 
 #Preview {
     MatrixList(
-        matrixList: Array(repeating: MatrixCalculation(name: "Иван", dateOfBirthday: .now, dateCreationMatrix: .now).matrixData, count: 15)
+        matrixList: Array(repeating: MatrixCalculationNew(name: "Иван", dateOfBirthday: .now, dateCreationMatrix: .now).matrixDataNew, count: 15)
     )
 }
