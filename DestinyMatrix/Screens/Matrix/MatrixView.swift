@@ -62,57 +62,23 @@ struct MatrixView: View {
                     ScrollViewReader { proxy in
                         ScrollView(showsIndicators: false) {
                             VStack(spacing: 30) {
-//                                sectionView(number: 1) {
-//                                    DestinyNumberView(destinyNumber: matrixData.lifeNumbers.destinyNumber)
-//                                }
-//                                
-//                                sectionView(number: 2) {
-//                                    LifePathNumberView(lifePathNumber: matrixData.lifeNumbers.lifePathNumber)
-//                                }
-//                                
-//                                sectionView(number: 3) {
-//                                    SoulNumberView(soulNumber: matrixData.lifeNumbers.soulNumber)
-//                                }
-//                                
-//                                sectionView(number: 4) {
-//                                    KarmaNumberView(karmaNumber: matrixData.lifeNumbers.karmaNumber)
-//                                }
-//                                
-//                                sectionView(number: 5) {
-//                                    PersonalityNumberView(personalityNumber: matrixData.lifeNumbers.personalityNumber)
-//                                }
-//                                
-//                                sectionView(number: 6) {
-//                                    KarmicKnotsView(karmicKnotsNumber: matrixData.karmicKnots)
-//                                }
-//                                
-//                                sectionView(number: 7) {
-//                                    ResourcesAndTalentsView(resourcesAndTalentsNumber: matrixData.resourcesAndTalents)
-//                                }
-//                                
-//                                sectionView(number: 8) {
-//                                    EmotionalAndPersonalTraitsView(emotionalAndPersonalTraitsNumber: matrixData.emotionalAndPersonalTraits)
-//                                }
-//                                
-//                                sectionView(number: 9) {
-//                                    ProfessionsAndRolesView(professionsAndRolesNumber: matrixData.professionsAndRolesData)
-//                                }
-//                                
-//                                sectionView(number: 10) {
-//                                    MoneyFlowsView(moneyFlowsNumber: matrixData.moneyFlows)
-//                                }
-//                                
-//                                sectionView(number: 11) {
-//                                    EnergyFlowsView(energyFlowsNumber: matrixData.energyFlows)
-//                                }
-//                                
-//                                sectionView(number: 12) {
-//                                    RecommendationsView(recommendationsNumber: matrixData.recommendations)
-//                                }
+                                ForEach(1..<14) { arkan in
+                                    sectionView(number: arkan) {
+                                        ArkanDetailView(arkanInfo: matrixData.allArkans[arkan - 1])
+                                    }
+                                }
                             }
-                            .padding(.trailing)
                         }
                         .padding()
+                        .onPreferenceChange(SectionPositionPreferenceKey.self) { positions in
+                            let screenMidY = UIScreen.main.bounds.midY
+                            // Находим секцию, ближайшую к центру экрана
+                            if let closestSection = positions.min(by: { abs($0.value - screenMidY) < abs($1.value - screenMidY) })?.key {
+                                if selectedSectionForLeftButtons != closestSection {
+                                    selectedSectionForLeftButtons = closestSection
+                                }
+                            }
+                        }
                         .onChange(of: selectedSection) { section in
                             withAnimation {
                                 proxy.scrollTo(section, anchor: .top)
@@ -121,6 +87,14 @@ struct MatrixView: View {
                     }
                 }
             }
+        }
+    }
+    
+    struct SectionPositionPreferenceKey: PreferenceKey {
+        static var defaultValue: [Int: CGFloat] = [:]
+
+        static func reduce(value: inout [Int: CGFloat], nextValue: () -> [Int: CGFloat]) {
+            value.merge(nextValue()) { $1 }
         }
     }
     
@@ -133,14 +107,8 @@ struct MatrixView: View {
         .background(
             GeometryReader { geometry in
                 Color.clear
-                    .onChange(of: geometry.frame(in: .global).midY) { newPosition in
-                        let screenMidY = UIScreen.main.bounds.height / 2
-                        if abs(newPosition - screenMidY) < 50 {
-                            if selectedSectionForLeftButtons != number {
-                                selectedSectionForLeftButtons = number
-                            }
-                        }
-                    }
+                    .preference(key: SectionPositionPreferenceKey.self,
+                                value: [number: geometry.frame(in: .global).midY])
             }
         )
     }

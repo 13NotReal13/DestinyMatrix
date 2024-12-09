@@ -8,16 +8,18 @@
 import SwiftUI
 
 struct ArkanDetailView: View {
-    @State var destinyNumber: ArkanInfo
+    @State var arkanInfo: ArkanInfo
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text(RelationshipsArkans.allArkans[1]!.title)
-                .font(.title)
+            Text(arkanInfo.title)
+                .font(.title2)
+                .bold()
             
-            ForEach(RelationshipsArkans.allArkans[1]!.subcategories, id: \.self) { subcategorie in
+            ForEach(arkanInfo.subcategories, id: \.self) { subcategorie in
                 Text(subcategorie.title)
-                    .font(.title2)
+                    .font(.title3)
+                    .bold()
                     .padding(.top)
                 Text(subcategorie.shortDescription)
                     .opacity(0.7)
@@ -32,6 +34,6 @@ struct ArkanDetailView: View {
     ZStack {
         AnimatedStarryBackgroundView()
         
-        ArkanDetailView(destinyNumber: DestinyNumberArkans.allArkans[1]!)
+        ArkanDetailView(arkanInfo: DestinyNumberArkans.allArkans[1]!)
     }
 }

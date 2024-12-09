@@ -25,6 +25,24 @@ struct MatrixData: Hashable {
     var purpose: ArkanInfo // Предназначение
     var karmicLessons: ArkanInfo // Кармические Уроки
     var futureProspects: ArkanInfo // Будущее
+    
+    var allArkans: [ArkanInfo] {
+        return [
+            destinyNumber,
+            lifePath,
+            relationships,
+            finances,
+            career,
+            health,
+            talents,
+            challenges,
+            personalGrowth,
+            innerSelf,
+            purpose,
+            karmicLessons,
+            futureProspects
+        ]
+    }
 }
 
 typealias ArkanDictionary = [Int: ArkanInfo]
