@@ -5,69 +5,84 @@
 //  Created by Иван Семикин on 26/11/2024.
 //
 
-import Foundation
 import UIKit
+import PDFKit
 
 final class PDFManager {
-    static let shared = PDFManager()
+    let pageRect = CGRect(x: 0, y: 0, width: 612, height: 792)
+    let leftPadding: CGFloat = 50
+    let topPadding: CGFloat = 50
+    let rightPadding: CGFloat = 50
+    let bottomPadding: CGFloat = 50
     
-    private init() {}
+    var currentY: CGFloat = 0.0
     
-    func createPDF(from scrollView: UIScrollView) -> Data? {
-        let originalFrame = scrollView.frame
-        
-        let contentSize = scrollView.contentSize
-        scrollView.frame = CGRect(origin: .zero, size: contentSize)
-        
+    func createPDF(matrixData: MatrixData) -> Data? {
         let pdfData = NSMutableData()
-        UIGraphicsBeginPDFContextToData(pdfData, CGRect(origin: .zero, size: contentSize), nil)
-        UIGraphicsBeginPDFPage()
+        UIGraphicsBeginPDFContextToData(pdfData, pageRect, nil)
         
-        guard let pdfContext = UIGraphicsGetCurrentContext() else { return nil }
-        scrollView.layer.render(in: pdfContext)
+        beginNewPage()
+        
+        // Шрифты
+        let personalDataFont = UIFont.boldSystemFont(ofSize: 24)
+        let titleFont = UIFont.boldSystemFont(ofSize: 18)
+        let subtitleFont = UIFont.boldSystemFont(ofSize: 16)
+        let shortDescriptionFont = UIFont.italicSystemFont(ofSize: 14)
+        let mainDescriptionFont = UIFont.systemFont(ofSize: 14)
+        
+        let personalDataAttrs: [NSAttributedString.Key: Any] = [.font: personalDataFont]
+        let titleAttrs: [NSAttributedString.Key: Any] = [.font: titleFont]
+        let subtitleAttrs: [NSAttributedString.Key: Any] = [.font: subtitleFont]
+        let shortDescriptionAttrs: [NSAttributedString.Key: Any] = [.font: shortDescriptionFont]
+        let mainDescriptionAttrs: [NSAttributedString.Key: Any] = [.font: mainDescriptionFont]
+        
+        // Вывод персональных данных
+        let personalInfoText = "\(matrixData.name) - \(matrixData.dateOfBirthday.formattedDate())"
+        drawTextWithPagination(personalInfoText, attributes: personalDataAttrs)
+        
+        // Добавим отступ после персональных данных
+        currentY += 30
+        
+        // Проходим по всем арканам
+        for arkan in matrixData.allArkans {
+            // Заголовок аркана
+            drawTextWithPagination(arkan.title, attributes: titleAttrs)
+            
+            for subcat in arkan.subcategories {
+                currentY += 20
+                drawTextWithPagination(subcat.title, attributes: subtitleAttrs)
+                currentY += 5
+                drawTextWithPagination(subcat.shortDescription, attributes: shortDescriptionAttrs)
+                currentY += 5
+                drawTextWithPagination(subcat.mainDescription, attributes: mainDescriptionAttrs)
+            }
+            
+            // Отступ между арканами
+            currentY += 40
+        }
         
         UIGraphicsEndPDFContext()
-        
-        scrollView.frame = originalFrame
         return pdfData as Data
     }
     
-    func savePDF(name: String, dateOfBirthday: String, data: Data) -> URL? {
-        let fileName = "\(name)-\(dateOfBirthday).pdf"
-        let fileManager = FileManager.default
-        let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let fileURL = documentsURL.appendingPathComponent(fileName, conformingTo: .pdf)
+    private func beginNewPage() {
+        UIGraphicsBeginPDFPage()
+        currentY = topPadding
+    }
+    
+    private func drawTextWithPagination(_ text: String, attributes: [NSAttributedString.Key: Any]) {
+        let attrString = NSAttributedString(string: text, attributes: attributes)
+        let maxWidth = pageRect.width - leftPadding - rightPadding
+        let textSize = attrString.boundingRect(with: CGSize(width: maxWidth, height: .greatestFiniteMagnitude),
+                                               options: [.usesLineFragmentOrigin, .usesFontLeading],
+                                               context: nil)
         
-        do {
-            try data.write(to: fileURL)
-            return fileURL
-        } catch {
-            print("Ошибка при сохранении PDF: \(error)")
-            return nil
+        // Проверяем, влезает ли текст на текущую страницу
+        if currentY + textSize.height > (pageRect.height - bottomPadding) {
+            beginNewPage()
         }
-    }
-    
-    func sharePDF(from fileURL: URL, in viewController: UIViewController) {
-        let activityViewController = UIActivityViewController(activityItems: [fileURL], applicationActivities: nil)
-        viewController.present(activityViewController, animated: true, completion: nil)
-    }
-    
-    func exportScrollViewToPDF(name: String, dateOfBirthday: String, scrollView: UIScrollView, viewController: UIViewController) {
-
-        guard let pdfData = createPDF(from: scrollView) else {
-            print("Не удалось создать PDF")
-            return
-        }
-
-        guard let fileURL = savePDF(
-            name: name,
-            dateOfBirthday: dateOfBirthday,
-            data: pdfData
-        ) else {
-            print("Ошибка при сохранении PDF")
-            return
-        }
-
-        sharePDF(from: fileURL, in: viewController)
+        
+        attrString.draw(in: CGRect(x: leftPadding, y: currentY, width: maxWidth, height: textSize.height))
+        currentY += textSize.height
     }
 }
