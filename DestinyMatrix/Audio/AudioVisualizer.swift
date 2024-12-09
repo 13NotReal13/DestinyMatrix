@@ -89,7 +89,9 @@ final class AudioVisualizer: ObservableObject {
     func playBackgroundAudio() {
         guard let backgroundFile = backgroundFile else { return }
         backgroundPlayerNode.stop()
-        backgroundPlayerNode.scheduleFile(backgroundFile, at: nil)
+        backgroundPlayerNode.scheduleFile(backgroundFile, at: nil) { [weak self] in
+            self?.playBackgroundAudio()
+        }
         backgroundPlayerNode.volume = 0.2
         backgroundPlayerNode.play()
     }
