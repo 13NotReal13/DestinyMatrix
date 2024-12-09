@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct LeftNavigationButtonsView: View {
-    @Binding var selectedSection: Int
-    @Binding var selectedSectionForLeftButtons: Int
-    @Binding var isMenuOpen: Bool
+    @EnvironmentObject private var matrixViewModel: MatrixViewModel
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -20,9 +18,10 @@ struct LeftNavigationButtonsView: View {
                 Text(HelpInfoViewModel().categories[num - 1].title)
                     .customText(fontSize: 17, textColor: .white)
                     .foregroundStyle(.white)
-                    .padding(8)
+                    .padding(.vertical, 8)
+                    .padding(.horizontal, 12)
                     .overlay {
-                        if num == selectedSectionForLeftButtons {
+                        if num == matrixViewModel.selectedSectionForLeftButtons {
                             Capsule()
                                 .stroke(Color.white, lineWidth: 2)
                         }
@@ -31,8 +30,8 @@ struct LeftNavigationButtonsView: View {
                     .onTapGesture {
                         
                         withAnimation {
-                            isMenuOpen = false
-                            selectedSection = num
+                            matrixViewModel.isMenuOpen = false
+                            matrixViewModel.selectedSection = num
                         }
                     }
                 
@@ -50,10 +49,7 @@ struct LeftNavigationButtonsView: View {
     ZStack {
         AnimatedStarryBackgroundView()
         
-        LeftNavigationButtonsView(
-            selectedSection: .constant(1),
-            selectedSectionForLeftButtons: .constant(1),
-            isMenuOpen: .constant(false)
-        )
+        LeftNavigationButtonsView()
+            .environmentObject(MatrixViewModel())
     }
 }

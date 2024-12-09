@@ -8,13 +8,10 @@
 import SwiftUI
 
 struct MatrixView: View {
+    @EnvironmentObject private var matrixViewModel: MatrixViewModel
     @Environment(\.dismiss) private var dismiss
     
     @State var matrixData: MatrixData
-    
-    @State private var selectedSection = 1
-    @State private var selectedSectionForLeftButtons = 1
-    @State private var isMenuOpen = false
     
     var body: some View {
         ZStack(alignment: .leading) {
@@ -43,15 +40,7 @@ struct MatrixView: View {
                 }
                 .padding(.horizontal)
                 
-                HStack {
-                    Text(matrixData.name)
-                    Text(" - ")
-                    Text(matrixData.dateOfBirthday.formattedDate())
-                }
-                .customText(fontSize: 24, textColor: .white)
-                .padding(.horizontal)
-                .padding(.top, 8)
-                .frame(maxWidth: .infinity)
+                PersonalDataView(matrixData: matrixData)
                 
                 ScrollViewReader { proxy in
                     ScrollView(showsIndicators: false) {
@@ -69,12 +58,12 @@ struct MatrixView: View {
                         let screenMidY = UIScreen.main.bounds.midY
                         // Находим секцию, ближайшую к центру экрана
                         if let closestSection = positions.min(by: { abs($0.value - screenMidY) < abs($1.value - screenMidY) })?.key {
-                            if selectedSectionForLeftButtons != closestSection {
-                                selectedSectionForLeftButtons = closestSection
+                            if matrixViewModel.selectedSectionForLeftButtons != closestSection {
+                                matrixViewModel.selectedSectionForLeftButtons = closestSection
                             }
                         }
                     }
-                    .onChange(of: selectedSection) { section in
+                    .onChange(of: matrixViewModel.selectedSection) { section in
                         withAnimation {
                             proxy.scrollTo(section, anchor: .top)
                         }
@@ -82,31 +71,7 @@ struct MatrixView: View {
                 }
             }
             
-            ZStack(alignment: .leading) {
-                Color.black.opacity(isMenuOpen ? 0.5 : 0) // затемнение фона при открытом меню
-                    .edgesIgnoringSafeArea(.all)
-                    .onTapGesture {
-                        withAnimation { isMenuOpen = false }
-                    }
-                
-                ZStack(alignment: .leading) {
-                    BackgroundLeftMenuView()
-                        .frame(width: 282)
-                    
-                    HStack(spacing: 0) {
-                        LeftNavigationButtonsView(
-                            selectedSection: $selectedSection,
-                            selectedSectionForLeftButtons: $selectedSectionForLeftButtons,
-                            isMenuOpen: $isMenuOpen
-                        )
-                        .frame(width: 250)
-                        .padding(.horizontal)
-                        
-                        LeftMenuButtonView(isMenuOpen: $isMenuOpen)
-                    }
-                }
-                .offset(x: isMenuOpen ? 0 : -282)
-            }
+            LeftMenuView()
         }
     }
     
@@ -146,4 +111,5 @@ struct MatrixView: View {
     )
     
     MatrixView(matrixData: matrixData.matrixData)
+        .environmentObject(MatrixViewModel())
 }

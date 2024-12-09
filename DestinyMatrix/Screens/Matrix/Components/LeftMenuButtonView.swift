@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LeftMenuButtonView: View {
-    @Binding var isMenuOpen: Bool
+    @EnvironmentObject private var matrixViewModel: MatrixViewModel
     
     @State private var iconIsLeft: Bool = false
     
@@ -23,12 +23,12 @@ struct LeftMenuButtonView: View {
         .ignoresSafeArea()
         .onTapGesture {
             withAnimation {
-                isMenuOpen.toggle()
+                matrixViewModel.isMenuOpen.toggle()
             }
         }
-        .onChange(of: isMenuOpen) { newValue in
+        .onChange(of: matrixViewModel.isMenuOpen) { newValue in
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                iconIsLeft = isMenuOpen
+                iconIsLeft = matrixViewModel.isMenuOpen
             }
         }
     }
