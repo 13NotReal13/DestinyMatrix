@@ -7,6 +7,18 @@
 
 import SwiftUI
 
+// View для открытия окна "Поделиться"
+struct ShareSheet: UIViewControllerRepresentable {
+    var items: [Any]
+
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        let controller = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        return controller
+    }
+
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
+}
+
 struct MatrixView: View {
     @EnvironmentObject private var matrixViewModel: MatrixViewModel
     @Environment(\.dismiss) private var dismiss
@@ -29,7 +41,7 @@ struct MatrixView: View {
                     Spacer()
                     
                     Button {
-                        
+                        matrixViewModel.generatePDF(matrixData: matrixData)
                     } label: {
                         HStack {
                             Image(systemName: "square.and.arrow.down")
@@ -73,6 +85,10 @@ struct MatrixView: View {
             
             LeftMenuView()
         }
+        .sheet(isPresented: $matrixViewModel.showShareSheet) {
+            ShareSheet(items: matrixViewModel.shareItems)
+        }
+        
     }
     
     struct SectionPositionPreferenceKey: PreferenceKey {

@@ -65,6 +65,25 @@ final class PDFManager {
         return pdfData as Data
     }
     
+    func savePDF(matrixData: MatrixData) -> URL? {
+        guard let pdfData = createPDF(matrixData: matrixData) else { return nil }
+        
+        // Формируем имя файла
+        let fileName = "\(matrixData.name) - \(matrixData.dateOfBirthday.formattedDate()).pdf"
+        
+        // Путь к документам
+        if let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+            let pdfURL = documentsURL.appendingPathComponent(fileName)
+            do {
+                try pdfData.write(to: pdfURL)
+                return pdfURL
+            } catch {
+                print("Ошибка при сохранении PDF: \(error)")
+            }
+        }
+        return nil
+    }
+    
     private func beginNewPage() {
         UIGraphicsBeginPDFPage()
         currentY = topPadding
