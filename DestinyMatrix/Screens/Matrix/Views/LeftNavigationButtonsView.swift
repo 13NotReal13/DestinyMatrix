@@ -10,35 +10,50 @@ import SwiftUI
 struct LeftNavigationButtonsView: View {
     @Binding var selectedSection: Int
     @Binding var selectedSectionForLeftButtons: Int
+    @Binding var isMenuOpen: Bool
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             ForEach(1..<14) { num in
                 Spacer()
                 
-                Text(String(num))
-                    .customText(fontSize: 15, textColor: .white)
+                Text(HelpInfoViewModel().categories[num - 1].title)
+                    .customText(fontSize: 17, textColor: .white)
                     .foregroundStyle(.white)
-                    .frame(width: 16, height: 16)
-                    .customButtonStyle(color1: .backgroundColor1, color2: .buttonColor1, shape: .circle)
-                    .clipShape(.circle)
+                    .padding(8)
                     .overlay {
                         if num == selectedSectionForLeftButtons {
-                            Circle()
+                            Capsule()
                                 .stroke(Color.white, lineWidth: 2)
                         }
                     }
-                    .shadow(color: .white, radius: num == selectedSectionForLeftButtons ? 5 : 0)
+//                    .shadow(color: .white, radius: num == selectedSectionForLeftButtons ? 5 : 0)
                     .onTapGesture {
+                        
                         withAnimation {
+                            isMenuOpen = false
                             selectedSection = num
                         }
                     }
+                
+                if num != 13 {
+                    Divider()
+                        .frame(height: 1)
+                        .background(.white.opacity(0.4))
+                }
             }
         }
     }
 }
 
 #Preview {
-    LeftNavigationButtonsView(selectedSection: .constant(1), selectedSectionForLeftButtons: .constant(1))
+    ZStack {
+        AnimatedStarryBackgroundView()
+        
+        LeftNavigationButtonsView(
+            selectedSection: .constant(1),
+            selectedSectionForLeftButtons: .constant(1),
+            isMenuOpen: .constant(false)
+        )
+    }
 }

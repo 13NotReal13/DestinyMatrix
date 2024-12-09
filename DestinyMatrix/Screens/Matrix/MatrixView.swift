@@ -14,9 +14,10 @@ struct MatrixView: View {
     
     @State private var selectedSection = 1
     @State private var selectedSectionForLeftButtons = 1
+    @State private var isMenuOpen = false
     
     var body: some View {
-        ZStack {
+        ZStack(alignment: .leading) {
             AnimatedStarryBackgroundView()
             
             VStack {
@@ -52,40 +53,59 @@ struct MatrixView: View {
                 .padding(.top, 8)
                 .frame(maxWidth: .infinity)
                 
-                HStack {
-                    LeftNavigationButtonsView(
-                        selectedSection: $selectedSection,
-                        selectedSectionForLeftButtons: $selectedSectionForLeftButtons
-                    )
-                    .padding(.leading)
-                    
-                    ScrollViewReader { proxy in
-                        ScrollView(showsIndicators: false) {
-                            VStack(spacing: 30) {
-                                ForEach(1..<14) { arkan in
-                                    sectionView(number: arkan) {
-                                        ArkanDetailView(arkanInfo: matrixData.allArkans[arkan - 1])
-                                    }
+                ScrollViewReader { proxy in
+                    ScrollView(showsIndicators: false) {
+                        VStack(spacing: 30) {
+                            ForEach(1..<14) { arkan in
+                                sectionView(number: arkan) {
+                                    ArkanDetailView(arkanInfo: matrixData.allArkans[arkan - 1])
                                 }
-                            }
-                        }
-                        .padding()
-                        .onPreferenceChange(SectionPositionPreferenceKey.self) { positions in
-                            let screenMidY = UIScreen.main.bounds.midY
-                            // Находим секцию, ближайшую к центру экрана
-                            if let closestSection = positions.min(by: { abs($0.value - screenMidY) < abs($1.value - screenMidY) })?.key {
-                                if selectedSectionForLeftButtons != closestSection {
-                                    selectedSectionForLeftButtons = closestSection
-                                }
-                            }
-                        }
-                        .onChange(of: selectedSection) { section in
-                            withAnimation {
-                                proxy.scrollTo(section, anchor: .top)
                             }
                         }
                     }
+                    .padding()
+                    .padding(.leading, 32)
+                    .onPreferenceChange(SectionPositionPreferenceKey.self) { positions in
+                        let screenMidY = UIScreen.main.bounds.midY
+                        // Находим секцию, ближайшую к центру экрана
+                        if let closestSection = positions.min(by: { abs($0.value - screenMidY) < abs($1.value - screenMidY) })?.key {
+                            if selectedSectionForLeftButtons != closestSection {
+                                selectedSectionForLeftButtons = closestSection
+                            }
+                        }
+                    }
+                    .onChange(of: selectedSection) { section in
+                        withAnimation {
+                            proxy.scrollTo(section, anchor: .top)
+                        }
+                    }
                 }
+            }
+            
+            ZStack(alignment: .leading) {
+                Color.black.opacity(isMenuOpen ? 0.5 : 0) // затемнение фона при открытом меню
+                    .edgesIgnoringSafeArea(.all)
+                    .onTapGesture {
+                        withAnimation { isMenuOpen = false }
+                    }
+                
+                ZStack(alignment: .leading) {
+                    BackgroundLeftMenuView()
+                        .frame(width: 282)
+                    
+                    HStack(spacing: 0) {
+                        LeftNavigationButtonsView(
+                            selectedSection: $selectedSection,
+                            selectedSectionForLeftButtons: $selectedSectionForLeftButtons,
+                            isMenuOpen: $isMenuOpen
+                        )
+                        .frame(width: 250)
+                        .padding(.horizontal)
+                        
+                        LeftMenuButtonView(isMenuOpen: $isMenuOpen)
+                    }
+                }
+                .offset(x: isMenuOpen ? 0 : -282)
             }
         }
     }

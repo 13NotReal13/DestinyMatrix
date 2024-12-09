@@ -16,4 +16,22 @@ extension View {
     func customButtonStyle(color1: Color, color2: Color, shape: TypeShape) -> some View {
         self.modifier(CustomButtonStyleModifier(color1: color1, color2: color2, shape: shape))
     }
+    
+    func cornerRadius(radius: CGFloat, corners: UIRectCorner) -> some View {
+        clipShape( RoundedCorners(radius: radius, corners: corners) )
+    }
+}
+
+struct RoundedCorners: Shape {
+    var radius: CGFloat = .infinity
+    var corners: UIRectCorner = .allCorners
+
+    func path(in rect: CGRect) -> Path {
+        let path = UIBezierPath(
+            roundedRect: rect,
+            byRoundingCorners: corners,
+            cornerRadii: CGSize(width: radius, height: radius)
+        )
+        return Path(path.cgPath)
+    }
 }
