@@ -11,6 +11,7 @@ enum Screen {
     case onboarding
     case home
     case enterData
+    case preloadMatrixData
 }
 
 struct HomeView: View {
@@ -35,6 +36,8 @@ struct HomeView: View {
                             }
                     } else if homeViewModel.currentScreen == .enterData {
                         EnterDataView()
+                    } else if homeViewModel.currentScreen == .preloadMatrixData {
+                        PreloadMatrixDataView()
                     }
                 }
                 .padding()
@@ -46,4 +49,7 @@ struct HomeView: View {
 #Preview {
     HomeView()
         .environmentObject(AudioVisualizer())
+        .environmentObject(OnboardingViewModel())
+        .environmentObject(HomeViewModel())
+        .environmentObject(EnterDataViewModel())
 }

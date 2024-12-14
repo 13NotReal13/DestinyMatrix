@@ -88,10 +88,18 @@ final class AudioVisualizer: ObservableObject {
     
     func playBackgroundAudio() {
         guard let backgroundFile = backgroundFile else { return }
-        backgroundPlayerNode.stop()
-        backgroundPlayerNode.scheduleFile(backgroundFile, at: nil) { [weak self] in
-            self?.playBackgroundAudio()
+        
+        // Убедимся, что backgroundPlayerNode полностью остановлен перед перезапуском
+        if backgroundPlayerNode.isPlaying {
+            backgroundPlayerNode.stop()
         }
+        
+        backgroundPlayerNode.scheduleFile(backgroundFile, at: nil) { [weak self] in
+            DispatchQueue.main.async {
+                self?.playBackgroundAudio() // Рекурсивный вызов для зацикливания
+            }
+        }
+        
         backgroundPlayerNode.volume = 0.2
         backgroundPlayerNode.play()
     }

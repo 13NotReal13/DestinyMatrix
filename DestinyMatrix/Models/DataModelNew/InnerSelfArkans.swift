@@ -11,6 +11,7 @@ struct InnerSelfArkans {
     static let allArkans: ArkanDictionary = [
         // MARK: - 1 Arkan
         1: ArkanInfo(
+            arkanNumber: 1,
             title: "10. Внутренний Мир (1 Аркан)",
             subcategories: [
                 Subcategory(
@@ -72,6 +73,7 @@ struct InnerSelfArkans {
         ),
         // MARK: - 2 Arkan
         2: ArkanInfo(
+            arkanNumber: 2,
             title: "10. Внутренний Мир (2 Аркан)",
             subcategories: [
                 Subcategory(
@@ -133,6 +135,7 @@ struct InnerSelfArkans {
         ),
         // MARK: - 3 Arkan
         3: ArkanInfo(
+            arkanNumber: 3,
             title: "10. Внутренний Мир (3 Аркан)",
             subcategories: [
                 Subcategory(
@@ -194,6 +197,7 @@ struct InnerSelfArkans {
         ),
         // MARK: - 4 Arkan
         4: ArkanInfo(
+            arkanNumber: 4,
             title: "10. Внутренний Мир (4 Аркан)",
             subcategories: [
                 Subcategory(
@@ -255,6 +259,7 @@ struct InnerSelfArkans {
         ),
         // MARK: - 5 Arkan
         5: ArkanInfo(
+            arkanNumber: 5,
             title: "10. Внутренний Мир (5 Аркан)",
             subcategories: [
                 Subcategory(
@@ -316,6 +321,7 @@ struct InnerSelfArkans {
         ),
         // MARK: - 6 Arkan
         6: ArkanInfo(
+            arkanNumber: 6,
             title: "10. Внутренний Мир (6 Аркан)",
             subcategories: [
                 Subcategory(
@@ -377,6 +383,7 @@ struct InnerSelfArkans {
         ),
         // MARK: - 7 Arkan
         7: ArkanInfo(
+            arkanNumber: 7,
             title: "10. Внутренний Мир (7 Аркан)",
             subcategories: [
                 Subcategory(
@@ -438,6 +445,7 @@ struct InnerSelfArkans {
         ),
         // MARK: - 8 Arkan
         8: ArkanInfo(
+            arkanNumber: 8,
             title: "10. Внутренний Мир (8 Аркан)",
             subcategories: [
                 Subcategory(
@@ -499,6 +507,7 @@ struct InnerSelfArkans {
         ),
         // MARK: - 9 Arkan
         9: ArkanInfo(
+            arkanNumber: 9,
             title: "10. Внутренний Мир (9 Аркан)",
             subcategories: [
                 Subcategory(
@@ -560,6 +569,7 @@ struct InnerSelfArkans {
         ),
         // MARK: - 10 Arkan
         10: ArkanInfo(
+            arkanNumber: 10,
             title: "10. Внутренний Мир (10 Аркан)",
             subcategories: [
                 Subcategory(
@@ -621,6 +631,7 @@ struct InnerSelfArkans {
         ),
         // MARK: - 11 Arkan
         11: ArkanInfo(
+            arkanNumber: 11,
             title: "10. Внутренний Мир (11 Аркан)",
             subcategories: [
                 Subcategory(
@@ -682,6 +693,7 @@ struct InnerSelfArkans {
         ),
         // MARK: - 12 Arkan
         12: ArkanInfo(
+            arkanNumber: 12,
             title: "10. Внутренний Мир (12 Аркан)",
             subcategories: [
                 Subcategory(
@@ -743,6 +755,7 @@ struct InnerSelfArkans {
         ),
         // MARK: - 13 Arkan
         13: ArkanInfo(
+            arkanNumber: 13,
             title: "10. Внутренний Мир (13 Аркан)",
             subcategories: [
                 Subcategory(
@@ -804,6 +817,7 @@ struct InnerSelfArkans {
         ),
         // MARK: - 14 Arkan
         14: ArkanInfo(
+            arkanNumber: 14,
             title: "10. Внутренний Мир (14 Аркан)",
             subcategories: [
                 Subcategory(
@@ -865,6 +879,7 @@ struct InnerSelfArkans {
         ),
         // MARK: - 15 Arkan
         15: ArkanInfo(
+            arkanNumber: 15,
             title: "10. Внутренний Мир (15 Аркан)",
             subcategories: [
                 Subcategory(
@@ -926,6 +941,7 @@ struct InnerSelfArkans {
         ),
         // MARK: - 16 Arkan
         16: ArkanInfo(
+            arkanNumber: 16,
             title: "10. Внутренний Мир (16 Аркан)",
             subcategories: [
                 Subcategory(
@@ -987,6 +1003,7 @@ struct InnerSelfArkans {
         ),
         // MARK: - 17 Arkan
         17: ArkanInfo(
+            arkanNumber: 17,
             title: "10. Внутренний Мир (17 Аркан)",
             subcategories: [
                 Subcategory(
@@ -1048,6 +1065,7 @@ struct InnerSelfArkans {
         ),
         // MARK: - 18 Arkan
         18: ArkanInfo(
+            arkanNumber: 18,
             title: "10. Внутренний Мир (18 Аркан)",
             subcategories: [
                 Subcategory(
@@ -1109,6 +1127,7 @@ struct InnerSelfArkans {
         ),
         // MARK: - 19 Arkan
         19: ArkanInfo(
+            arkanNumber: 19,
             title: "10. Внутренний Мир (19 Аркан)",
             subcategories: [
                 Subcategory(
@@ -1170,6 +1189,7 @@ struct InnerSelfArkans {
         ),
         // MARK: - 20 Arkan
         20: ArkanInfo(
+            arkanNumber: 20,
             title: "10. Внутренний Мир (20 Аркан)",
             subcategories: [
                 Subcategory(
@@ -1231,6 +1251,7 @@ struct InnerSelfArkans {
         ),
         // MARK: - 21 Arkan
         21: ArkanInfo(
+            arkanNumber: 21,
             title: "10. Внутренний Мир (21 Аркан)",
             subcategories: [
                 Subcategory(
@@ -1292,6 +1313,7 @@ struct InnerSelfArkans {
         ),
         // MARK: - 22 Arkan
         22: ArkanInfo(
+            arkanNumber: 22,
             title: "10. Внутренний Мир (22 Аркан)",
             subcategories: [
                 Subcategory(

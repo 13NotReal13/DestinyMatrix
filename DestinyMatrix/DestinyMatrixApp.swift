@@ -15,6 +15,7 @@ struct DestinyMatrixApp: App {
     @StateObject private var onboardingViewModel = OnboardingViewModel()
     @StateObject private var homeViewModel = HomeViewModel()
     @StateObject private var enterDataViewModel = EnterDataViewModel()
+    @StateObject private var preloadMatrixDataViewModel = PreloadMatrixDataViewModel()
     @StateObject private var matrixViewModel = MatrixViewModel()
 
     var body: some Scene {
@@ -25,6 +26,7 @@ struct DestinyMatrixApp: App {
                     .environmentObject(homeViewModel)
                     .environmentObject(onboardingViewModel)
                     .environmentObject(enterDataViewModel)
+                    .environmentObject(preloadMatrixDataViewModel)
                     .environmentObject(matrixViewModel)
                 
                 // Preload keyboard

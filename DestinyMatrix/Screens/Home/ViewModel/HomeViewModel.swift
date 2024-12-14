@@ -24,6 +24,7 @@ final class HomeViewModel: ObservableObject {
     @Published var currentScreen: Screen = .onboarding
     @Published var onboardingIsFinished = false
     @Published var readyToGoToEnterData = false
+    @Published var readyToGoToPreloadMatrixData = false
     
     @Published var showHelpInfoView: Bool = false
 }

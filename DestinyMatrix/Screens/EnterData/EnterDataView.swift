@@ -13,52 +13,43 @@ struct EnterDataView: View {
     @EnvironmentObject private var audioVisualizer: AudioVisualizer
     @EnvironmentObject private var homeViewModel: HomeViewModel
     
-    @State private var showMatrixView: Bool = false
-    
     var body: some View {
         VStack(spacing: 20) {
-            Spacer()
-            
-            NameTextFieldView()
-            
-            DatePickerView()
-            
-            Spacer()
-            
-            Button {
-                enterDataViewModel.validateName()
-                enterDataViewModel.validateDate()
+            if !homeViewModel.readyToGoToPreloadMatrixData {
+                Spacer()
                 
-                if enterDataViewModel.isNameValid && enterDataViewModel.isDateValid {
-                    showMatrixView = true
-                    enterDataViewModel.stopAudio(audioVisualizer: audioVisualizer)
+                NameTextFieldView()
+                
+                DatePickerView()
+                
+                Spacer()
+                
+                Button {
+                    enterDataViewModel.validateName()
+                    enterDataViewModel.validateDate()
+                    
+                    if enterDataViewModel.isNameValid && enterDataViewModel.isDateValid {
+                        withAnimation(.easeOut(duration: 0.2)) {
+                            homeViewModel.readyToGoToPreloadMatrixData = true
+                        }
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                            withAnimation(.easeIn(duration: 0.7)) {
+                                homeViewModel.currentScreen = .preloadMatrixData
+                            }
+                        }
+                    }
+                } label: {
+                    Text("Далее")
+                        .padding(.horizontal)
+                        .customText(fontSize: 16, textColor: .white)
+                        .customButtonStyle(color1: .backgroundColor2, color2: .buttonColor2, shape: .capsule)
                 }
-            } label: {
-                Text("Далее")
-                    .padding(.horizontal)
-                    .customText(fontSize: 16, textColor: .white)
-                    .customButtonStyle(color1: .backgroundColor2, color2: .buttonColor2, shape: .capsule)
+                
+                Spacer()
             }
-            
-            Spacer()
         }
         .frame(height: UIScreen.main.bounds.height * 0.4)
-        .onAppear {
-            enterDataViewModel.startEnterDataAudio(audioVisualizer: audioVisualizer)
-        }
-        .onDisappear {
-            enterDataViewModel.stopAudio(audioVisualizer: audioVisualizer)
-        }
-        .fullScreenCover(isPresented: $showMatrixView) {
-            MatrixView(
-                matrixData: MatrixCalculation(
-                    name: enterDataViewModel.name,
-                    dateOfBirthday: enterDataViewModel.dateBirthday,
-                    dateCreationMatrix: .now
-                )
-                .matrixData
-            )
-        }
     }
 }
 

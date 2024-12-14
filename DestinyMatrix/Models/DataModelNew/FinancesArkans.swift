@@ -11,6 +11,7 @@ struct FinancesArkans {
     static let allArkans: ArkanDictionary = [
         // MARK: - 1 Arkan
         1: ArkanInfo(
+            arkanNumber: 1,
             title: "4. Деньги и Финансы (1 Аркан)",
             subcategories: [
                 Subcategory(
@@ -74,6 +75,7 @@ struct FinancesArkans {
         ),
         // MARK: - 2 Arkan
         2: ArkanInfo(
+            arkanNumber: 2,
             title: "4. Деньги и Финансы (2 Аркан)",
             subcategories: [
                 Subcategory(
@@ -137,6 +139,7 @@ struct FinancesArkans {
         ),
         // MARK: - 3 Arkan
         3: ArkanInfo(
+            arkanNumber: 3,
             title: "4. Деньги и Финансы (3 Аркан)",
             subcategories: [
                 Subcategory(
@@ -200,6 +203,7 @@ struct FinancesArkans {
         ),
         // MARK: - 4 Arkan
         4: ArkanInfo(
+            arkanNumber: 4,
             title: "4. Деньги и Финансы (4 Аркан)",
             subcategories: [
                 Subcategory(
@@ -263,6 +267,7 @@ struct FinancesArkans {
         ),
         // MARK: - 5 Arkan
         5: ArkanInfo(
+            arkanNumber: 5,
             title: "4. Деньги и Финансы (5 Аркан)",
             subcategories: [
                 Subcategory(
@@ -326,6 +331,7 @@ struct FinancesArkans {
         ),
         // MARK: - 6 Arkan
         6: ArkanInfo(
+            arkanNumber: 6,
             title: "4. Деньги и Финансы (6 Аркан)",
             subcategories: [
                 Subcategory(
@@ -389,6 +395,7 @@ struct FinancesArkans {
         ),
         // MARK: - 7 Arkan
         7: ArkanInfo(
+            arkanNumber: 7,
             title: "4. Деньги и Финансы (7 Аркан)",
             subcategories: [
                 Subcategory(
@@ -452,6 +459,7 @@ struct FinancesArkans {
         ),
         // MARK: - 8 Arkan
         8: ArkanInfo(
+            arkanNumber: 8,
             title: "4. Деньги и Финансы (8 Аркан)",
             subcategories: [
                 Subcategory(
@@ -515,6 +523,7 @@ struct FinancesArkans {
         ),
         // MARK: - 9 Arkan
         9: ArkanInfo(
+            arkanNumber: 9,
             title: "4. Деньги и Финансы (9 Аркан)",
             subcategories: [
                 Subcategory(
@@ -578,6 +587,7 @@ struct FinancesArkans {
         ),
         // MARK: - 10 Arkan
         10: ArkanInfo(
+            arkanNumber: 10,
             title: "4. Деньги и Финансы (10 Аркан)",
             subcategories: [
                 Subcategory(
@@ -641,6 +651,7 @@ struct FinancesArkans {
         ),
         // MARK: - 11 Arkan
         11: ArkanInfo(
+            arkanNumber: 11,
             title: "4. Деньги и Финансы (11 Аркан)",
             subcategories: [
                 Subcategory(
@@ -704,6 +715,7 @@ struct FinancesArkans {
         ),
         // MARK: - 12 Arkan
         12: ArkanInfo(
+            arkanNumber: 12,
             title: "4. Деньги и Финансы (12 Аркан)",
             subcategories: [
                 Subcategory(
@@ -767,6 +779,7 @@ struct FinancesArkans {
         ),
         // MARK: - 13 Arkan
         13: ArkanInfo(
+            arkanNumber: 13,
             title: "4. Деньги и Финансы (13 Аркан)",
             subcategories: [
                 Subcategory(
@@ -830,6 +843,7 @@ struct FinancesArkans {
         ),
         // MARK: - 14 Arkan
         14: ArkanInfo(
+            arkanNumber: 14,
             title: "4. Деньги и Финансы (14 Аркан)",
             subcategories: [
                 Subcategory(
@@ -893,6 +907,7 @@ struct FinancesArkans {
         ),
         // MARK: - 15 Arkan
         15: ArkanInfo(
+            arkanNumber: 15,
             title: "4. Деньги и Финансы (15 Аркан)",
             subcategories: [
                 Subcategory(
@@ -956,6 +971,7 @@ struct FinancesArkans {
         ),
         // MARK: - 16 Arkan
         16: ArkanInfo(
+            arkanNumber: 16,
             title: "4. Деньги и Финансы (16 Аркан)",
             subcategories: [
                 Subcategory(
@@ -1019,6 +1035,7 @@ struct FinancesArkans {
         ),
         // MARK: - 17 Arkan
         17: ArkanInfo(
+            arkanNumber: 17,
             title: "4. Деньги и Финансы (17 Аркан)",
             subcategories: [
                 Subcategory(
@@ -1082,6 +1099,7 @@ struct FinancesArkans {
         ),
         // MARK: - 18 Arkan
         18: ArkanInfo(
+            arkanNumber: 18,
             title: "4. Деньги и Финансы (18 Аркан)",
             subcategories: [
                 Subcategory(
@@ -1145,6 +1163,7 @@ struct FinancesArkans {
         ),
         // MARK: - 19 Arkan
         19: ArkanInfo(
+            arkanNumber: 19,
             title: "4. Деньги и Финансы (19 Аркан)",
             subcategories: [
                 Subcategory(
@@ -1208,6 +1227,7 @@ struct FinancesArkans {
         ),
         // MARK: - 20 Arkan
         20: ArkanInfo(
+            arkanNumber: 20,
             title: "4. Деньги и Финансы (20 Аркан)",
             subcategories: [
                 Subcategory(
@@ -1271,6 +1291,7 @@ struct FinancesArkans {
         ),
         // MARK: - 21 Arkan
         21: ArkanInfo(
+            arkanNumber: 21,
             title: "4. Деньги и Финансы (21 Аркан)",
             subcategories: [
                 Subcategory(
@@ -1334,6 +1355,7 @@ struct FinancesArkans {
         ),
         // MARK: - 22 Arkan
         22: ArkanInfo(
+            arkanNumber: 22,
             title: "4. Деньги и Финансы (22 Аркан)",
             subcategories: [
                 Subcategory(

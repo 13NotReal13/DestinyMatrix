@@ -43,12 +43,16 @@ struct MatrixData: Hashable {
             futureProspects
         ]
     }
+    
+    var arkanNumbers: [Int] {
+        return allArkans.map { $0.arkanNumber }
+    }
 }
 
 typealias ArkanDictionary = [Int: ArkanInfo]
 
 struct ArkanInfo: Hashable {
-    let arkanNumber: Int = 0
+    let arkanNumber: Int
     let title: String
     let subcategories: [Subcategory]
 }

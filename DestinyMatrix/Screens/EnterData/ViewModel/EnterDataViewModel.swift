@@ -8,8 +8,6 @@
 import SwiftUI
 
 final class EnterDataViewModel: ObservableObject {
-    @Published var audioEnterDataIsFinished: Bool = true
-    
     @Published var name: String = ""
     @Published var isNameValid: Bool = true
     
@@ -30,22 +28,6 @@ final class EnterDataViewModel: ObservableObject {
     func updateDisplayedDate() {
         displayedDateText = dateBirthday.formattedDate()
         isDateValid = true
-    }
-    
-    func startEnterDataAudio(audioVisualizer: AudioVisualizer) {
-        if !audioEnterDataIsFinished, let audioURL = Bundle.main.url(forResource: "CharlotteEnterData", withExtension: "mp3") {
-            audioVisualizer.playAudio(url: audioURL) { [weak self] in
-                DispatchQueue.main.async {
-                    withAnimation(.easeIn(duration: 1.5)) {
-                        self?.audioEnterDataIsFinished = true
-                    }
-                }
-            }
-        }
-    }
-    
-    func stopAudio(audioVisualizer: AudioVisualizer) {
-        audioVisualizer.stopVoice()
     }
 
     func toggleDatePicker() {
