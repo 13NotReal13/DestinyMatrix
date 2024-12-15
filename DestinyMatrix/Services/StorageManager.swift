@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct ShortMatrixData: Codable {
+struct ShortMatrixData: Codable, Hashable {
     let name: String
     let dateOfBirthday: Date
     let dateCreationMatrix: Date
@@ -33,5 +33,6 @@ final class StorageManager {
     func add(shortMatrixData: ShortMatrixData) {
         var currentData = historyMatrixData
         currentData.append(shortMatrixData)
+        historyMatrixData = currentData
     }
 }

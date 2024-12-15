@@ -21,10 +21,79 @@ enum ShapeOfSphere: String {
 }
 
 final class HomeViewModel: ObservableObject {
+    @Published var onboardingAudioIsFinished: Bool = false
+    @Published var onboardingWasShowed: Bool = false
+    
     @Published var currentScreen: Screen = .onboarding
     @Published var onboardingIsFinished = false
-    @Published var readyToGoToEnterData = false
-    @Published var readyToGoToPreloadMatrixData = false
     
     @Published var showHelpInfoView: Bool = false
+    @Published var showHistoryView: Bool = false
+    @Published var showMatrixView: Bool = false
+    
+    @Published var name: String = ""
+    @Published var isNameValid: Bool = true
+    
+    @Published var dateBirthday: Date = Date()
+    @Published var isDateValid: Bool = true
+    
+    @Published var displayedDateText: String = "Выбрать дату"
+    @Published var isDatePickerPresented: Bool = false
+    
+    @Published var preloadAudioIsFinished: Bool = false
+    @Published var matrixData: MatrixData?
+    
+    @Published var backgroundAudioIsPlaying = false
+    
+    func goHomeScreen() {
+        currentScreen = .home
+        name = ""
+        dateBirthday = Date()
+        displayedDateText = "Выбрать дату"
+    }
+    
+    func validateName() {
+        isNameValid = name.isCyrillicOnly
+    }
+    
+    func validateDate() {
+        isDateValid = displayedDateText.lowercased() != "Выбрать дату".lowercased()
+    }
+    
+    func updateDisplayedDate() {
+        displayedDateText = dateBirthday.formattedDate()
+        isDateValid = true
+    }
+
+    func toggleDatePicker() {
+        isDatePickerPresented.toggle()
+    }
+    
+    func startOnboardingAudio(audioVisualizer: AudioVisualizer) {
+        if !onboardingAudioIsFinished, let audioURL = Bundle.main.url(forResource: "CharlotteOnboarding2", withExtension: "mp3") {
+            audioVisualizer.playAudio(url: audioURL) { [weak self] in
+                DispatchQueue.main.async {
+                    withAnimation(.easeIn(duration: 1)) {
+                        self?.onboardingAudioIsFinished = true
+                    }
+                }
+            }
+        }
+    }
+    
+    func startPreloadAudio(audioVisualizer: AudioVisualizer) {
+        if !preloadAudioIsFinished, let audioURL = Bundle.main.url(forResource: "CharlottePreloadMatrixData", withExtension: "mp3") {
+            audioVisualizer.playAudio(url: audioURL) { [weak self] in
+                DispatchQueue.main.async {
+                    withAnimation(.easeIn(duration: 1)) {
+                        self?.preloadAudioIsFinished = true
+                    }
+                }
+            }
+        }
+    }
+    
+    func stopPreloadAudio(audioVisualizer: AudioVisualizer) {
+        audioVisualizer.stopVoice()
+    }
 }

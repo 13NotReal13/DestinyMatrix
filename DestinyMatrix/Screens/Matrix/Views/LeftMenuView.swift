@@ -27,7 +27,7 @@ struct LeftMenuView: View {
                         .frame(width: 250)
                         .padding(.horizontal)
                     
-                    LeftMenuButtonView()
+                    LeftOpenMenuButtonView()
                 }
             }
             .offset(x: matrixViewModel.isMenuOpen ? 0 : -282)

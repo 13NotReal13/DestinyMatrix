@@ -1,5 +1,5 @@
 //
-//  LeftMenuButtonView.swift
+//  LeftOpenMenuButtonView.swift
 //  DestinyMatrix
 //
 //  Created by Иван Семикин on 09/12/2024.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct LeftMenuButtonView: View {
+struct LeftOpenMenuButtonView: View {
     @EnvironmentObject private var matrixViewModel: MatrixViewModel
     
     @State private var iconIsLeft: Bool = false

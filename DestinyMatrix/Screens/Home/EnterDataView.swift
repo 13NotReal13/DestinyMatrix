@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct EnterDataView: View {
-    @EnvironmentObject private var enterDataViewModel: EnterDataViewModel
-    
     @EnvironmentObject private var audioVisualizer: AudioVisualizer
     @EnvironmentObject private var homeViewModel: HomeViewModel
     
+    @State private var readyToGoToPreloadMatrixData = false
+    
     var body: some View {
         VStack(spacing: 20) {
-            if !homeViewModel.readyToGoToPreloadMatrixData {
+            if !readyToGoToPreloadMatrixData {
                 Spacer()
                 
                 NameTextFieldView()
@@ -25,12 +25,20 @@ struct EnterDataView: View {
                 Spacer()
                 
                 Button {
-                    enterDataViewModel.validateName()
-                    enterDataViewModel.validateDate()
+                    homeViewModel.validateName()
+                    homeViewModel.validateDate()
                     
-                    if enterDataViewModel.isNameValid && enterDataViewModel.isDateValid {
+                    if homeViewModel.isNameValid && homeViewModel.isDateValid {
+                        StorageManager().add(
+                            shortMatrixData: ShortMatrixData(
+                                name: homeViewModel.name,
+                                dateOfBirthday: homeViewModel.dateBirthday,
+                                dateCreationMatrix: .now
+                            )
+                        )
+                        
                         withAnimation(.easeOut(duration: 0.2)) {
-                            homeViewModel.readyToGoToPreloadMatrixData = true
+                            readyToGoToPreloadMatrixData = true
                         }
                         
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
@@ -41,9 +49,9 @@ struct EnterDataView: View {
                     }
                 } label: {
                     Text("Далее")
-                        .padding(.horizontal)
+                        .frame(maxWidth: .infinity)
                         .customText(fontSize: 16, textColor: .white)
-                        .customButtonStyle(color1: .backgroundColor2, color2: .buttonColor2, shape: .capsule)
+                        .customButtonStyle(shape: .capsule)
                 }
                 
                 Spacer()
@@ -58,7 +66,6 @@ struct EnterDataView: View {
         AnimatedStarryBackgroundView()
         
         EnterDataView()
-            .environmentObject(EnterDataViewModel())
             .environmentObject(AudioVisualizer())
             .environmentObject(HomeViewModel())
     }

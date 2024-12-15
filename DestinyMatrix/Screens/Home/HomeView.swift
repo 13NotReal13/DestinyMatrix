@@ -21,27 +21,62 @@ struct HomeView: View {
     private var screenHeight = UIScreen.main.bounds.height
     
     var body: some View {
-        ZStack {
-            AnimatedStarryBackgroundView()
-            
+        NavigationView {
+            ZStack {
+                AnimatedStarryBackgroundView()
+                
                 VStack {
                     Completed3DSphere()
-                    
+                    // Onboarding
                     if homeViewModel.currentScreen == .onboarding {
                         OnboardingView()
+                            .onAppear {
+                                homeViewModel.startOnboardingAudio(audioVisualizer: audioVisualizer)
+                            }
+                    // Home
                     } else if homeViewModel.currentScreen == .home {
                         HomeMenuButtonsView()
                             .onAppear {
-                                audioVisualizer.playBackgroundAudio()
+                                if !homeViewModel.backgroundAudioIsPlaying {
+                                    audioVisualizer.playBackgroundAudio()
+                                }
+                                homeViewModel.backgroundAudioIsPlaying = true
                             }
+                    // EnterData
                     } else if homeViewModel.currentScreen == .enterData {
                         EnterDataView()
+                    // PreloadMatrix
                     } else if homeViewModel.currentScreen == .preloadMatrixData {
                         PreloadMatrixDataView()
+                            .onAppear {
+                                homeViewModel.startPreloadAudio(audioVisualizer: audioVisualizer)
+                            }
+                            .onDisappear {
+                                homeViewModel.stopPreloadAudio(audioVisualizer: audioVisualizer)
+                            }
                     }
                 }
                 .padding()
-                .frame(height: screenHeight * 0.9)
+                .frame(height: screenHeight * 0.8)
+            }
+            .ignoresSafeArea()
+            .fullScreenCover(isPresented: $homeViewModel.showHelpInfoView) {
+                HelpInfoView()
+            }
+            .fullScreenCover(isPresented: $homeViewModel.showHistoryView) {
+                HistoryView()
+            }
+            .fullScreenCover(
+                isPresented: $homeViewModel.showMatrixView,
+                onDismiss: homeViewModel.goHomeScreen) {
+                    MatrixView(
+                        matrixData: MatrixCalculation(
+                            name: homeViewModel.name,
+                            dateOfBirthday: homeViewModel.dateBirthday
+                        )
+                        .matrixData
+                    )
+                }
         }
     }
 }
@@ -49,7 +84,5 @@ struct HomeView: View {
 #Preview {
     HomeView()
         .environmentObject(AudioVisualizer())
-        .environmentObject(OnboardingViewModel())
         .environmentObject(HomeViewModel())
-        .environmentObject(EnterDataViewModel())
 }

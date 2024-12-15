@@ -10,7 +10,6 @@ import Foundation
 struct MatrixData: Hashable {
     var name: String
     var dateOfBirthday: Date
-    var dateCreationMatrix: Date
     
     var destinyNumber: ArkanInfo // Число Судьбы
     var lifePath: ArkanInfo // Жизненный Путь

@@ -30,9 +30,38 @@ struct CustomButtonStyleModifier: ViewModifier {
             .overlay(
                 Group {
                     if shape == .capsule {
-                        Capsule().stroke(Color.white, lineWidth: 2)
+                        Capsule().stroke(Color.white, lineWidth: 1)
                     } else {
-                        Circle().stroke(Color.white, lineWidth: 2)
+                        Circle().stroke(Color.white, lineWidth: 1)
+                    }
+                }
+            )
+            .modifier(ConditionalClipShape(shape: shape))
+    }
+}
+
+struct CustomBarButtonStyleModifier: ViewModifier {
+    var color1: Color
+    var color2: Color
+    var shape: TypeShape
+
+    func body(content: Content) -> some View {
+        content
+            .padding(.vertical, 8)
+            .padding(.horizontal)
+            .background(
+                LinearGradient(
+                    colors: [color1, color2],
+                    startPoint: .bottom,
+                    endPoint: .top
+                )
+            )
+            .overlay(
+                Group {
+                    if shape == .capsule {
+                        Capsule().stroke(Color.white, lineWidth: 1)
+                    } else {
+                        Circle().stroke(Color.white, lineWidth: 1)
                     }
                 }
             )

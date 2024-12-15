@@ -8,13 +8,12 @@
 import SwiftUI
 
 struct NextButtonOnboardingView: View {
-    @EnvironmentObject private var onboardingViewModel: OnboardingViewModel
     @EnvironmentObject private var homeViewModel: HomeViewModel
     
     var body: some View {
         Button {
             withAnimation(.easeOut(duration: 0.2)) {
-                onboardingViewModel.onboardingWasShowed = true
+                homeViewModel.onboardingWasShowed = true
                 }
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
@@ -24,18 +23,20 @@ struct NextButtonOnboardingView: View {
             }
         } label: {
             Text("Далее")
-                .font(.custom(CustomFont.fontName.rawValue, size: 24))
-                .padding()
-                .foregroundStyle(.white)
-                .shadow(color: .purple.opacity(0.7), radius: 5, x: 0, y: 0)
-                .opacity(onboardingViewModel.audioIsFinished ? 1 : 0)
+                .frame(maxWidth: .infinity)
+                .customText(fontSize: 17, textColor: .white)
+                .customButtonStyle(shape: .capsule)
+                .opacity(homeViewModel.onboardingAudioIsFinished ? 1 : 0)
                 .transition(.opacity.combined(with: .scale(scale: 0.5)))
         }
     }
 }
 
 #Preview {
-    NextButtonOnboardingView()
-        .environmentObject(OnboardingViewModel())
-        .environmentObject(HomeViewModel())
+    ZStack {
+        AnimatedStarryBackgroundView()
+        
+        NextButtonOnboardingView()
+            .environmentObject(HomeViewModel())
+    }
 }

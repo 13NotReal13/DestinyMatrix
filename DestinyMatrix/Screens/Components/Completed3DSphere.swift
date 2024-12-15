@@ -21,6 +21,22 @@ struct Completed3DSphere: View {
     
     var body: some View {
         VStack {
+            HStack {
+                if homeViewModel.currentScreen != .home
+                    && homeViewModel.currentScreen != .onboarding
+                    && homeViewModel.currentScreen != .preloadMatrixData {
+                    Button {
+                        homeViewModel.goHomeScreen()
+                    } label: {
+                        Text("Главная")
+                            .customText(fontSize: 17, textColor: .white)
+                            .customBarButtonStyle(shape: .capsule)
+                    }
+                    Spacer()
+                }
+            }
+            .frame(height: UIScreen.main.bounds.height * 0.05)
+            
             VStack(spacing: 10) {
                 if homeViewModel.currentScreen != .onboarding {
                     Text("Матрица Судьбы")
@@ -68,7 +84,11 @@ struct Completed3DSphere: View {
 }
 
 #Preview {
-    Completed3DSphere()
-        .environmentObject(HomeViewModel())
-        .environmentObject(AudioVisualizer())
+    ZStack {
+        AnimatedStarryBackgroundView()
+        
+        Completed3DSphere()
+            .environmentObject(HomeViewModel())
+            .environmentObject(AudioVisualizer())
+    }
 }

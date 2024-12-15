@@ -13,8 +13,20 @@ extension View {
         self.modifier(CustomShadowModifier(fontSize: fontSize, textColor: textColor))
     }
     
-    func customButtonStyle(color1: Color, color2: Color, shape: TypeShape) -> some View {
+    func customButtonStyle(
+        color1: Color = .backgroundColor1,
+        color2: Color = .backgroundColor2,
+        shape: TypeShape
+    ) -> some View {
         self.modifier(CustomButtonStyleModifier(color1: color1, color2: color2, shape: shape))
+    }
+    
+    func customBarButtonStyle(
+        color1: Color = .backgroundColor1,
+        color2: Color = .backgroundColor2,
+        shape: TypeShape
+    ) -> some View {
+        self.modifier(CustomBarButtonStyleModifier(color1: color1, color2: color2, shape: shape))
     }
     
     func cornerRadius(radius: CGFloat, corners: UIRectCorner) -> some View {

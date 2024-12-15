@@ -10,13 +10,11 @@ import Foundation
 struct MatrixCalculation {
     let name: String
     let dateOfBirthday: Date
-    let dateCreationMatrix: Date
     
     var matrixData: MatrixData {
         return MatrixData(
             name: name,
             dateOfBirthday: dateOfBirthday,
-            dateCreationMatrix: dateCreationMatrix,
             
             destinyNumber: DestinyNumberArkans.allArkans[destinyNumberValue]!,
             lifePath: LifePathArkans.allArkans[lifePathValue]!,
@@ -38,10 +36,9 @@ struct MatrixCalculation {
     private let month: Int
     private let year: Int
     
-    init(name: String, dateOfBirthday: Date, dateCreationMatrix: Date) {
+    init(name: String, dateOfBirthday: Date) {
         self.name = name
         self.dateOfBirthday = dateOfBirthday
-        self.dateCreationMatrix = dateCreationMatrix
         
         let calendar = Calendar.current
         self.day = calendar.component(.day, from: dateOfBirthday)

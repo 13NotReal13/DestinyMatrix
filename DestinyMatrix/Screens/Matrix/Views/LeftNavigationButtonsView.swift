@@ -23,10 +23,9 @@ struct LeftNavigationButtonsView: View {
                     .overlay {
                         if num == matrixViewModel.selectedSectionForLeftButtons {
                             Capsule()
-                                .stroke(Color.white, lineWidth: 2)
+                                .stroke(Color.white, lineWidth: 1)
                         }
                     }
-//                    .shadow(color: .white, radius: num == selectedSectionForLeftButtons ? 5 : 0)
                     .onTapGesture {
                         
                         withAnimation {

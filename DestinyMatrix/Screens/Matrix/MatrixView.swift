@@ -21,6 +21,7 @@ struct ShareSheet: UIViewControllerRepresentable {
 
 struct MatrixView: View {
     @EnvironmentObject private var matrixViewModel: MatrixViewModel
+    @EnvironmentObject private var homeViewModel: HomeViewModel
     @Environment(\.dismiss) private var dismiss
     
     @State var matrixData: MatrixData
@@ -36,6 +37,7 @@ struct MatrixView: View {
                     } label: {
                         Text("Закрыть")
                             .customText(fontSize: 17, textColor: .white)
+                            .customBarButtonStyle(shape: .capsule)
                     }
                     
                     Spacer()
@@ -48,6 +50,7 @@ struct MatrixView: View {
                             Text("Скачать .pdf")
                         }
                         .customText(fontSize: 17, textColor: .white)
+                        .customBarButtonStyle(shape: .capsule)
                     }
                 }
                 .padding(.horizontal)
@@ -88,7 +91,9 @@ struct MatrixView: View {
         .sheet(isPresented: $matrixViewModel.showShareSheet) {
             ShareSheet(items: matrixViewModel.shareItems)
         }
-        
+        .onAppear {
+            homeViewModel.goHomeScreen()
+        }
     }
     
     struct SectionPositionPreferenceKey: PreferenceKey {
@@ -122,10 +127,10 @@ struct MatrixView: View {
     
     let matrixData = MatrixCalculation(
         name: "Иван",
-        dateOfBirthday: date,
-        dateCreationMatrix: .now
+        dateOfBirthday: date
     )
     
     MatrixView(matrixData: matrixData.matrixData)
         .environmentObject(MatrixViewModel())
+        .environmentObject(HomeViewModel())
 }

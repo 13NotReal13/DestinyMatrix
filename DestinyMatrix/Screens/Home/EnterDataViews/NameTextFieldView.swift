@@ -8,28 +8,32 @@
 import SwiftUI
 
 struct NameTextFieldView: View {
-    @EnvironmentObject private var enterDataViewModel: EnterDataViewModel
+    @EnvironmentObject private var homeViewModel: HomeViewModel
     
     var body: some View {
         VStack {
             Text("Введите ваше полное имя (только имя)")
-                .customText(fontSize: 12, textColor: .white)
+                .customText(fontSize: 14, textColor: .white)
             
             VStack {
-                TextField("ПОЛНОЕ ИМЯ", text: $enterDataViewModel.name)
+                TextField("ПОЛНОЕ ИМЯ", text: $homeViewModel.name)
                     .textContentType(.none)
                     .disableAutocorrection(true)
                     .multilineTextAlignment(.center)
                     .customText(fontSize: 16, textColor: .black)
-                    .onChange(of: enterDataViewModel.name) { _ in
-                        enterDataViewModel.validateName()
+                    .onChange(of: homeViewModel.name) { _ in
+                        homeViewModel.validateName()
                     }
             }
-            .frame(width: UIScreen.main.bounds.width * 0.55)
-            .customButtonStyle(color1: .lightAroundSphere, color2: .lightAroundSphere, shape: .capsule)
+            .frame(maxWidth: .infinity)
+            .customButtonStyle(
+                color1: .lightAroundSphere,
+                color2: .lightAroundSphere,
+                shape: .capsule
+            )
             
-            if !enterDataViewModel.isNameValid {
-                Text("Допустимы только символы \"А-Я\"")
+            if !homeViewModel.isNameValid {
+                Text("Допустимые символы: \"А-Я\"")
                     .customText(fontSize: 12, textColor: .red)
             }
         }
@@ -41,6 +45,6 @@ struct NameTextFieldView: View {
         AnimatedStarryBackgroundView()
         
         NameTextFieldView()
-            .environmentObject(EnterDataViewModel())
+            .environmentObject(HomeViewModel())
     }
 }

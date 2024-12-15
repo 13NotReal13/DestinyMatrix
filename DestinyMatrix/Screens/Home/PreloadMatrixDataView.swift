@@ -8,11 +8,8 @@
 import SwiftUI
 
 struct PreloadMatrixDataView: View {
-    @EnvironmentObject private var preloadMatrixDataViewModel: PreloadMatrixDataViewModel
     @EnvironmentObject private var audioVisualizer: AudioVisualizer
-    
     @EnvironmentObject private var homeViewModel: HomeViewModel
-    @EnvironmentObject private var enterDataViewModel: EnterDataViewModel
     
     @State private var progress: CGFloat = 0.0
     @State private var statusText: String = "Считаю вашу матрицу судьбы..."
@@ -25,12 +22,11 @@ struct PreloadMatrixDataView: View {
             VStack {
                  Text(statusText)
                     .customText(fontSize: 16, textColor: .white)
-                     .padding()
+                    .padding(.vertical)
 
                  // Прогресс-бар
                  ProgressView(value: progress, total: 1.0)
                     .tint(.buttonColor2)
-                     .padding()
              }
             .padding()
             
@@ -38,13 +34,15 @@ struct PreloadMatrixDataView: View {
             
             VStack {
                 Button {
-                    preloadMatrixDataViewModel.showMatrixView = true
+                    homeViewModel.showMatrixView = true
                 } label: {
                     Text("Открыть")
-                        .padding(.horizontal)
+                        .frame(maxWidth: .infinity)
                         .customText(fontSize: 16, textColor: .white)
-                        .customButtonStyle(color1: .backgroundColor2, color2: .buttonColor2, shape: .capsule)
+                        .customButtonStyle(shape: .capsule)
                 }
+                
+                // TODO: Set 1 : 0 finally
                 .opacity(showButton ? 1 : 0)
                 .animation(.easeIn(duration: 0.5), value: showButton)
             }
@@ -52,21 +50,8 @@ struct PreloadMatrixDataView: View {
         }
         .frame(height: UIScreen.main.bounds.height * 0.4)
         .onAppear {
-            preloadMatrixDataViewModel.startAudio(audioVisualizer: audioVisualizer)
+            // TODO: Open this code finally
             simulateLoadingProgress()
-        }
-        .onDisappear {
-            preloadMatrixDataViewModel.stopAudio(audioVisualizer: audioVisualizer)
-        }
-        .fullScreenCover(isPresented: $preloadMatrixDataViewModel.showMatrixView) {
-            MatrixView(
-                matrixData: MatrixCalculation(
-                    name: enterDataViewModel.name,
-                    dateOfBirthday: enterDataViewModel.dateBirthday,
-                    dateCreationMatrix: .now
-                )
-                .matrixData
-            )
         }
     }
     
@@ -86,7 +71,7 @@ struct PreloadMatrixDataView: View {
                 }
                 
                 if index == delays.count - 1 { // Последний шаг
-                    preloadMatrixDataViewModel.audioIsFinished = true
+                    homeViewModel.preloadAudioIsFinished = true
                     statusText = "Готово! Анализ завершён." // Меняем текст
                     
                     withAnimation {
@@ -126,7 +111,6 @@ struct PreloadMatrixDataView: View {
         
         PreloadMatrixDataView()
             .environmentObject(AudioVisualizer())
-            .environmentObject(PreloadMatrixDataViewModel())
-            .environmentObject(EnterDataViewModel())
+            .environmentObject(HomeViewModel())
     }
 }

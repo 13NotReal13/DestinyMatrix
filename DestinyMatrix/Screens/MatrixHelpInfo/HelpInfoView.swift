@@ -23,6 +23,7 @@ struct HelpInfoView: View {
                     } label: {
                         Text("Закрыть")
                             .customText(fontSize: 17, textColor: .white)
+                            .customBarButtonStyle(shape: .capsule)
                     }
                     
                     Spacer()
