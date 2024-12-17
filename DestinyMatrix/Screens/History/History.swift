@@ -9,9 +9,10 @@ import SwiftUI
 
 struct HistoryView: View {
     @Environment(\.dismiss) private var dismiss
+    @ObservedObject private var storageManager = StorageManager()
     
-    private let matrixList = StorageManager().historyMatrixData
-//    private let matrixList = Array(repeating: ShortMatrixData(name: "Анастасия", dateOfBirthday: .now, dateCreationMatrix: .now), count: 15)
+    @State private var showDeleteAlert = false
+    @State private var selectedMatrixForDelete: ShortMatrixData? = nil
     
     var body: some View {
         ZStack {
@@ -30,14 +31,18 @@ struct HistoryView: View {
                     Spacer()
                 }
                 
-                if matrixList.isEmpty {
+                if storageManager.historyMatrixData.isEmpty {
                     Spacer()
                     Text("Нет истории")
                         .customText(fontSize: 17, textColor: .white)
                     Spacer()
                 } else {
-                    ScrollView(showsIndicators: false) {
-                        ForEach(matrixList, id: \.self) { matrix in
+                    Text("Удерживайте запись, чтобы удалить её из истории")
+                        .customText(fontSize: 10, textColor: .gray)
+                        .padding(.top, 8)
+                    
+                    List {
+                        ForEach(storageManager.historyMatrixData) { matrix in
                             VStack(spacing: 8) {
                                 HStack {
                                     Text("\(matrix.name) - \(matrix.dateOfBirthday.formattedDate())")
@@ -49,14 +54,35 @@ struct HistoryView: View {
                             }
                             .frame(maxWidth: .infinity)
                             .customButtonStyle(shape: .capsule)
-                            .padding(.top, 11)
+                            .listRowBackground(Color.clear)
+                            .onLongPressGesture {
+                                selectedMatrixForDelete = matrix
+                                showDeleteAlert = true
+                            }
+                            
                         }
-                        
-                        VStack { }.frame(height: 100)
                     }
+                    .listStyle(.plain)
                 }
             }
             .padding()
+        }
+        .alert(isPresented: $showDeleteAlert) {
+            let matrixName = selectedMatrixForDelete?.name ?? "неизвестно"
+            let matrixDate = selectedMatrixForDelete?.dateOfBirthday.formattedDate() ?? "неизвестно"
+            
+            return Alert(
+                title: Text("Удалить матрицу?"),
+                message: Text("Вы уверены, что хотите удалить матрицу \(matrixName) - \(matrixDate)?"),
+                primaryButton: .destructive(Text("Удалить")) {
+                    if let matrix = selectedMatrixForDelete {
+                        withAnimation {
+                            storageManager.delete(shortMatrixData: matrix)
+                        }
+                    }
+                },
+                secondaryButton: .cancel(Text("Отмена"))
+            )
         }
     }
 }

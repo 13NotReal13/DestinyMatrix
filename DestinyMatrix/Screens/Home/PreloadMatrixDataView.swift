@@ -43,7 +43,7 @@ struct PreloadMatrixDataView: View {
                 }
                 
                 // TODO: Set 1 : 0 finally
-                .opacity(showButton ? 1 : 0)
+                .opacity(showButton ? 0 : 1)
                 .animation(.easeIn(duration: 0.05), value: showButton)
             }
             .frame(height: UIScreen.main.bounds.height * 0.1)

@@ -8,31 +8,45 @@
 import Foundation
 import SwiftUI
 
-struct ShortMatrixData: Codable, Hashable {
+struct ShortMatrixData: Codable, Hashable, Identifiable {
+    var id: UUID = UUID()
     let name: String
     let dateOfBirthday: Date
     let dateCreationMatrix: Date
 }
 
-final class StorageManager {
-    @AppStorage("historyMatrixData") var storedData: String = ""
+final class StorageManager: ObservableObject {
+    @AppStorage("historyMatrixData") private var storedData: String = ""
+
+    @Published var historyMatrixData: [ShortMatrixData] = []
     
-    var historyMatrixData: [ShortMatrixData] {
-        get {
-            guard let data = storedData.data(using: .utf8) else { return [] }
-            let decodedData = try? JSONDecoder().decode([ShortMatrixData].self, from: data)
-            return decodedData ?? []
+    init() {
+        load()
+    }
+    
+    private func load() {
+        guard let data = storedData.data(using: .utf8),
+              let decodedData = try? JSONDecoder().decode([ShortMatrixData].self, from: data)
+        else {
+            historyMatrixData = []
+            return
         }
-        set {
-            if let encodedData = try? JSONEncoder().encode(newValue) {
-                storedData = String(data: encodedData, encoding: .utf8) ?? ""
-            }
+        historyMatrixData = decodedData
+    }
+    
+    private func save() {
+        if let encodedData = try? JSONEncoder().encode(historyMatrixData) {
+            storedData = String(data: encodedData, encoding: .utf8) ?? ""
         }
     }
     
     func add(shortMatrixData: ShortMatrixData) {
-        var currentData = historyMatrixData
-        currentData.append(shortMatrixData)
-        historyMatrixData = currentData
+        historyMatrixData.append(shortMatrixData)
+        save()
+    }
+    
+    func delete(shortMatrixData: ShortMatrixData) {
+        historyMatrixData.removeAll { $0.id == shortMatrixData.id }
+        save()
     }
 }

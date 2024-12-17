@@ -40,7 +40,7 @@ final class HomeViewModel: ObservableObject {
     @Published var displayedDateText: String = "Выбрать дату"
     @Published var isDatePickerPresented: Bool = false
     
-    @Published var preloadAudioIsFinished: Bool = false
+    @Published var preloadAudioIsFinished: Bool = true
     @Published var matrixData: MatrixData?
     
     @Published var backgroundAudioIsPlaying = false
