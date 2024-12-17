@@ -20,31 +20,8 @@ struct Completed3DSphere: View {
     private var imageName: String = ShapeOfSphere.shapeName.rawValue
     
     var body: some View {
-        VStack {
-            HStack {
-                if homeViewModel.currentScreen != .home
-                    && homeViewModel.currentScreen != .onboarding
-                    && homeViewModel.currentScreen != .preloadMatrixData {
-                    Button {
-                        homeViewModel.goHomeScreen()
-                    } label: {
-                        Text("Главная")
-                            .customText(fontSize: 17, textColor: .white)
-                            .customBarButtonStyle(shape: .capsule)
-                    }
-                    Spacer()
-                }
-            }
-            .frame(height: UIScreen.main.bounds.height * 0.05)
-            
+        VStack {            
             VStack(spacing: 10) {
-                if homeViewModel.currentScreen != .onboarding {
-                    Text("Матрица Судьбы")
-                        .customText(fontSize: 28, textColor: .white)
-                    
-                    Text("Ваш путь к успеху и изобилию")
-                        .customText(fontSize: 12, textColor: .white)
-                }
             }
             .frame(height: UIScreen.main.bounds.height * 0.05)
             

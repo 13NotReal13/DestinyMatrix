@@ -33,19 +33,19 @@ struct HomeView: View {
                             .onAppear {
                                 homeViewModel.startOnboardingAudio(audioVisualizer: audioVisualizer)
                             }
-                    // Home
+                        // Home
                     } else if homeViewModel.currentScreen == .home {
                         HomeMenuButtonsView()
                             .onAppear {
-                                if !homeViewModel.backgroundAudioIsPlaying {
-                                    audioVisualizer.playBackgroundAudio()
-                                }
-                                homeViewModel.backgroundAudioIsPlaying = true
+//                                if !homeViewModel.backgroundAudioIsPlaying {
+//                                    audioVisualizer.playBackgroundAudio()
+//                                }
+//                                homeViewModel.backgroundAudioIsPlaying = true
                             }
-                    // EnterData
+                        // EnterData
                     } else if homeViewModel.currentScreen == .enterData {
                         EnterDataView()
-                    // PreloadMatrix
+                        // PreloadMatrix
                     } else if homeViewModel.currentScreen == .preloadMatrixData {
                         PreloadMatrixDataView()
                             .onAppear {
@@ -76,6 +76,33 @@ struct HomeView: View {
                         )
                         .matrixData
                     )
+                }
+                .toolbar {
+                    ToolbarItem(placement: .principal) {
+                        VStack(spacing: 8) {
+                            if homeViewModel.currentScreen != .onboarding {
+                                Text("Матрица Судьбы")
+                                    .customText(fontSize: 28, textColor: .white)
+                                
+                                Text("Ваш путь к успеху и изобилию")
+                                    .customText(fontSize: 12, textColor: .white)
+                            }
+                        }
+                    }
+                    
+                    ToolbarItem(placement: .topBarLeading) {
+                        if homeViewModel.currentScreen != .home
+                            && homeViewModel.currentScreen != .onboarding
+                            && homeViewModel.currentScreen != .preloadMatrixData {
+                            Button {
+                                homeViewModel.goHomeScreen()
+                            } label: {
+                                Image(systemName: "chevron.backward")
+                                    .customText(fontSize: 17, textColor: .white)
+                                    .customBarButtonStyle(shape: .circle)
+                            }
+                        }
+                    }
                 }
         }
     }

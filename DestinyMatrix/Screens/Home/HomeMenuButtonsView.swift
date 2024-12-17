@@ -19,12 +19,12 @@ struct HomeMenuButtonsView: View {
                 Spacer()
                 
                 Button {
-                    withAnimation(.easeOut(duration: 0.2)) {
+                    withAnimation(.easeOut(duration: 0.05)) {
                         readyToGoToEnterData = true
                     }
                     
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                        withAnimation(.easeIn(duration: 0.7)) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                        withAnimation(.easeIn(duration: 0.05)) {
                             homeViewModel.currentScreen = .enterData
                         }
                     }

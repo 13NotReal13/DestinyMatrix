@@ -21,11 +21,11 @@ enum ShapeOfSphere: String {
 }
 
 final class HomeViewModel: ObservableObject {
-    @Published var onboardingAudioIsFinished: Bool = false
-    @Published var onboardingWasShowed: Bool = false
+    @Published var currentScreen: Screen = .home
     
-    @Published var currentScreen: Screen = .onboarding
-    @Published var onboardingIsFinished = false
+    @Published var onboardingAudioIsFinished: Bool = true
+    @Published var onboardingIsFinished = true
+    @Published var onboardingWasShowed: Bool = true
     
     @Published var showHelpInfoView: Bool = false
     @Published var showHistoryView: Bool = false

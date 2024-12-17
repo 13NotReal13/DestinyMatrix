@@ -12,12 +12,12 @@ struct NextButtonOnboardingView: View {
     
     var body: some View {
         Button {
-            withAnimation(.easeOut(duration: 0.2)) {
+            withAnimation(.easeOut(duration: 0.05)) {
                 homeViewModel.onboardingWasShowed = true
                 }
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                withAnimation(.easeIn(duration: 0.7)) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                withAnimation(.easeIn(duration: 0.05)) {
                     homeViewModel.currentScreen = .home
                 }
             }
@@ -27,7 +27,7 @@ struct NextButtonOnboardingView: View {
                 .customText(fontSize: 17, textColor: .white)
                 .customButtonStyle(shape: .capsule)
                 .opacity(homeViewModel.onboardingAudioIsFinished ? 1 : 0)
-                .transition(.opacity.combined(with: .scale(scale: 0.5)))
+                .transition(.opacity.combined(with: .scale(scale: 0.05)))
         }
     }
 }
