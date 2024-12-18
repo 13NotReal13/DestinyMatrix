@@ -13,7 +13,7 @@ struct OnboardingView: View {
     
     @State private var textOffset: CGFloat = UIScreen.main.bounds.height * 0.3
     
-    private var duration: CGFloat = 54
+    private var duration: CGFloat = 55
     
     var body: some View {
         VStack {

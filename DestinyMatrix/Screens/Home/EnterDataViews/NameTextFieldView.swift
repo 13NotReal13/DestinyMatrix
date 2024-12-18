@@ -25,7 +25,7 @@ struct NameTextFieldView: View {
                         homeViewModel.validateName()
                     }
             }
-            .frame(maxWidth: .infinity)
+            .frame(width: UIScreen.main.bounds.width * 0.6)
             .customButtonStyle(
                 color1: .lightAroundSphere,
                 color2: .lightAroundSphere,

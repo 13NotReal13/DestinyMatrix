@@ -30,7 +30,7 @@ struct HomeMenuButtonsView: View {
                     }
                 } label: {
                     Text("Рассчитать матрицу")
-                        .frame(maxWidth: .infinity)
+                        .frame(width: UIScreen.main.bounds.width * 0.6)
                         .customText(fontSize: 17, textColor: .white)
                         .customButtonStyle(shape: .capsule)
                 }
@@ -39,7 +39,7 @@ struct HomeMenuButtonsView: View {
                     homeViewModel.showHistoryView = true
                 } label: {
                     Text("История")
-                        .frame(maxWidth: .infinity)
+                        .frame(width: UIScreen.main.bounds.width * 0.6)
                         .customText(fontSize: 17, textColor: .white)
                         .customButtonStyle(shape: .capsule)
                 }
@@ -48,7 +48,7 @@ struct HomeMenuButtonsView: View {
                     homeViewModel.showHelpInfoView = true
                 } label: {
                     Text("Содержание")
-                        .frame(maxWidth: .infinity)
+                        .frame(width: UIScreen.main.bounds.width * 0.6)
                         .customText(fontSize: 17, textColor: .white)
                         .customButtonStyle(shape: .capsule)
                 }

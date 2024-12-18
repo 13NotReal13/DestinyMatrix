@@ -29,7 +29,7 @@ struct DatePickerView: View {
                             .customText(fontSize: 16, textColor: .black)
                     }
                 }
-                .frame(maxWidth: .infinity)
+                .frame(width: UIScreen.main.bounds.width * 0.6)
                 .customButtonStyle(
                     color1: .lightAroundSphere,
                     color2: .lightAroundSphere,
@@ -57,7 +57,7 @@ struct DatePickerView: View {
                             homeViewModel.isDatePickerPresented = false
                         } label: {
                             Text("Готово")
-                                .frame(maxWidth: .infinity)
+                                .frame(width: UIScreen.main.bounds.width * 0.6)
                                 .customText(fontSize: 16, textColor: .white)
                                 .customButtonStyle(shape: .capsule)
                         }

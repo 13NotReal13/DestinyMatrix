@@ -49,12 +49,10 @@ struct EnterDataView: View {
                     }
                 } label: {
                     Text("Далее")
-                        .frame(maxWidth: .infinity)
+                        .frame(width: UIScreen.main.bounds.width * 0.6)
                         .customText(fontSize: 16, textColor: .white)
                         .customButtonStyle(shape: .capsule)
                 }
-                
-                Spacer()
             }
         }
         .frame(height: UIScreen.main.bounds.height * 0.4)

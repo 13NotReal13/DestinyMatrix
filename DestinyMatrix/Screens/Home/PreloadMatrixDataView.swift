@@ -19,34 +19,32 @@ struct PreloadMatrixDataView: View {
         VStack {
             Spacer()
             
-            VStack {
-                 Text(statusText)
-                    .customText(fontSize: 16, textColor: .white)
-                    .padding(.vertical)
-
-                 // Прогресс-бар
-                 ProgressView(value: progress, total: 1.0)
-                    .tint(.buttonColor2)
-             }
-            .padding()
-            
-            Spacer()
-            
-            VStack {
-                Button {
-                    homeViewModel.showMatrixView = true
-                } label: {
-                    Text("Открыть")
-                        .frame(maxWidth: .infinity)
-                        .customText(fontSize: 16, textColor: .white)
-                        .customButtonStyle(shape: .capsule)
+            if showButton {
+                VStack {
+                    Button {
+                        homeViewModel.showMatrixView = true
+                    } label: {
+                        Text("Открыть")
+                            .frame(width: UIScreen.main.bounds.width * 0.6)
+                            .customText(fontSize: 16, textColor: .white)
+                            .customButtonStyle(shape: .capsule)
+                    }
                 }
-                
-                // TODO: Set 1 : 0 finally
-                .opacity(showButton ? 0 : 1)
-                .animation(.easeIn(duration: 0.05), value: showButton)
+                .frame(height: UIScreen.main.bounds.height * 0.1)
+                .transition(.opacity.animation(.easeIn(duration: 0.05)))
+            } else {
+                VStack {
+                    Text(statusText)
+                        .customText(fontSize: 16, textColor: .white)
+                        .padding(.vertical)
+                    
+                    // Прогресс-бар
+                    ProgressView(value: progress, total: 1.0)
+                        .tint(.buttonColor2)
+                }
+                .padding(.horizontal)
+                .transition(.opacity.animation(.easeOut(duration: 0.05)))
             }
-            .frame(height: UIScreen.main.bounds.height * 0.1)
         }
         .frame(height: UIScreen.main.bounds.height * 0.4)
         .onAppear {
@@ -72,11 +70,11 @@ struct PreloadMatrixDataView: View {
                 
                 if index == delays.count - 1 { // Последний шаг
                     homeViewModel.preloadAudioIsFinished = true
-                    statusText = "Готово! Анализ завершён." // Меняем текст
-                    
                     withAnimation {
-                        showButton = true
+                        statusText = "Готово! Анализ завершён." // Меняем текст
                     }
+                    
+                    showButton = true
                 }
             }
         }
