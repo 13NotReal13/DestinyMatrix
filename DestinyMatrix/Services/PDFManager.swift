@@ -7,6 +7,7 @@
 
 import UIKit
 import PDFKit
+import SwiftUI
 
 final class PDFManager {
     let pageRect = CGRect(x: 0, y: 0, width: 612, height: 792)
@@ -16,48 +17,59 @@ final class PDFManager {
     let bottomPadding: CGFloat = 50
     
     var currentY: CGFloat = 0.0
+    var stars: [(CGPoint, CGFloat)] = [] // (позиция, прозрачность)
     
     func createPDF(matrixData: MatrixData) -> Data? {
+        generateStars(in: pageRect.size)
+        
         let pdfData = NSMutableData()
         UIGraphicsBeginPDFContextToData(pdfData, pageRect, nil)
         
         beginNewPage()
         
-        // Шрифты
+        // Шрифты с белым цветом текста
         let personalDataFont = UIFont.boldSystemFont(ofSize: 24)
         let titleFont = UIFont.boldSystemFont(ofSize: 18)
         let subtitleFont = UIFont.boldSystemFont(ofSize: 16)
         let shortDescriptionFont = UIFont.italicSystemFont(ofSize: 14)
         let mainDescriptionFont = UIFont.systemFont(ofSize: 14)
+        let headerFont = UIFont.boldSystemFont(ofSize: 28)
         
-        let personalDataAttrs: [NSAttributedString.Key: Any] = [.font: personalDataFont]
-        let titleAttrs: [NSAttributedString.Key: Any] = [.font: titleFont]
-        let subtitleAttrs: [NSAttributedString.Key: Any] = [.font: subtitleFont]
-        let shortDescriptionAttrs: [NSAttributedString.Key: Any] = [.font: shortDescriptionFont]
-        let mainDescriptionAttrs: [NSAttributedString.Key: Any] = [.font: mainDescriptionFont]
+        let textColor = UIColor.white
         
-        // Вывод персональных данных
+        let headerAttrs: [NSAttributedString.Key: Any] = [.font: headerFont, .foregroundColor: textColor]
+        let personalDataAttrs: [NSAttributedString.Key: Any] = [.font: personalDataFont, .foregroundColor: textColor]
+        let titleAttrs: [NSAttributedString.Key: Any] = [.font: titleFont, .foregroundColor: textColor]
+        let subtitleAttrs: [NSAttributedString.Key: Any] = [.font: subtitleFont, .foregroundColor: textColor]
+        let shortDescriptionAttrs: [NSAttributedString.Key: Any] = [.font: shortDescriptionFont, .foregroundColor: textColor]
+        let mainDescriptionAttrs: [NSAttributedString.Key: Any] = [.font: mainDescriptionFont, .foregroundColor: textColor]
+        
+        // Заголовок всего документа
+        let headerText = "Матрица Судьбы"
+        drawCenteredText(headerText, attributes: headerAttrs)
+        
+        currentY += 40
+        
+        // Персональные данные
         let personalInfoText = "\(matrixData.name) - \(matrixData.dateOfBirthday.formattedDate())"
-        drawTextWithPagination(personalInfoText, attributes: personalDataAttrs)
+        drawAttributedText(NSAttributedString(string: personalInfoText, attributes: personalDataAttrs))
         
-        // Добавим отступ после персональных данных
         currentY += 30
         
         // Проходим по всем арканам
         for arkan in matrixData.allArkans {
             // Заголовок аркана
-            drawTextWithPagination(arkan.title, attributes: titleAttrs)
+            drawAttributedText(NSAttributedString(string: arkan.title, attributes: titleAttrs))
             
             for subcat in arkan.subcategories {
                 currentY += 20
-                drawTextWithPagination(subcat.title, attributes: subtitleAttrs)
+                drawAttributedText(NSAttributedString(string: subcat.title, attributes: subtitleAttrs))
                 currentY += 5
-                drawTextWithPagination(subcat.shortDescription, attributes: shortDescriptionAttrs)
+                drawAttributedText(NSAttributedString(string: subcat.shortDescription, attributes: shortDescriptionAttrs))
                 currentY += 5
-                drawTextWithPagination(subcat.mainDescription, attributes: mainDescriptionAttrs)
+                drawAttributedText(NSAttributedString(string: subcat.mainDescription, attributes: mainDescriptionAttrs))
             }
             
-            // Отступ между арканами
             currentY += 40
         }
         
@@ -68,10 +80,8 @@ final class PDFManager {
     func savePDF(matrixData: MatrixData) -> URL? {
         guard let pdfData = createPDF(matrixData: matrixData) else { return nil }
         
-        // Формируем имя файла
         let fileName = "\(matrixData.name) - \(matrixData.dateOfBirthday.formattedDate()).pdf"
         
-        // Путь к документам
         if let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
             let pdfURL = documentsURL.appendingPathComponent(fileName)
             do {
@@ -87,21 +97,95 @@ final class PDFManager {
     private func beginNewPage() {
         UIGraphicsBeginPDFPage()
         currentY = topPadding
+        
+        // Рисуем однотонный фон
+        if let context = UIGraphicsGetCurrentContext() {
+            let backgroundColor = UIColor(Color.backgroundColor1)
+            context.setFillColor(backgroundColor.cgColor)
+            context.fill(pageRect)
+            
+            // Рисуем звёзды
+            for (position, brightness) in stars {
+                let starColor = UIColor.white.withAlphaComponent(brightness)
+                context.setFillColor(starColor.cgColor)
+                context.fillEllipse(in: CGRect(x: position.x, y: position.y, width: 2, height: 2))
+            }
+        }
     }
     
-    private func drawTextWithPagination(_ text: String, attributes: [NSAttributedString.Key: Any]) {
+    /// Рисуем текст по центру
+    private func drawCenteredText(_ text: String, attributes: [NSAttributedString.Key: Any]) {
         let attrString = NSAttributedString(string: text, attributes: attributes)
-        let maxWidth = pageRect.width - leftPadding - rightPadding
-        let textSize = attrString.boundingRect(with: CGSize(width: maxWidth, height: .greatestFiniteMagnitude),
+        let textSize = attrString.boundingRect(with: CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude),
                                                options: [.usesLineFragmentOrigin, .usesFontLeading],
                                                context: nil)
         
-        // Проверяем, влезает ли текст на текущую страницу
-        if currentY + textSize.height > (pageRect.height - bottomPadding) {
+        if currentY + textSize.height > pageRect.height - bottomPadding {
             beginNewPage()
         }
         
-        attrString.draw(in: CGRect(x: leftPadding, y: currentY, width: maxWidth, height: textSize.height))
+        let x = (pageRect.width - textSize.width) / 2
+        attrString.draw(in: CGRect(x: x, y: currentY, width: textSize.width, height: textSize.height))
         currentY += textSize.height
+    }
+    
+    /// Рисуем атрибутированный текст с разбиением на страницы по строкам.
+    private func drawAttributedText(_ attrString: NSAttributedString) {
+        let maxWidth = pageRect.width - leftPadding - rightPadding
+        
+        // Создаём NSTextStorage и NSLayoutManager
+        let textStorage = NSTextStorage(attributedString: attrString)
+        let layoutManager = NSLayoutManager()
+        let textContainer = NSTextContainer(size: CGSize(width: maxWidth, height: .greatestFiniteMagnitude))
+        
+        layoutManager.addTextContainer(textContainer)
+        textStorage.addLayoutManager(layoutManager)
+        
+        var glyphIndex = 0
+        
+        while glyphIndex < layoutManager.numberOfGlyphs {
+            let remainingHeight = pageRect.height - bottomPadding - currentY
+            
+            // Вычисляем, сколько глифов влезает на текущую "страницу"
+            // Для этого используем boundingRect через layoutManager:
+            let range = layoutManager.glyphRange(forBoundingRect: CGRect(x: 0, y: 0, width: maxWidth, height: remainingHeight), in: textContainer)
+            
+            if range.length == 0 {
+                // Если не влезло ни одного глифа, начинаем новую страницу
+                beginNewPage()
+                continue
+            }
+            
+            // Отрисовываем глифы на текущей странице
+            let offset = CGPoint(x: leftPadding, y: currentY)
+            layoutManager.drawBackground(forGlyphRange: range, at: offset)
+            layoutManager.drawGlyphs(forGlyphRange: range, at: offset)
+            
+            // Вычисляем высоту нарисованного текста
+            let usedRect = layoutManager.boundingRect(forGlyphRange: range, in: textContainer)
+            currentY += usedRect.height
+            
+            glyphIndex = NSMaxRange(range)
+            
+            // Если есть ещё глифы на отрисовку — нужна новая страница
+            if glyphIndex < layoutManager.numberOfGlyphs {
+                beginNewPage()
+            }
+        }
+    }
+    
+    private func generateStars(in size: CGSize) {
+        let screenWidth = size.width
+        let screenHeight = size.height
+        
+        stars = (0..<100).map { _ in
+            (
+                CGPoint(
+                    x: CGFloat.random(in: 0...screenWidth),
+                    y: CGFloat.random(in: 0...screenHeight)
+                ),
+                CGFloat.random(in: 0.5...1.0) // яркость
+            )
+        }
     }
 }
