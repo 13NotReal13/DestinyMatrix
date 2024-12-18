@@ -52,22 +52,22 @@ final class PDFManager {
         
         // Персональные данные
         let personalInfoText = "\(matrixData.name) - \(matrixData.dateOfBirthday.formattedDate())"
-        drawAttributedText(NSAttributedString(string: personalInfoText, attributes: personalDataAttrs))
+        drawAttributedTextLineByLine(NSAttributedString(string: personalInfoText, attributes: personalDataAttrs))
         
         currentY += 30
         
         // Проходим по всем арканам
         for arkan in matrixData.allArkans {
             // Заголовок аркана
-            drawAttributedText(NSAttributedString(string: arkan.title, attributes: titleAttrs))
+            drawAttributedTextLineByLine(NSAttributedString(string: arkan.title, attributes: titleAttrs))
             
             for subcat in arkan.subcategories {
                 currentY += 20
-                drawAttributedText(NSAttributedString(string: subcat.title, attributes: subtitleAttrs))
+                drawAttributedTextLineByLine(NSAttributedString(string: subcat.title, attributes: subtitleAttrs))
                 currentY += 5
-                drawAttributedText(NSAttributedString(string: subcat.shortDescription, attributes: shortDescriptionAttrs))
+                drawAttributedTextLineByLine(NSAttributedString(string: subcat.shortDescription, attributes: shortDescriptionAttrs))
                 currentY += 5
-                drawAttributedText(NSAttributedString(string: subcat.mainDescription, attributes: mainDescriptionAttrs))
+                drawAttributedTextLineByLine(NSAttributedString(string: subcat.mainDescription, attributes: mainDescriptionAttrs))
             }
             
             currentY += 40
@@ -129,8 +129,8 @@ final class PDFManager {
         currentY += textSize.height
     }
     
-    /// Рисуем атрибутированный текст с разбиением на страницы по строкам.
-    private func drawAttributedText(_ attrString: NSAttributedString) {
+    /// Рисуем атрибутированный текст построчно (без дублирования) используя lineFragmentRect
+    private func drawAttributedTextLineByLine(_ attrString: NSAttributedString) {
         let maxWidth = pageRect.width - leftPadding - rightPadding
         
         // Создаём NSTextStorage и NSLayoutManager
@@ -142,35 +142,26 @@ final class PDFManager {
         textStorage.addLayoutManager(layoutManager)
         
         var glyphIndex = 0
-        
         while glyphIndex < layoutManager.numberOfGlyphs {
-            let remainingHeight = pageRect.height - bottomPadding - currentY
+            var lineRange = NSRange()
+            let lineRect = layoutManager.lineFragmentRect(forGlyphAt: glyphIndex, effectiveRange: &lineRange, withoutAdditionalLayout: true)
             
-            // Вычисляем, сколько глифов влезает на текущую "страницу"
-            // Для этого используем boundingRect через layoutManager:
-            let range = layoutManager.glyphRange(forBoundingRect: CGRect(x: 0, y: 0, width: maxWidth, height: remainingHeight), in: textContainer)
-            
-            if range.length == 0 {
-                // Если не влезло ни одного глифа, начинаем новую страницу
-                beginNewPage()
-                continue
-            }
-            
-            // Отрисовываем глифы на текущей странице
-            let offset = CGPoint(x: leftPadding, y: currentY)
-            layoutManager.drawBackground(forGlyphRange: range, at: offset)
-            layoutManager.drawGlyphs(forGlyphRange: range, at: offset)
-            
-            // Вычисляем высоту нарисованного текста
-            let usedRect = layoutManager.boundingRect(forGlyphRange: range, in: textContainer)
-            currentY += usedRect.height
-            
-            glyphIndex = NSMaxRange(range)
-            
-            // Если есть ещё глифы на отрисовку — нужна новая страница
-            if glyphIndex < layoutManager.numberOfGlyphs {
+            // Проверяем, поместится ли строка на текущей странице
+            if currentY + lineRect.height > pageRect.height - bottomPadding {
+                // Если не помещается, начинаем новую страницу
                 beginNewPage()
             }
+            
+            // Отрисовываем строку
+            // lineRect.origin.y - это координата строки в контексте текста (сверху 0),
+            // нам нужно сдвинуть её так, чтобы она появилась на currentY
+            let offset = CGPoint(x: leftPadding, y: currentY - lineRect.origin.y)
+            
+            layoutManager.drawBackground(forGlyphRange: lineRange, at: offset)
+            layoutManager.drawGlyphs(forGlyphRange: lineRange, at: offset)
+            
+            currentY += lineRect.height
+            glyphIndex = NSMaxRange(lineRange)
         }
     }
     
