@@ -13,7 +13,7 @@ struct OnboardingView: View {
     
     @State private var textOffset: CGFloat = UIScreen.main.bounds.height * 0.3
     
-    private var duration: CGFloat = 55
+    private var duration: CGFloat = 56
     
     var body: some View {
         VStack {
@@ -69,7 +69,7 @@ struct OnboardingView: View {
         AnimatedStarryBackgroundView()
         
         OnboardingView()
-            .environmentObject(HomeViewModel())
+            .environmentObject(HomeViewModel(storageManager: StorageManager()))
             .environmentObject(AudioVisualizer())
     }
 }

@@ -80,6 +80,6 @@ struct DatePickerView: View {
         AnimatedStarryBackgroundView()
         
         DatePickerView()
-            .environmentObject(HomeViewModel())
+            .environmentObject(HomeViewModel(storageManager: StorageManager()))
     }
 }

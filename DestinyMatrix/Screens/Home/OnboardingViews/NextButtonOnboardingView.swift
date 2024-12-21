@@ -9,6 +9,7 @@ import SwiftUI
 
 struct NextButtonOnboardingView: View {
     @EnvironmentObject private var homeViewModel: HomeViewModel
+    @EnvironmentObject private var storageManager: StorageManager
     
     var body: some View {
         Button {
@@ -18,6 +19,7 @@ struct NextButtonOnboardingView: View {
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
                 withAnimation(.easeIn(duration: 0.05)) {
+                    storageManager.onboardingWasShowing = true
                     homeViewModel.currentScreen = .home
                 }
             }
@@ -37,6 +39,6 @@ struct NextButtonOnboardingView: View {
         AnimatedStarryBackgroundView()
         
         NextButtonOnboardingView()
-            .environmentObject(HomeViewModel())
+            .environmentObject(HomeViewModel(storageManager: StorageManager()))
     }
 }

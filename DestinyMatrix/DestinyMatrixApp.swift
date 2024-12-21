@@ -12,14 +12,21 @@ import SwiftUI
 struct DestinyMatrixApp: App {
     @StateObject private var audioVisualizer = AudioVisualizer()
     
-    @StateObject private var homeViewModel = HomeViewModel()
+    @StateObject private var storageManager = StorageManager()
+    @StateObject private var homeViewModel: HomeViewModel
     @StateObject private var matrixViewModel = MatrixViewModel()
+    
+    init() {
+        let storageManager = StorageManager()
+        _homeViewModel = StateObject(wrappedValue: HomeViewModel(storageManager: storageManager))
+    }
 
     var body: some Scene {
         WindowGroup {
             ZStack {
                 HomeView()
                     .environmentObject(audioVisualizer)
+                    .environmentObject(storageManager)
                     .environmentObject(homeViewModel)
                     .environmentObject(matrixViewModel)
                 

@@ -21,11 +21,13 @@ enum ShapeOfSphere: String {
 }
 
 final class HomeViewModel: ObservableObject {
-    @Published var currentScreen: Screen = .home
+    private var storageManager: StorageManager
     
-    @Published var onboardingAudioIsFinished: Bool = true
-    @Published var onboardingIsFinished = true
-    @Published var onboardingWasShowed: Bool = true
+    @Published var currentScreen: Screen = .onboarding
+    
+    @Published var onboardingAudioIsFinished: Bool = false
+    @Published var onboardingIsFinished = false
+    @Published var onboardingWasShowed: Bool = false
     
     @Published var showHelpInfoView: Bool = false
     @Published var showHistoryView: Bool = false
@@ -40,10 +42,24 @@ final class HomeViewModel: ObservableObject {
     @Published var displayedDateText: String = "Выбрать дату"
     @Published var isDatePickerPresented: Bool = false
     
-    @Published var preloadAudioIsFinished: Bool = true
+    @Published var preloadAudioIsFinished: Bool = false
     @Published var matrixData: MatrixData?
     
     @Published var backgroundAudioIsPlaying = false
+    
+    init(storageManager: StorageManager) {
+        self.storageManager = storageManager
+        initializeFromStorage()
+    }
+    
+    func initializeFromStorage() {
+        if storageManager.onboardingWasShowing {
+            onboardingAudioIsFinished = true
+            onboardingIsFinished = true
+            onboardingWasShowed = true
+            currentScreen = .home
+        }
+    }
     
     func goHomeScreen() {
         currentScreen = .home

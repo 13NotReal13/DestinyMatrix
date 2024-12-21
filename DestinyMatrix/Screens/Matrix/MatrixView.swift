@@ -132,5 +132,5 @@ struct MatrixView: View {
     
     MatrixView(matrixData: matrixData.matrixData)
         .environmentObject(MatrixViewModel())
-        .environmentObject(HomeViewModel())
+        .environmentObject(HomeViewModel(storageManager: StorageManager()))
 }

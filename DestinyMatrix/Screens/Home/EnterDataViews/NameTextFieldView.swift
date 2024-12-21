@@ -45,6 +45,6 @@ struct NameTextFieldView: View {
         AnimatedStarryBackgroundView()
         
         NameTextFieldView()
-            .environmentObject(HomeViewModel())
+            .environmentObject(HomeViewModel(storageManager: StorageManager()))
     }
 }

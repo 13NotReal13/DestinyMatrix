@@ -16,6 +16,7 @@ struct ShortMatrixData: Codable, Hashable, Identifiable {
 }
 
 final class StorageManager: ObservableObject {
+    @AppStorage("onboardingWasShowing") var onboardingWasShowing: Bool = false
     @AppStorage("historyMatrixData") private var storedData: String = ""
 
     @Published var historyMatrixData: [ShortMatrixData] = []

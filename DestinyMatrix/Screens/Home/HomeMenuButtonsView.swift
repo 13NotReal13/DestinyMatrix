@@ -63,6 +63,6 @@ struct HomeMenuButtonsView: View {
         AnimatedStarryBackgroundView()
         
         HomeMenuButtonsView()
-            .environmentObject(HomeViewModel())
+            .environmentObject(HomeViewModel(storageManager: StorageManager()))
     }
 }

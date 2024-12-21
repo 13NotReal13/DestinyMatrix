@@ -109,6 +109,6 @@ struct PreloadMatrixDataView: View {
         
         PreloadMatrixDataView()
             .environmentObject(AudioVisualizer())
-            .environmentObject(HomeViewModel())
+            .environmentObject(HomeViewModel(storageManager: StorageManager()))
     }
 }

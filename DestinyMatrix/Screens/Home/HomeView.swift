@@ -37,10 +37,10 @@ struct HomeView: View {
                     } else if homeViewModel.currentScreen == .home {
                         HomeMenuButtonsView()
                             .onAppear {
-//                                if !homeViewModel.backgroundAudioIsPlaying {
-//                                    audioVisualizer.playBackgroundAudio()
-//                                }
-//                                homeViewModel.backgroundAudioIsPlaying = true
+                                if !homeViewModel.backgroundAudioIsPlaying {
+                                    audioVisualizer.playBackgroundAudio()
+                                }
+                                homeViewModel.backgroundAudioIsPlaying = true
                             }
                         // EnterData
                     } else if homeViewModel.currentScreen == .enterData {
@@ -111,5 +111,5 @@ struct HomeView: View {
 #Preview {
     HomeView()
         .environmentObject(AudioVisualizer())
-        .environmentObject(HomeViewModel())
+        .environmentObject(HomeViewModel(storageManager: StorageManager()))
 }

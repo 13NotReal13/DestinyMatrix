@@ -65,6 +65,7 @@ struct EnterDataView: View {
         
         EnterDataView()
             .environmentObject(AudioVisualizer())
-            .environmentObject(HomeViewModel())
+            .environmentObject(HomeViewModel(storageManager: StorageManager()))
     }
 }
+        
