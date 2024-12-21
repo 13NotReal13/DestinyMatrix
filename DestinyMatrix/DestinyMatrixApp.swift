@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import FirebaseCore
 
 @main
 struct DestinyMatrixApp: App {
@@ -17,6 +17,8 @@ struct DestinyMatrixApp: App {
     @StateObject private var matrixViewModel = MatrixViewModel()
     
     init() {
+        FirebaseApp.configure()
+        
         let storageManager = StorageManager()
         _homeViewModel = StateObject(wrappedValue: HomeViewModel(storageManager: storageManager))
     }
