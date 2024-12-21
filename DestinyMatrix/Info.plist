@@ -8,5 +8,9 @@
 		<string>CorrectionBrush.ttf</string>
 		<string>Blackcraft.ttf</string>
 	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
 </dict>
 </plist>

@@ -10,6 +10,8 @@ import FirebaseCore
 
 @main
 struct DestinyMatrixApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
     @StateObject private var audioVisualizer = AudioVisualizer()
     
     @StateObject private var storageManager = StorageManager()
@@ -17,8 +19,6 @@ struct DestinyMatrixApp: App {
     @StateObject private var matrixViewModel = MatrixViewModel()
     
     init() {
-        FirebaseApp.configure()
-        
         let storageManager = StorageManager()
         _homeViewModel = StateObject(wrappedValue: HomeViewModel(storageManager: storageManager))
     }
