@@ -11,6 +11,8 @@ import FirebaseCore
 import FirebaseMessaging
 import UserNotifications
 
+import FirebaseAnalytics
+
 class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {
     
     // Инициализация Firebase
@@ -18,6 +20,8 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
 
+        Analytics.setAnalyticsCollectionEnabled(true)
+        
         // Настройка уведомлений
         UNUserNotificationCenter.current().delegate = self
         Messaging.messaging().delegate = self
@@ -30,6 +34,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
             }
         }
         application.registerForRemoteNotifications()
+        
         
         return true
     }
@@ -44,7 +49,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        completionHandler([.alert, .sound, .badge])
+        completionHandler([.banner, .sound, .badge])
     }
     
     // Обновление FCM-токена
