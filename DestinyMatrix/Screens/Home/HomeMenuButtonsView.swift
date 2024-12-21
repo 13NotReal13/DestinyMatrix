@@ -19,15 +19,17 @@ struct HomeMenuButtonsView: View {
                 Spacer()
                 
                 Button {
-                    withAnimation(.easeOut(duration: 0.05)) {
-                        readyToGoToEnterData = true
-                    }
+//                    withAnimation(.easeOut(duration: 0.05)) {
+//                        readyToGoToEnterData = true
+//                    }
+//                    
+//                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+//                        withAnimation(.easeIn(duration: 0.05)) {
+//                            homeViewModel.currentScreen = .enterData
+//                        }
+//                    }
                     
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-                        withAnimation(.easeIn(duration: 0.05)) {
-                            homeViewModel.currentScreen = .enterData
-                        }
-                    }
+                    fatalError("Тестовый краш!")
                 } label: {
                     Text("Рассчитать матрицу")
                         .frame(width: UIScreen.main.bounds.width * 0.6)
