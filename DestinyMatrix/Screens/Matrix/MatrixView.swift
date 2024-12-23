@@ -85,6 +85,11 @@ struct MatrixView: View {
                     }
                 }
             }
+            .onAppear {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    homeViewModel.currentScreen = .matrix
+                }
+            }
             
             LeftMenuView()
         }

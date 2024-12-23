@@ -37,6 +37,10 @@ struct HomeMenuButtonsView: View {
                 
                 Button {
                     homeViewModel.showHistoryView = true
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        homeViewModel.currentScreen = .history
+                    }
                 } label: {
                     Text("История")
                         .frame(width: UIScreen.main.bounds.width * 0.6)
@@ -46,6 +50,10 @@ struct HomeMenuButtonsView: View {
                 
                 Button {
                     homeViewModel.showHelpInfoView = true
+                
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        homeViewModel.currentScreen = .helpInfo
+                    }
                 } label: {
                     Text("Содержание")
                         .frame(width: UIScreen.main.bounds.width * 0.6)

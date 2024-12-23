@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HelpInfoView: View {
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject private var homeViewModel: HomeViewModel
     
     private let categories = HelpInfoViewModel().categories
     
@@ -19,6 +20,7 @@ struct HelpInfoView: View {
             VStack(alignment: .center) {
                 HStack {
                     Button {
+                        homeViewModel.goHomeScreen()
                         dismiss()
                     } label: {
                         Text("Закрыть")

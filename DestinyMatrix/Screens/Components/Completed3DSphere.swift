@@ -47,13 +47,6 @@ struct Completed3DSphere: View {
                     .stroke(lineWidth: 0.1)
                     .frame(width: UIScreen.main.bounds.width * (size - 0.05))
                     .foregroundStyle(.lightAroundSphere)
-                
-                VStack {
-                    if homeViewModel.currentScreen != .onboarding  {
-                        DateAround3DSphere(customFont: CustomFont.fontName)
-                        Spacer()
-                    }
-                }
             }
         }
         .frame(height: UIScreen.main.bounds.height * 0.4)

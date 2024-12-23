@@ -10,9 +10,12 @@ import SwiftUI
 struct HistoryView: View {
     @Environment(\.dismiss) private var dismiss
     @ObservedObject private var storageManager = StorageManager()
+    @EnvironmentObject private var homeViewModel: HomeViewModel
     
     @State private var showDeleteAlert = false
-    @State private var selectedMatrixForDelete: ShortMatrixData? = nil
+    @State private var selectedMatrix: ShortMatrixData? = nil
+    
+    @State private var showMatrixView = false
     
     var body: some View {
         NavigationView {
@@ -36,7 +39,7 @@ struct HistoryView: View {
                                     HStack {
                                         Text("\(matrix.name)")
                                             .onLongPressGesture {
-                                                selectedMatrixForDelete = matrix
+                                                selectedMatrix = matrix
                                                 showDeleteAlert = true
                                             }
                                         Text(" - \(matrix.dateOfBirthday.formattedDate())")
@@ -49,6 +52,12 @@ struct HistoryView: View {
                                 .frame(maxWidth: .infinity)
                                 .customButtonStyle(shape: .capsule)
                                 .listRowBackground(Color.clear)
+                                .onTapGesture {
+                                    selectedMatrix = matrix
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                        showMatrixView = true
+                                    }
+                                }
                             }
                         }
                         .listStyle(.plain)
@@ -58,6 +67,7 @@ struct HistoryView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button {
+                        homeViewModel.goHomeScreen()
                         dismiss()
                     } label: {
                         Text("Закрыть")
@@ -67,20 +77,29 @@ struct HistoryView: View {
                 }
             }
             .alert(isPresented: $showDeleteAlert) {
-                let matrixName = selectedMatrixForDelete?.name ?? "неизвестно"
-                let matrixDate = selectedMatrixForDelete?.dateOfBirthday.formattedDate() ?? "неизвестно"
+                let matrixName = selectedMatrix?.name ?? "неизвестно"
+                let matrixDate = selectedMatrix?.dateOfBirthday.formattedDate() ?? "неизвестно"
                 
                 return Alert(
                     title: Text("Удалить матрицу?"),
                     message: Text("Вы уверены, что хотите удалить матрицу \(matrixName) - \(matrixDate)?"),
                     primaryButton: .destructive(Text("Удалить")) {
-                        if let matrix = selectedMatrixForDelete {
+                        if let matrix = selectedMatrix {
                             withAnimation {
                                 storageManager.delete(shortMatrixData: matrix)
                             }
                         }
                     },
                     secondaryButton: .cancel(Text("Отмена"))
+                )
+            }
+            .fullScreenCover(isPresented: $showMatrixView) {
+                MatrixView(
+                    matrixData: MatrixCalculation(
+                        name: selectedMatrix?.name ?? "",
+                        dateOfBirthday: selectedMatrix?.dateOfBirthday ?? Date()
+                    )
+                    .matrixData
                 )
             }
         }

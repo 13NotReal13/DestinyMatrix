@@ -20,6 +20,16 @@ enum ShapeOfSphere: String {
     case shape11 = "Shape11"
 }
 
+enum Screen {
+    case onboarding
+    case home
+    case enterData
+    case preloadMatrixData
+    case matrix
+    case history
+    case helpInfo
+}
+
 final class HomeViewModel: ObservableObject {
     private var storageManager: StorageManager
     

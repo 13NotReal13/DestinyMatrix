@@ -7,13 +7,6 @@
 
 import SwiftUI
 
-enum Screen {
-    case onboarding
-    case home
-    case enterData
-    case preloadMatrixData
-}
-
 struct HomeView: View {
     @EnvironmentObject private var audioVisualizer: AudioVisualizer
     @EnvironmentObject private var homeViewModel: HomeViewModel
@@ -23,10 +16,17 @@ struct HomeView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                AnimatedStarryBackgroundView()
+                if homeViewModel.currentScreen != .history
+                    && homeViewModel.currentScreen != .matrix {
+                    AnimatedStarryBackgroundView()
+                }
                 
                 VStack {
-                    Completed3DSphere()
+                    
+                    if homeViewModel.currentScreen != .history
+                        && homeViewModel.currentScreen != .matrix {
+                        Completed3DSphere()
+                    }
                     // Onboarding
                     if homeViewModel.currentScreen == .onboarding {
                         OnboardingView()
@@ -58,6 +58,9 @@ struct HomeView: View {
                 }
                 .padding()
                 .frame(height: screenHeight * 0.8)
+            }
+            .onDisappear {
+                print("Dissappear HomeView")
             }
             .ignoresSafeArea()
             .fullScreenCover(isPresented: $homeViewModel.showHelpInfoView) {
