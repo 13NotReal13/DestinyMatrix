@@ -43,15 +43,6 @@ final class HomeViewModel: ObservableObject {
     @Published var showHistoryView: Bool = false
     @Published var showMatrixView: Bool = false
     
-    @Published var name: String = ""
-    @Published var isNameValid: Bool = true
-    
-    @Published var dateBirthday: Date = Date()
-    @Published var isDateValid: Bool = true
-    
-    @Published var displayedDateText: String = "Выбрать дату"
-    @Published var isDatePickerPresented: Bool = false
-    
     @Published var preloadAudioIsFinished: Bool = false
     @Published var matrixData: MatrixData?
     
@@ -69,30 +60,6 @@ final class HomeViewModel: ObservableObject {
             onboardingWasShowed = true
             currentScreen = .home
         }
-    }
-    
-    func goHomeScreen() {
-        currentScreen = .home
-        name = ""
-        dateBirthday = Date()
-        displayedDateText = "Выбрать дату"
-    }
-    
-    func validateName() {
-        isNameValid = name.isCyrillicOnly
-    }
-    
-    func validateDate() {
-        isDateValid = displayedDateText.lowercased() != "Выбрать дату".lowercased()
-    }
-    
-    func updateDisplayedDate() {
-        displayedDateText = dateBirthday.formattedDate()
-        isDateValid = true
-    }
-
-    func toggleDatePicker() {
-        isDatePickerPresented.toggle()
     }
     
     func startOnboardingAudio(audioVisualizer: AudioVisualizer) {

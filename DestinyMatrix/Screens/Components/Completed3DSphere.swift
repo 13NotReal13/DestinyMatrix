@@ -20,11 +20,7 @@ struct Completed3DSphere: View {
     private var imageName: String = ShapeOfSphere.shapeName.rawValue
     
     var body: some View {
-        VStack {            
-            VStack(spacing: 10) {
-            }
-            .frame(height: UIScreen.main.bounds.height * 0.05)
-            
+        VStack {
             ZStack {
                 if audioVusualizer.isPlaying {
                     CircularEqualizerView(
@@ -49,7 +45,6 @@ struct Completed3DSphere: View {
                     .foregroundStyle(.lightAroundSphere)
             }
         }
-        .frame(height: UIScreen.main.bounds.height * 0.4)
     }
 }
 

@@ -16,98 +16,46 @@ struct HomeView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                if homeViewModel.currentScreen != .history
-                    && homeViewModel.currentScreen != .matrix {
-                    AnimatedStarryBackgroundView()
-                }
+                AnimatedStarryBackgroundView()
                 
                 VStack {
+                    Spacer()
                     
-                    if homeViewModel.currentScreen != .history
-                        && homeViewModel.currentScreen != .matrix {
-                        Completed3DSphere()
-                    }
-                    // Onboarding
-                    if homeViewModel.currentScreen == .onboarding {
-                        OnboardingView()
-                            .onAppear {
-                                homeViewModel.startOnboardingAudio(audioVisualizer: audioVisualizer)
-                            }
-                        // Home
-                    } else if homeViewModel.currentScreen == .home {
-                        HomeMenuButtonsView()
-                            .onAppear {
-                                if !homeViewModel.backgroundAudioIsPlaying {
-                                    audioVisualizer.playBackgroundAudio()
-                                }
-                                homeViewModel.backgroundAudioIsPlaying = true
-                            }
-                        // EnterData
-                    } else if homeViewModel.currentScreen == .enterData {
-                        EnterDataView()
-                        // PreloadMatrix
-                    } else if homeViewModel.currentScreen == .preloadMatrixData {
-                        PreloadMatrixDataView()
-                            .onAppear {
-                                homeViewModel.startPreloadAudio(audioVisualizer: audioVisualizer)
-                            }
-                            .onDisappear {
-                                homeViewModel.stopPreloadAudio(audioVisualizer: audioVisualizer)
-                            }
-                    }
-                }
-                .padding()
-                .frame(height: screenHeight * 0.8)
-            }
-            .onDisappear {
-                print("Dissappear HomeView")
-            }
-            .ignoresSafeArea()
-            .fullScreenCover(isPresented: $homeViewModel.showHelpInfoView) {
-                HelpInfoView()
-            }
-            .fullScreenCover(isPresented: $homeViewModel.showHistoryView) {
-                HistoryView()
-            }
-            .fullScreenCover(
-                isPresented: $homeViewModel.showMatrixView,
-                onDismiss: homeViewModel.goHomeScreen) {
-                    MatrixView(
-                        matrixData: MatrixCalculation(
-                            name: homeViewModel.name,
-                            dateOfBirthday: homeViewModel.dateBirthday
-                        )
-                        .matrixData
-                    )
-                }
-                .toolbar {
-                    ToolbarItem(placement: .principal) {
-                        VStack(spacing: 8) {
-                            if homeViewModel.currentScreen != .onboarding {
-                                Text("Матрица Судьбы")
-                                    .customText(fontSize: 28, textColor: .white)
-                                
-                                Text("Ваш путь к успеху и изобилию")
-                                    .customText(fontSize: 12, textColor: .white)
-                            }
+                    Completed3DSphere()
+                    
+                    Spacer()
+                    
+                    VStack(spacing: 16) {
+                        Spacer()
+                        Spacer()
+                        
+                        NavigationLink(destination: EnterDataView()) {
+                            HomeMenuButtonView(title: "Рассчитать матрицу")
                         }
+                        
+                        NavigationLink(destination: HistoryView()) {
+                            HomeMenuButtonView(title: "История")
+                        }
+                        
+                        NavigationLink(destination: HelpInfoView()) {
+                            HomeMenuButtonView(title: "Содержание")
+                        }
+                        
+                        Spacer()
                     }
                     
-                    ToolbarItem(placement: .topBarLeading) {
-                        if homeViewModel.currentScreen != .home
-                            && homeViewModel.currentScreen != .onboarding
-                            && homeViewModel.currentScreen != .preloadMatrixData {
-                            Button {
-                                homeViewModel.goHomeScreen()
-                            } label: {
-                                Image(systemName: "chevron.backward")
-                                    .customText(fontSize: 17, textColor: .white)
-                                    .customBarButtonStyle(shape: .circle)
-                            }
-                        }
+                    Spacer()
+                }
+            }
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    VStack {
+                        CustomNavigationTitleView(title: "Матрица Судьбы")
                     }
                 }
+            }
         }
+        .navigationBarHidden(true)
     }
 }
 

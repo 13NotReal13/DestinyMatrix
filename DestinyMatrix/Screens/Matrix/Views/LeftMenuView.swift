@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct LeftMenuView: View {
-    @EnvironmentObject private var matrixViewModel: MatrixViewModel
+    @StateObject var viewModel: MatrixViewModel
     
     var body: some View {
         ZStack(alignment: .leading) {
-            Color.black.opacity(matrixViewModel.isMenuOpen ? 0.5 : 0)
+            Color.black.opacity(viewModel.isMenuOpen ? 0.5 : 0)
                 .edgesIgnoringSafeArea(.all)
                 .onTapGesture {
-                    withAnimation { matrixViewModel.isMenuOpen = false }
+                    withAnimation { viewModel.isMenuOpen = false }
                 }
             
             ZStack(alignment: .leading) {
@@ -23,19 +23,14 @@ struct LeftMenuView: View {
                     .frame(width: 282)
                 
                 HStack(spacing: 0) {
-                    LeftNavigationButtonsView()
+                    LeftNavigationButtonsView(matrixViewModel: viewModel)
                         .frame(width: 250)
                         .padding(.horizontal)
                     
-                    LeftOpenMenuButtonView()
+                    LeftOpenMenuButtonView(matrixViewModel: viewModel)
                 }
             }
-            .offset(x: matrixViewModel.isMenuOpen ? 0 : -282)
+            .offset(x: viewModel.isMenuOpen ? 0 : -282)
         }
     }
-}
-
-#Preview {
-    LeftMenuView()
-        .environmentObject(MatrixViewModel())
 }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LeftOpenMenuButtonView: View {
-    @EnvironmentObject private var matrixViewModel: MatrixViewModel
+    @StateObject var matrixViewModel: MatrixViewModel
     
     @State private var iconIsLeft: Bool = false
     

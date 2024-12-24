@@ -8,21 +8,25 @@
 import SwiftUI
 
 struct NameTextFieldView: View {
-    @EnvironmentObject private var homeViewModel: HomeViewModel
+    @Binding var name: String
+    @Binding var isNameValid: Bool
+    
+    var validateName: () -> Void
     
     var body: some View {
         VStack {
             Text("Введите ваше полное имя (только имя)")
-                .customText(fontSize: 14, textColor: .white)
+                .customText(fontSize: 12, textColor: .white)
             
             VStack {
-                TextField("ПОЛНОЕ ИМЯ", text: $homeViewModel.name)
+                TextField("ПОЛНОЕ ИМЯ", text: $name)
                     .textContentType(.none)
                     .disableAutocorrection(true)
                     .multilineTextAlignment(.center)
                     .customText(fontSize: 16, textColor: .black)
-                    .onChange(of: homeViewModel.name) { _ in
-                        homeViewModel.validateName()
+                    .onChange(of: name) { newValue in
+                        name = newValue.replacingOccurrences(of: " ", with: "")
+                        validateName()
                     }
             }
             .frame(width: UIScreen.main.bounds.width * 0.6)
@@ -32,19 +36,13 @@ struct NameTextFieldView: View {
                 shape: .capsule
             )
             
-            if !homeViewModel.isNameValid {
-                Text("Допустимые символы: \"А-Я\"")
-                    .customText(fontSize: 12, textColor: .red)
+            VStack {
+                if !isNameValid {
+                    Text("Допустимые символы: \"А-Я\"")
+                        .customText(fontSize: 12, textColor: .red)
+                }
             }
+            .frame(height: UIScreen.main.bounds.height * 0.01)
         }
-    }
-}
-
-#Preview {
-    ZStack {
-        AnimatedStarryBackgroundView()
-        
-        NameTextFieldView()
-            .environmentObject(HomeViewModel(storageManager: StorageManager()))
     }
 }

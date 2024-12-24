@@ -39,6 +39,7 @@ struct AnimatedStarryBackgroundView: View {
                 }
             }
         }
+        .ignoresSafeArea()
         .onReceive(Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()) { _ in
             stars = stars.map { star in
                 let newBrightness = Double.random(in: 0.5...1.0)

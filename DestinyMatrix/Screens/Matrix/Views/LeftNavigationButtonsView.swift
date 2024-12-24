@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LeftNavigationButtonsView: View {
-    @EnvironmentObject private var matrixViewModel: MatrixViewModel
+    @StateObject var matrixViewModel: MatrixViewModel
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -48,7 +48,6 @@ struct LeftNavigationButtonsView: View {
     ZStack {
         AnimatedStarryBackgroundView()
         
-        LeftNavigationButtonsView()
-            .environmentObject(MatrixViewModel())
+        LeftNavigationButtonsView(matrixViewModel: MatrixViewModel())
     }
 }

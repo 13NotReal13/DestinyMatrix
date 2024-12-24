@@ -13,7 +13,7 @@ struct ArkanDetailView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             Text(arkanInfo.title)
-                .font(.title2)
+                .font(.system(size: 21))
                 .bold()
             
             ForEach(arkanInfo.subcategories, id: \.self) { subcategorie in

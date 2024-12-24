@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PersonalDataView: View {
+struct PersonalTitleView: View {
     @State var matrixData: MatrixData
     
     var body: some View {
@@ -22,7 +22,3 @@ struct PersonalDataView: View {
         .frame(maxWidth: .infinity)
     }
 }
-
-//#Preview {
-//    PersonalDataView()
-//}
