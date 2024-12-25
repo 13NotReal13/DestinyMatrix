@@ -16,6 +16,7 @@ struct MatrixView: View {
     var isFromPreload: Bool
     
     @StateObject private var viewModel = MatrixViewModel()
+    @ObservedObject private var storageManager = StorageManager()
     
     var body: some View {
         ZStack {
@@ -43,6 +44,12 @@ struct MatrixView: View {
                                 // Возвращаемся на предыдущий экран
                                 presentationMode.wrappedValue.dismiss()
                             }
+                            
+                            if !ReviewRequestManager.shared.reviewPromptWasShowing() {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                    checkReviewConditions()
+                                }
+                            }
                         } label: {
                             Image(systemName: isFromPreload ? "house" : "chevron.left")
                                 .customText(fontSize: 17, textColor: .white)
@@ -61,6 +68,25 @@ struct MatrixView: View {
         .sheet(isPresented: $viewModel.showShareSheet) {
             ShareSheet(items: viewModel.shareItems)
         }
+    }
+    
+    private func checkReviewConditions() {
+        print("checkReviewConditions() called")
+        
+        let matricesCount = storageManager.historyMatrixData.count
+        let totalTime = UserDefaults.standard.double(forKey: "totalAppTime")
+        let currentSection = viewModel.selectedSection
+        
+        ReviewRequestManager.shared.checkReviewConditions(
+            matricesCount: matricesCount,
+            totalTime: totalTime,
+            currentSection: currentSection
+        )
+        
+        print("Used: checkReviewConditions()")
+        print("matricesCount: \(matricesCount)")
+        print("totalTime: \(totalTime)")
+        print("currentSection: \(currentSection)")
     }
 }
 

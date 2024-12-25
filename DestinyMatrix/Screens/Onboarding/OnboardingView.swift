@@ -74,7 +74,7 @@ struct OnboardingView: View {
                 .hidden()
             }
             .onAppear {
-                if let audioURL = Bundle.main.url(forResource: "CharlotteOnboarding2", withExtension: "mp3") {
+                if let audioURL = Bundle.main.url(forResource: "CharlotteOnboarding", withExtension: "mp3") {
                     audioVisualizer.playAudio(url: audioURL) {
                         self.onboardingAudioIsFinished = true
                     }

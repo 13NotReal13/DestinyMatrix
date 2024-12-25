@@ -4,9 +4,7 @@
 <dict>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Inkverse.ttf</string>
 		<string>CorrectionBrush.ttf</string>
-		<string>Blackcraft.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

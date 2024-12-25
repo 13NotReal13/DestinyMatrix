@@ -13,8 +13,7 @@ import FirebaseMessaging
 import FirebaseAnalytics
 
 class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {
-    
-    // Инициализация Firebase
+    // MARK: - Firebase
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
@@ -43,6 +42,6 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
     
     // Обновление FCM-токена
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-        print("FCM Token: \(fcmToken ?? "")")
+//        print("FCM Token: \(fcmToken ?? "")")
     }
 }

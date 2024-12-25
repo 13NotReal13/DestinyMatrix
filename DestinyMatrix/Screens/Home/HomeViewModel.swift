@@ -9,15 +9,11 @@ import Foundation
 import SwiftUI
 
 enum CustomFont: String {
-    case blackcraft = "Blackcraft"
-    case fontName = "CorrectionBrush" // main
-    case inkverse = "Inkverse"
+    case fontName = "CorrectionBrush"
 }
 
 enum ShapeOfSphere: String {
-    case shapeName = "Shape9" // main
-    case shape10 = "Shape10"
-    case shape11 = "Shape11"
+    case shapeName = "Shape9"
 }
 
 final class HomeViewModel: ObservableObject {
