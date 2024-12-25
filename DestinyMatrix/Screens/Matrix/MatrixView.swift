@@ -38,13 +38,13 @@ struct MatrixView: View {
                         DownloadPDFButtonView(viewModel: viewModel, matrixData: matrixData)
                     }
                 }
-                .sheet(isPresented: $viewModel.showShareSheet) {
-                    ShareSheet(items: viewModel.shareItems)
-                }
             }
             .navigationBarHidden(true)
             
             LeftMenuView(viewModel: viewModel)
+        }
+        .sheet(isPresented: $viewModel.showShareSheet) {
+            ShareSheet(items: viewModel.shareItems)
         }
     }
 }

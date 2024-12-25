@@ -53,7 +53,6 @@ struct Completed3DSphere: View {
         AnimatedStarryBackgroundView()
         
         Completed3DSphere()
-            .environmentObject(HomeViewModel(storageManager: StorageManager()))
             .environmentObject(AudioVisualizer())
     }
 }

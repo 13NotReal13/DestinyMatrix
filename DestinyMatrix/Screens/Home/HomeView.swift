@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     @EnvironmentObject private var audioVisualizer: AudioVisualizer
-    @EnvironmentObject private var homeViewModel: HomeViewModel
+    @StateObject private var homeViewModel = HomeViewModel()
     
     private var screenHeight = UIScreen.main.bounds.height
     
@@ -61,6 +61,4 @@ struct HomeView: View {
 
 #Preview {
     HomeView()
-        .environmentObject(AudioVisualizer())
-        .environmentObject(HomeViewModel(storageManager: StorageManager()))
 }

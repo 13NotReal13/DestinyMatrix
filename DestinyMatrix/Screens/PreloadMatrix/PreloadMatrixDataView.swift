@@ -41,6 +41,10 @@ struct PreloadMatrixDataView: View {
             }
             .onAppear {
                 viewModel.startLoading()
+                
+                if let audioURL = Bundle.main.url(forResource: "CharlottePreloadMatrixData", withExtension: "mp3") {
+                    audioVisualizer.playAudio(url: audioURL) { }
+                }
             }
             .background(
                 NavigationLink(

@@ -12,29 +12,29 @@ struct DestinyMatrixApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     @StateObject private var audioVisualizer = AudioVisualizer()
-    
     @StateObject private var storageManager = StorageManager()
-    @StateObject private var homeViewModel: HomeViewModel
-    @StateObject private var matrixViewModel = MatrixViewModel()
-    
-    init() {
-        let storageManager = StorageManager()
-        _homeViewModel = StateObject(wrappedValue: HomeViewModel(storageManager: storageManager))
-    }
+    @AppStorage("onboardingWasShowing") private var onboardingWasShowing: Bool = false
 
     var body: some Scene {
         WindowGroup {
             ZStack {
-                HomeView()
-                    .environmentObject(audioVisualizer)
-                    .environmentObject(storageManager)
-                    .environmentObject(homeViewModel)
-                    .environmentObject(matrixViewModel)
+                if onboardingWasShowing {
+                    HomeView()
+                        .environmentObject(audioVisualizer)
+                        .preferredColorScheme(.dark)
+                } else {
+                    OnboardingView()
+                        .environmentObject(audioVisualizer)
+                        .preferredColorScheme(.dark)
+                }
                 
                 // Preload keyboard
                 PreloadKeyboardView()
                     .frame(width: 0, height: 0)
                     .opacity(0)
+            }
+            .onAppear {
+                audioVisualizer.playBackgroundAudio()
             }
         }
     }

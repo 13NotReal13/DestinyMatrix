@@ -19,6 +19,10 @@ struct DatePickerView: View {
                 .customText(fontSize: 12, textColor: .white)
             
             Button(action: {
+                UIApplication.shared.connectedScenes
+                    .compactMap { ($0 as? UIWindowScene)?.keyWindow }
+                    .first?
+                    .endEditing(true)
                 isDatePickerPresented.toggle()
             }) {
                 HStack {

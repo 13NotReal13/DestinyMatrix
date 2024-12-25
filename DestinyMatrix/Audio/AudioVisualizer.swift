@@ -9,10 +9,15 @@ import AVFoundation
 import SwiftUI
 
 final class AudioVisualizer: ObservableObject {
-    @Published var amplitudes: [CGFloat] = Array(repeating: 0.5, count: 120)
+    // MARK: - Published properties
+    
+    /// Вектор амплитуд для 120 столбцов визуализатора
+    @Published var amplitudes: [CGFloat]
+    
+    /// Флаг, воспроизводится ли основной трек
     @Published var isPlaying: Bool = false
     
-    @State var isNeedAmplitude: Bool = false
+    // MARK: - Audio Engine
     
     private let audioEngine = AVAudioEngine()
     private let playerNode = AVAudioPlayerNode()
@@ -20,11 +25,72 @@ final class AudioVisualizer: ObservableObject {
     
     private var backgroundFile: AVAudioFile?
     
+    // MARK: - Константы/настройки
+    
+    private let barsCount = 120          // кол-во столбцов визуализации
+    private let amplitudeScale: CGFloat = 4.0 // масштаб амплитуды
+    
+    // MARK: - Init
+    
     init() {
+        // Изначально все амплитуды по 0.5
+        self.amplitudes = Array(repeating: 0.5, count: barsCount)
+        
         setupAudioSession()
         setupAudioEngine()
         prepareBackgroundAudioFile()
     }
+    
+    // MARK: - Public Methods
+    
+    /// Воспроизведение основного файла (однократно)
+    func playAudio(url: URL, completion: @escaping () -> Void) {
+        do {
+            let file = try AVAudioFile(forReading: url)
+            isPlaying = true
+            
+            playerNode.scheduleFile(file, at: nil) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    withAnimation(.easeOut(duration: 0.5)) {
+                        self.isPlaying = false
+                        self.playerNode.stop()
+                    }
+                    completion()
+                }
+            }
+            playerNode.volume = 1.0
+            playerNode.play()
+        } catch {
+            print("Ошибка при загрузке аудиофайла: \(error.localizedDescription)")
+        }
+    }
+    
+    /// Запускаем фоновую музыку зацикленно
+    func playBackgroundAudio() {
+        guard let backgroundFile = backgroundFile else { return }
+        
+        if backgroundPlayerNode.isPlaying {
+            backgroundPlayerNode.stop()
+        }
+        
+        backgroundPlayerNode.scheduleFile(backgroundFile, at: nil) { [weak self] in
+            DispatchQueue.main.async {
+                self?.playBackgroundAudio() // зацикливаем
+            }
+        }
+        
+        backgroundPlayerNode.volume = 0.2
+        backgroundPlayerNode.play()
+    }
+    
+    /// Остановить фоновую музыку вручную
+    func stopBackgroundAudio() {
+        if backgroundPlayerNode.isPlaying {
+            backgroundPlayerNode.stop()
+        }
+    }
+    
+    // MARK: - Private Setup
     
     private func prepareBackgroundAudioFile() {
         if let backgroundAudioUrl = Bundle.main.url(forResource: "BackgroundMusic", withExtension: "mp3") {
@@ -54,7 +120,7 @@ final class AudioVisualizer: ObservableObject {
         audioEngine.connect(playerNode, to: audioEngine.mainMixerNode, format: format)
         audioEngine.connect(backgroundPlayerNode, to: audioEngine.mainMixerNode, format: format)
         
-        // Установка tap на mainMixerNode для визуализации амплитуд
+        // Устанавливаем Tap для визуализации амплитуды
         audioEngine.mainMixerNode.installTap(onBus: 0, bufferSize: 1024, format: format) { buffer, _ in
             self.updateAmplitudes(buffer: buffer)
         }
@@ -62,69 +128,35 @@ final class AudioVisualizer: ObservableObject {
         do {
             try audioEngine.start()
         } catch {
-            print("Ошибка запуска аудио движка: \(error.localizedDescription)")
+            print("Ошибка запуска аудиодвижка: \(error.localizedDescription)")
         }
     }
     
-    func playAudio(url: URL, completion: @escaping () -> Void) {
-        do {
-            let file = try AVAudioFile(forReading: url)
-            isPlaying = true
-            playerNode.scheduleFile(file, at: nil) {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    withAnimation(.easeOut(duration: 0.5)) {
-                        self.isPlaying = false
-                        self.playerNode.stop()
-                    }
-                    completion()
-                }
-            }
-            playerNode.volume = 1.0
-            playerNode.play()
-        } catch {
-            print("Ошибка при загрузке аудиофайла: \(error.localizedDescription)")
-        }
-    }
+    // MARK: - Updating Amplitudes
     
-    func playBackgroundAudio() {
-        guard let backgroundFile = backgroundFile else { return }
-        
-        // Убедимся, что backgroundPlayerNode полностью остановлен перед перезапуском
-        if backgroundPlayerNode.isPlaying {
-            backgroundPlayerNode.stop()
-        }
-        
-        backgroundPlayerNode.scheduleFile(backgroundFile, at: nil) { [weak self] in
-            DispatchQueue.main.async {
-                self?.playBackgroundAudio() // Рекурсивный вызов для зацикливания
-            }
-        }
-        
-        backgroundPlayerNode.volume = 0.2
-        backgroundPlayerNode.play()
-    }
-    
-    func stopVoice() {
-        playerNode.stop()
-//        audioEngine.stop()
-//        audioEngine.mainMixerNode.removeTap(onBus: 0)
-    }
-    
+    /// Генерируем случайные амплитуды на основе реального пика
     private func updateAmplitudes(buffer: AVAudioPCMBuffer) {
-        if playerNode.isPlaying {
-            guard let channelData = buffer.floatChannelData else { return }
-            
-            let channelDataArray = Array(UnsafeBufferPointer(start: channelData[0], count: Int(buffer.frameLength)))
-            
-            // Преобразуем значения в амплитуды для визуализации
-            let amplitude = channelDataArray.map { abs($0) }.max() ?? 0.0
-            let scaledAmplitude = CGFloat(amplitude) * 4 // Увеличиваем коэффициент для видимого эффекта
-            
-            DispatchQueue.main.async {
-                self.amplitudes = self.amplitudes.map { _ in
-                    CGFloat.random(in: scaledAmplitude * 0.5...scaledAmplitude)
-                }
-            }
+        // Если основной трек не играет, можно не обновлять амплитуды (или сбрасывать).
+        guard playerNode.isPlaying else { return }
+        
+        guard let channelData = buffer.floatChannelData else { return }
+        
+        // Берём максимальный пик из первого канала (или усредняем все каналы, если нужно)
+        let frameLength = Int(buffer.frameLength)
+        let samples = UnsafeBufferPointer(start: channelData[0], count: frameLength)
+        
+        let peak = samples.map { abs($0) }.max() ?? 0.0
+        
+        // Увеличиваем значение для наглядности
+        let scaledAmplitude = CGFloat(peak) * amplitudeScale
+        
+        // Заполняем каждый столбец случайным значением в диапазоне
+        let newAmplitudes = amplitudes.map { _ in
+            CGFloat.random(in: scaledAmplitude * 0.5...scaledAmplitude)
+        }
+        
+        DispatchQueue.main.async {
+            self.amplitudes = newAmplitudes
         }
     }
 }

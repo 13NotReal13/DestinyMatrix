@@ -19,15 +19,20 @@ struct NameTextFieldView: View {
                 .customText(fontSize: 12, textColor: .white)
             
             VStack {
-                TextField("ПОЛНОЕ ИМЯ", text: $name)
-                    .textContentType(.none)
-                    .disableAutocorrection(true)
-                    .multilineTextAlignment(.center)
-                    .customText(fontSize: 16, textColor: .black)
-                    .onChange(of: name) { newValue in
-                        name = newValue.replacingOccurrences(of: " ", with: "")
-                        validateName()
-                    }
+                TextField(
+                    "",
+                    text: $name,
+                    prompt: Text("ПОЛНОЕ ИМЯ")
+                    .foregroundColor(Color.gray.opacity(0.65))
+                )
+                .textContentType(.none)
+                .disableAutocorrection(true)
+                .multilineTextAlignment(.center)
+                .customText(fontSize: 16, textColor: .black)
+                .onChange(of: name) { newValue in
+                    name = newValue.replacingOccurrences(of: " ", with: "")
+                    validateName()
+                }
             }
             .frame(width: UIScreen.main.bounds.width * 0.6)
             .customButtonStyle(

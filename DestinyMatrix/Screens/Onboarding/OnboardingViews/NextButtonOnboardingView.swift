@@ -8,37 +8,22 @@
 import SwiftUI
 
 struct NextButtonOnboardingView: View {
-    @EnvironmentObject private var homeViewModel: HomeViewModel
-    @EnvironmentObject private var storageManager: StorageManager
+    @Binding var onboardingAudioIsFinished: Bool
+    @Binding var navigateToHome: Bool
+    
+    @AppStorage("onboardingWasShowing") private var onboardingWasShowing = false
     
     var body: some View {
         Button {
-            withAnimation(.easeOut(duration: 0.05)) {
-                homeViewModel.onboardingWasShowed = true
-                }
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-                withAnimation(.easeIn(duration: 0.05)) {
-                    storageManager.onboardingWasShowing = true
-                    homeViewModel.currentScreen = .home
-                }
-            }
+            onboardingWasShowing = true
+            navigateToHome = true
         } label: {
             Text("Далее")
                 .frame(width: UIScreen.main.bounds.width * 0.6)
                 .customText(fontSize: 17, textColor: .white)
                 .customButtonStyle(shape: .capsule)
-                .opacity(homeViewModel.onboardingAudioIsFinished ? 1 : 0)
-                .transition(.opacity.combined(with: .scale(scale: 0.05)))
+                .opacity(onboardingAudioIsFinished ? 1 : 0)
+                .transition(.opacity.combined(with: .scale(scale: 0.1)))
         }
-    }
-}
-
-#Preview {
-    ZStack {
-        AnimatedStarryBackgroundView()
-        
-        NextButtonOnboardingView()
-            .environmentObject(HomeViewModel(storageManager: StorageManager()))
     }
 }

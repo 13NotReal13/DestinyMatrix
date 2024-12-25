@@ -9,7 +9,6 @@ import SwiftUI
 
 struct EnterDataView: View {
     @Environment(\.presentationMode) private var presentationMode
-    
     @StateObject private var enterDataViewModel = EnterDataViewModel()
     
     var body: some View {
@@ -31,6 +30,12 @@ struct EnterDataView: View {
                     Spacer()
                 }
             }
+            .onTapGesture {
+                UIApplication.shared.connectedScenes
+                    .compactMap { ($0 as? UIWindowScene)?.keyWindow }
+                    .first?
+                    .endEditing(true)
+            }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     CustomBackButtonView { presentationMode.wrappedValue.dismiss() }
@@ -42,6 +47,7 @@ struct EnterDataView: View {
             }
             .sheet(isPresented: $enterDataViewModel.isDatePickerPresented) {
                 DatePickerModalView(enterDataViewModel: enterDataViewModel)
+                    .preferredColorScheme(.light)
             }
         }
         .navigationBarHidden(true)

@@ -19,8 +19,8 @@ final class MatrixViewModel: ObservableObject {
         let pdfManager = PDFManager()
         if let pdfURL = pdfManager.savePDF(matrixData: matrixData) {
             DispatchQueue.main.async {
-                self.showShareSheet = true
                 self.shareItems = [pdfURL]
+                self.showShareSheet = true
             }
         } else {
             print("Не удалось создать PDF")
