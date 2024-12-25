@@ -7,9 +7,14 @@
 
 import SwiftUI
 
+class NavigationManager: ObservableObject {
+    @Published var isRootActive: Bool = false
+}
+
 struct HomeView: View {
     @EnvironmentObject private var audioVisualizer: AudioVisualizer
     @StateObject private var homeViewModel = HomeViewModel()
+    @StateObject private var navigationManager = NavigationManager()
     
     private var screenHeight = UIScreen.main.bounds.height
     
@@ -29,7 +34,11 @@ struct HomeView: View {
                         Spacer()
                         Spacer()
                         
-                        NavigationLink(destination: EnterDataView()) {
+                        NavigationLink(
+                            destination: EnterDataView()
+                                .environmentObject(navigationManager),
+                            isActive: $navigationManager.isRootActive
+                        ) {
                             HomeMenuButtonView(title: "Рассчитать матрицу")
                         }
                         
@@ -52,6 +61,11 @@ struct HomeView: View {
                     VStack {
                         CustomNavigationTitleView(title: "Матрица Судьбы")
                     }
+                }
+            }
+            .onAppear {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    homeViewModel.requestNotificationAuthorization()
                 }
             }
         }

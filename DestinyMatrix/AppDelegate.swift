@@ -9,7 +9,6 @@ import Foundation
 import SwiftUI
 import FirebaseCore
 import FirebaseMessaging
-import UserNotifications
 
 import FirebaseAnalytics
 
@@ -25,16 +24,6 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
         // Настройка уведомлений
         UNUserNotificationCenter.current().delegate = self
         Messaging.messaging().delegate = self
-        
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
-            if let error = error {
-                print("Ошибка при запросе разрешений: \(error)")
-            } else {
-                print("Разрешения получены: \(granted)")
-            }
-        }
-        application.registerForRemoteNotifications()
-        
         
         return true
     }

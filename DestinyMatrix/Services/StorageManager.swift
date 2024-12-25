@@ -42,6 +42,7 @@ final class StorageManager: ObservableObject {
     
     func add(shortMatrixData: ShortMatrixData) {
         historyMatrixData.append(shortMatrixData)
+        historyMatrixData.sort(by: { $0.dateCreationMatrix > $1.dateCreationMatrix })
         save()
     }
     

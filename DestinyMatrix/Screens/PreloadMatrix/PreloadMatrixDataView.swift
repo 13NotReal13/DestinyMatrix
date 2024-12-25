@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PreloadMatrixDataView: View {
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var navigationManager: NavigationManager
     
     let matrix: ShortMatrixData
     
@@ -52,8 +53,10 @@ struct PreloadMatrixDataView: View {
                         matrixData: MatrixCalculation(
                             name: matrix.name,
                             dateOfBirthday: matrix.dateOfBirthday
-                        ).matrixData
-                    ),
+                        ).matrixData,
+                        isFromPreload: true
+                    )
+                    .environmentObject(navigationManager),
                     isActive: $navigateToMatrix
                 ) {
                     EmptyView()

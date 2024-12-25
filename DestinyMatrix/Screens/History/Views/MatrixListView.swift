@@ -39,8 +39,10 @@ struct MatrixListView: View {
                                 matrixData: MatrixCalculation(
                                     name: matrix.name,
                                     dateOfBirthday: matrix.dateOfBirthday
-                                ).matrixData
-                            )) {
+                                ).matrixData,
+                                isFromPreload: false
+                            )
+                        ) {
                                 Image(systemName: "chevron.right")
                                     .customText(fontSize: 17, textColor: .white)
                                     .padding()

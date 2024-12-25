@@ -8,10 +8,14 @@
 import SwiftUI
 
 struct MatrixView: View {
+    @EnvironmentObject var navigationManager: NavigationManager
+    
     @Environment(\.presentationMode) private var presentationMode
-    @StateObject private var viewModel = MatrixViewModel()
     
     @State var matrixData: MatrixData
+    var isFromPreload: Bool
+    
+    @StateObject private var viewModel = MatrixViewModel()
     
     var body: some View {
         ZStack {
@@ -31,7 +35,18 @@ struct MatrixView: View {
                 }
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
-                        CustomBackButtonView { presentationMode.wrappedValue.dismiss() }
+                        Button {
+                            if isFromPreload {
+                                // Сбрасываем навигацию к корню (HomeView)
+                                navigationManager.isRootActive = false
+                            } else {
+                                // Возвращаемся на предыдущий экран
+                                presentationMode.wrappedValue.dismiss()
+                            }
+                        } label: {
+                            Image(systemName: isFromPreload ? "house" : "chevron.left")
+                                .customText(fontSize: 17, textColor: .white)
+                        }
                     }
                     
                     ToolbarItem(placement: .topBarTrailing) {
@@ -59,5 +74,5 @@ struct MatrixView: View {
         dateOfBirthday: date
     )
     
-    MatrixView(matrixData: matrixData.matrixData)
+    MatrixView(matrixData: matrixData.matrixData, isFromPreload: true)
 }

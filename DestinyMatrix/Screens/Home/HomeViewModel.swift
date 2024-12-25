@@ -24,4 +24,9 @@ final class HomeViewModel: ObservableObject {
     @Published var showHelpInfoView: Bool = false
     @Published var showHistoryView: Bool = false
     @Published var showMatrixView: Bool = false
+    
+    func requestNotificationAuthorization() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { _, _ in }
+        UIApplication.shared.registerForRemoteNotifications()
+    }
 }
