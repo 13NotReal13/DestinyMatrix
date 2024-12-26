@@ -49,6 +49,9 @@ struct EnterDataView: View {
                 DatePickerModalView(enterDataViewModel: enterDataViewModel)
                     .preferredColorScheme(.light)
             }
+            .onAppear {
+                FirebaseLogManager.shared.logScreenView(screenName: "enter_data")
+            }
         }
         .navigationBarHidden(true)
     }

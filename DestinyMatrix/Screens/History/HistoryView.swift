@@ -56,6 +56,9 @@ struct HistoryView: View {
                     }
                 }
             )
+            .onAppear {
+                FirebaseLogManager.shared.logScreenView(screenName: "history")
+            }
         }
         .navigationBarHidden(true)
     }

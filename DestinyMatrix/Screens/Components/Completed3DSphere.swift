@@ -15,7 +15,10 @@ struct Completed3DSphere: View {
     
     private var colorOfEqualizer: Color = .cyan
     private var shadowColorOfEqualizer: Color = .white
-    private var offsetDistanceOfEqualizer: CGFloat = -121
+    
+    private var offsetDistanceOfEqualizer: CGFloat {
+        UIScreen.main.bounds.width * -0.28 // Процент от ширины экрана
+    }
     
     private var imageName: String = ShapeOfSphere.shapeName.rawValue
     

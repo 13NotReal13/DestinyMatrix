@@ -61,13 +61,24 @@ final class AudioVisualizer: ObservableObject {
             playerNode.volume = 1.0
             playerNode.play()
         } catch {
-            print("Ошибка при загрузке аудиофайла: \(error.localizedDescription)")
+            FirebaseLogManager.shared.logError(
+                message: "Failed to load audio file.",
+                details: "URL: \(url.absoluteString), Error: \(error.localizedDescription)"
+            )
+//            print("Ошибка при загрузке аудиофайла: \(error.localizedDescription)")
         }
     }
     
     /// Запускаем фоновую музыку зацикленно
     func playBackgroundAudio() {
-        guard let backgroundFile = backgroundFile else { return }
+        guard let backgroundFile = backgroundFile else {
+            FirebaseLogManager.shared.logError(
+                message: "Background audio file not found.",
+                details: "Unable to load background audio from bundle."
+            )
+//            print("Background audio file not found.")
+            return
+        }
         
         if backgroundPlayerNode.isPlaying {
             backgroundPlayerNode.stop()
@@ -97,7 +108,11 @@ final class AudioVisualizer: ObservableObject {
             do {
                 backgroundFile = try AVAudioFile(forReading: backgroundAudioUrl)
             } catch {
-                print("Ошибка при загрузке фоновой музыки: \(error.localizedDescription)")
+                FirebaseLogManager.shared.logError(
+                    message: "Failed to load background audio.",
+                    details: "Error loading BackgroundMusic.mp3: \(error.localizedDescription)"
+                )
+//                print("Ошибка при загрузке фоновой музыки: \(error.localizedDescription)")
             }
         }
     }
@@ -108,7 +123,11 @@ final class AudioVisualizer: ObservableObject {
             try session.setCategory(.playback, options: [.mixWithOthers, .duckOthers])
             try session.setActive(true)
         } catch {
-            print("Ошибка настройки аудиосессии: \(error)")
+            FirebaseLogManager.shared.logError(
+                message: "Failed to configure audio session.",
+                details: "Error: \(error.localizedDescription)"
+            )
+//            print("Ошибка настройки аудиосессии: \(error)")
         }
     }
     
@@ -128,7 +147,11 @@ final class AudioVisualizer: ObservableObject {
         do {
             try audioEngine.start()
         } catch {
-            print("Ошибка запуска аудиодвижка: \(error.localizedDescription)")
+            FirebaseLogManager.shared.logError(
+                message: "Failed to start audio engine.",
+                details: "Error: \(error.localizedDescription)"
+            )
+//            print("Ошибка запуска аудиодвижка: \(error.localizedDescription)")
         }
     }
     

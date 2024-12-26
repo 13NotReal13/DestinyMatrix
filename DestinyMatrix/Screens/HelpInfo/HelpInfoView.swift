@@ -22,6 +22,17 @@ struct HelpInfoView: View {
                     
                     HelpInfoCategoriesView(categories: categories)
                         .padding(.top, -16)
+                    
+                    Button(action: {
+                        if let url = URL(string: "https://13notreal13.github.io/privacy-policy-destiny-matrix/") {
+                            UIApplication.shared.open(url)
+                        }
+                    }) {
+                        Text("Политика конфиденциальности")
+                            .font(.footnote)
+                            .foregroundColor(.gray)
+                    }
+                    .padding()
                 }
             }
             .toolbar {
@@ -32,6 +43,9 @@ struct HelpInfoView: View {
                 ToolbarItem(placement: .principal) {
                     CustomNavigationTitleView(title: "Содержание")
                 }
+            }
+            .onAppear {
+                FirebaseLogManager.shared.logScreenView(screenName: "help_info")
             }
         }
         .navigationBarHidden(true)

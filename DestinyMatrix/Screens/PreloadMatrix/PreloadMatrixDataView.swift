@@ -46,6 +46,8 @@ struct PreloadMatrixDataView: View {
                 if let audioURL = Bundle.main.url(forResource: "CharlottePreloadMatrixData", withExtension: "mp3") {
                     audioVisualizer.playAudio(url: audioURL) { }
                 }
+                
+                FirebaseLogManager.shared.logScreenView(screenName: "preload_matrix")
             }
             .background(
                 NavigationLink(

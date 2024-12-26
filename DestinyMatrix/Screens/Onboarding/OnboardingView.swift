@@ -12,9 +12,9 @@ struct OnboardingView: View {
 
     @State private var navigateToHome = false
     @State private var onboardingAudioIsFinished = false
-    @State private var textOffset: CGFloat = UIScreen.main.bounds.height * 0.3
+    @State private var textOffset: CGFloat = UIScreen.main.bounds.height * 0.5
     
-    private var duration: CGFloat = 56
+    private var duration: CGFloat = 100
     
     var body: some View {
         NavigationView {
@@ -22,17 +22,19 @@ struct OnboardingView: View {
                 AnimatedStarryBackgroundView()
                 
                 VStack {
+                    Spacer()
+                    
                     Completed3DSphere()
                     
                     ScrollView {
                         VStack {
                             Text(OnboardingTextModel.introductionText)
-                                .customText(fontSize: 24, textColor: .white)
+                                .customText(fontSize: 17, textColor: .white)
                                 .foregroundColor(.white)
                                 .multilineTextAlignment(.center)
                                 .lineSpacing(4)
                                 .offset(y: textOffset)
-                                .frame(maxWidth: UIScreen.main.bounds.width * 0.9)
+                                .frame(maxWidth: UIScreen.main.bounds.width * 0.8)
                                 .onAppear {
                                     withAnimation(Animation.linear(duration: duration)) {
                                         textOffset = -UIScreen.main.bounds.height

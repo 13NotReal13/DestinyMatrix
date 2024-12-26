@@ -44,7 +44,3 @@ struct Rotating3DSphereView: UIViewRepresentable {
 
     func updateUIView(_ uiView: SCNView, context: Context) {}
 }
-
-//#Preview {
-//    Rotating3DSphereView()
-//}

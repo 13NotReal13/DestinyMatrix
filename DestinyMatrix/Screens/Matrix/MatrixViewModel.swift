@@ -23,7 +23,10 @@ final class MatrixViewModel: ObservableObject {
                 self.showShareSheet = true
             }
         } else {
-            print("Не удалось создать PDF")
+            FirebaseLogManager.shared.logError(
+                message: "Failed to generate PDF file",
+                details: "Error occurred while saving PDF for matrix with name '\(matrixData.name)' and date of birth '\(matrixData.dateOfBirthday)'"
+            )
         }
     }
 }

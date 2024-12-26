@@ -14,6 +14,7 @@ struct DownloadPDFButtonView: View {
     var body: some View {
         Button {
             viewModel.generatePDF(matrixData: matrixData)
+            FirebaseLogManager.shared.logSharePDFFile()
         } label: {
             HStack {
                 Image(systemName: "square.and.arrow.down")

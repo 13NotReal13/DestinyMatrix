@@ -41,6 +41,7 @@ struct DestinyMatrixApp: App {
             }
             .onAppear {
                 audioVisualizer.playBackgroundAudio()
+                FirebaseLogManager.shared.logDeviceInfoOnce()
             }
             .onChange(of: scenePhase) { phase in
                 switch phase {
@@ -50,8 +51,8 @@ struct DestinyMatrixApp: App {
                     if let startTime = startTime {
                         let sessionDuration = Date().timeIntervalSince(startTime)
                         totalAppTime += sessionDuration
-                        print("Session duration: \(sessionDuration)")
-                        print("Total time: \(totalAppTime)")
+//                        print("Session duration: \(sessionDuration)")
+//                        print("Total time: \(totalAppTime)")
                     }
                 @unknown default:
                     break

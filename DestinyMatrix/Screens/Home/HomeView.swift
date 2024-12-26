@@ -67,6 +67,8 @@ struct HomeView: View {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     homeViewModel.requestNotificationAuthorization()
                 }
+            
+                FirebaseLogManager.shared.logScreenView(screenName: "home")
             }
         }
         .navigationBarHidden(true)

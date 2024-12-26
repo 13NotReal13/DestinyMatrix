@@ -36,6 +36,7 @@ final class ReviewRequestManager: NSObject, ObservableObject, MFMailComposeViewC
         }
      
         if matricesCount >= minMatricesCount || (viewedLastSection && totalTime >= minUsageTime) {
+            FirebaseLogManager.shared.logReviewPromptShown() // Лог показа формы
             showFeedbackAlert()
         }
     }
@@ -44,6 +45,8 @@ final class ReviewRequestManager: NSObject, ObservableObject, MFMailComposeViewC
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
             SKStoreReviewController.requestReview(in: windowScene)
             hasSeenReviewPrompt = true
+            
+            FirebaseLogManager.shared.logReviewPromptAccepted() // Лог положительного ответа
         }
     }
     
@@ -60,6 +63,7 @@ final class ReviewRequestManager: NSObject, ObservableObject, MFMailComposeViewC
         
         alert.addAction(UIAlertAction(title: "Нет", style: .cancel, handler: { _ in
             self.hasSeenReviewPrompt = true
+            FirebaseLogManager.shared.logReviewPromptDeclined() // Лог отказа от отзыва
             self.showFeedbackForm() // Переход к форме обратной связи
         }))
         
@@ -71,11 +75,14 @@ final class ReviewRequestManager: NSObject, ObservableObject, MFMailComposeViewC
     
     // Форма обратной связи
     private func showFeedbackForm() {
+        // Лог открытия формы обратной связи
+        FirebaseLogManager.shared.logFeedbackFormOpened()
+        
         // Проверяем, доступна ли почта на устройстве
         if MFMailComposeViewController.canSendMail() {
             let mail = MFMailComposeViewController()
             mail.mailComposeDelegate = self
-            mail.setToRecipients(["i.semikin.94@icloud.com"]) // Замените на реальный email
+            mail.setToRecipients(["i.semikin.94@icloud.com"])
             mail.setSubject("Обратная связь из приложения - Матрица Судьбы")
             mail.setMessageBody("Опишите вашу проблему или предложение здесь...", isHTML: false)
             
@@ -96,6 +103,9 @@ final class ReviewRequestManager: NSObject, ObservableObject, MFMailComposeViewC
                let rootVC = windowScene.windows.first?.rootViewController {
                 rootVC.present(alert, animated: true)
             }
+            
+            // Лог ошибки при открытии формы обратной связи
+            FirebaseLogManager.shared.logFeedbackError(message: "Mail client not available")
         }
     }
     
@@ -105,6 +115,14 @@ final class ReviewRequestManager: NSObject, ObservableObject, MFMailComposeViewC
         didFinishWith result: MFMailComposeResult,
         error: Error?
     ) {
+        switch result {
+        case .sent:
+            FirebaseLogManager.shared.logFeedbackSubmitted() // Лог отправленной формы
+        case .failed:
+            FirebaseLogManager.shared.logFeedbackError(message: "Failed to send email") // Лог ошибки отправки
+        default:
+            break
+        }
         controller.dismiss(animated: true, completion: nil)
     }
 }

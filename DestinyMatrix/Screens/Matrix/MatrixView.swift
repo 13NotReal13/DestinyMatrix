@@ -32,7 +32,6 @@ struct MatrixView: View {
                             matrixData: matrixData
                         )
                     }
-                    
                 }
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
@@ -60,6 +59,9 @@ struct MatrixView: View {
                         DownloadPDFButtonView(viewModel: viewModel, matrixData: matrixData)
                     }
                 }
+                .onAppear {
+                    FirebaseLogManager.shared.logScreenView(screenName: "matrix")
+                }
             }
             .navigationBarHidden(true)
             
@@ -71,8 +73,6 @@ struct MatrixView: View {
     }
     
     private func checkReviewConditions() {
-        print("checkReviewConditions() called")
-        
         let matricesCount = storageManager.historyMatrixData.count
         let totalTime = UserDefaults.standard.double(forKey: "totalAppTime")
         let currentSection = viewModel.selectedSection
@@ -82,11 +82,6 @@ struct MatrixView: View {
             totalTime: totalTime,
             currentSection: currentSection
         )
-        
-        print("Used: checkReviewConditions()")
-        print("matricesCount: \(matricesCount)")
-        print("totalTime: \(totalTime)")
-        print("currentSection: \(currentSection)")
     }
 }
 

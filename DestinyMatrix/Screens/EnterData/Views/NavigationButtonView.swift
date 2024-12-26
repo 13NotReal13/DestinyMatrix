@@ -33,6 +33,11 @@ struct NavigationButtonView: View {
                         )
                     )
                     
+                    FirebaseLogManager.shared.logMatrixCalculated(
+                        name: enterDataViewModel.name,
+                        dateOfBirth: enterDataViewModel.dateBirthday.formattedDate()
+                    )
+                    
                     enterDataViewModel.canNavigate = true
                 }
             } label: {
