@@ -24,7 +24,7 @@ struct HelpInfoView: View {
                         .padding(.top, -16)
                     
                     Button(action: {
-                        if let url = URL(string: "https://13notreal13.github.io/privacy-policy-destiny-matrix/") {
+                        if let url = URL(string: "https://13notreal13.github.io/privacy-policy-destiny-matrix/privacy.html") {
                             UIApplication.shared.open(url)
                         }
                     }) {
