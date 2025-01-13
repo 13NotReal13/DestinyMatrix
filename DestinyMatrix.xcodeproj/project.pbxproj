@@ -11,9 +11,11 @@
 		79709EE52D16CDC600E14E28 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 79709EE42D16CDC600E14E28 /* FirebaseAuth */; };
 		79709EE72D16CDC600E14E28 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 79709EE62D16CDC600E14E28 /* FirebaseCrashlytics */; };
 		79709EE92D16CDC600E14E28 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 79709EE82D16CDC600E14E28 /* FirebaseMessaging */; };
+		79914E6E2D359662004D1065 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79914E6D2D359662004D1065 /* StoreKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		79914E6D2D359662004D1065 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		79AFE6412CCE836C00D650B8 /* DestinyMatrix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DestinyMatrix.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -45,6 +47,7 @@
 			files = (
 				79709EE92D16CDC600E14E28 /* FirebaseMessaging in Frameworks */,
 				79709EE72D16CDC600E14E28 /* FirebaseCrashlytics in Frameworks */,
+				79914E6E2D359662004D1065 /* StoreKit.framework in Frameworks */,
 				79709EE32D16CDC600E14E28 /* FirebaseAnalytics in Frameworks */,
 				79709EE52D16CDC600E14E28 /* FirebaseAuth in Frameworks */,
 			);
@@ -53,10 +56,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		79914E6C2D359662004D1065 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				79914E6D2D359662004D1065 /* StoreKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		79AFE6382CCE836C00D650B8 = {
 			isa = PBXGroup;
 			children = (
 				79AFE6432CCE836C00D650B8 /* DestinyMatrix */,
+				79914E6C2D359662004D1065 /* Frameworks */,
 				79AFE6422CCE836C00D650B8 /* Products */,
 			);
 			sourceTree = "<group>";
