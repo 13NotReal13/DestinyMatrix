@@ -27,10 +27,7 @@ struct PreloadMatrixDataView: View {
                     
                     Spacer()
                     
-                    PreloadMatrixContentView(
-                        viewModel: viewModel,
-                        navigateToMatrix: $navigateToMatrix
-                    )
+                    LoadProgressView(viewModel: viewModel)
                     
                     Spacer()
                 }
@@ -64,6 +61,12 @@ struct PreloadMatrixDataView: View {
                     EmptyView()
                 }
             )
+            .sheet(isPresented: $viewModel.showPurchaseModal) {
+                PurchaseModalView(
+                    isPresented: $viewModel.showPurchaseModal,
+                    navigateToMatrix: $navigateToMatrix
+                )
+            }
         }
         .navigationBarHidden(true)
     }
@@ -75,5 +78,6 @@ struct PreloadMatrixDataView: View {
         
         PreloadMatrixDataView(matrix: ShortMatrixData(name: "Иван", dateOfBirthday: .now, dateCreationMatrix: .now))
             .environmentObject(AudioVisualizer())
+            .environmentObject(NavigationManager())
     }
 }

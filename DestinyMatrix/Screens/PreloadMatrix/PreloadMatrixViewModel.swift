@@ -10,8 +10,8 @@ import SwiftUI
 
 final class PreloadMatrixViewModel: ObservableObject {
     @Published var progress: CGFloat = 0.0
-    @Published var statusText: String = "Вычисляю вашу матрицу судьбы..."
-    @Published var showButton: Bool = false
+    @Published var statusText: String = "Анализирую вашу матрицу..."
+    @Published var showPurchaseModal: Bool = false
     
     private var totalDuration: TimeInterval = 25.0
     
@@ -29,7 +29,7 @@ final class PreloadMatrixViewModel: ObservableObject {
                 }
                 
                 if index == delays.count - 1 {
-                    self.showButton = true
+                    self.showPurchaseModal = true
                 }
             }
         }
