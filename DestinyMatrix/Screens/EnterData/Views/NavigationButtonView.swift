@@ -42,7 +42,7 @@ struct NavigationButtonView: View {
                 }
             } label: {
                 Text("Далее")
-                    .frame(width: UIScreen.main.bounds.width * 0.6)
+                    .frame(width: UIScreen.main.bounds.width * 0.2)
                     .customText(fontSize: 16, textColor: .white)
                     .customButtonStyle(shape: .capsule)
                     .padding(.top, 16)

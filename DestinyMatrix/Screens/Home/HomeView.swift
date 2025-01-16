@@ -27,31 +27,15 @@ struct HomeView: View {
                     Spacer()
                     
                     Completed3DSphere()
+                        .mask {
+                            Color.red
+                                .ignoresSafeArea()
+                        }
                     
                     Spacer()
                     
-                    VStack(spacing: 16) {
-                        Spacer()
-                        Spacer()
-                        
-                        NavigationLink(
-                            destination: EnterDataView()
-                                .environmentObject(navigationManager),
-                            isActive: $navigationManager.isRootActive
-                        ) {
-                            HomeMenuButtonView(title: "Рассчитать матрицу")
-                        }
-                        
-                        NavigationLink(destination: HistoryView()) {
-                            HomeMenuButtonView(title: "История")
-                        }
-                        
-                        NavigationLink(destination: HelpInfoView()) {
-                            HomeMenuButtonView(title: "Содержание")
-                        }
-                        
-                        Spacer()
-                    }
+                    BottomNavigationBarView(isRootActive: $navigationManager.isRootActive)
+                        .environmentObject(navigationManager)
                     
                     Spacer()
                 }
@@ -77,4 +61,6 @@ struct HomeView: View {
 
 #Preview {
     HomeView()
+        .environmentObject(AudioVisualizer())
+        .environmentObject(NavigationManager())
 }

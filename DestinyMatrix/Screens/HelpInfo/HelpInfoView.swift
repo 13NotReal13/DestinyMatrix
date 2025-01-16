@@ -16,6 +16,7 @@ struct HelpInfoView: View {
         NavigationView {
             ZStack {
                 AnimatedStarryBackgroundView()
+                ShadowBackgroundView()
                 
                 VStack(alignment: .center) {
                     CustomSpacerView(height: 0.01)

@@ -36,6 +36,6 @@ struct CircularEqualizerView: View {
 }
 
 #Preview {
-    CircularEqualizerView(color: Color.yellow, shadowColor: Color.white, offsetDistance: CGFloat(-150))
+    CircularEqualizerView(color: Color.cyan, shadowColor: Color.white, offsetDistance: CGFloat(-150))
         .environmentObject(AudioVisualizer())
 }

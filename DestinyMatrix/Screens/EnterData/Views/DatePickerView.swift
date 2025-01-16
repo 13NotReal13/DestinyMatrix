@@ -25,22 +25,29 @@ struct DatePickerView: View {
                     .endEditing(true)
                 isDatePickerPresented.toggle()
             }) {
-                HStack {
-                    if displayedDateText.lowercased() == "Выбрать дату".lowercased() {
-                        Text(displayedDateText)
-                            .font(.custom(CustomFont.fontName.rawValue, size: 16))
-                            .foregroundStyle(Color.gray.opacity(0.6))
-                    } else {
-                        Text(displayedDateText)
-                            .customText(fontSize: 16, textColor: .black)
+                ZStack {
+                    Color.clear
+                        .frame(width: UIScreen.main.bounds.width * 0.5)
+                        .frame(height: UIScreen.main.bounds.height * 0.02)
+                        .customButtonStyle(
+                            color1: .backgroundColor1,
+                            color2: .backgroundColor2,
+                            shape: .capsule
+                        )
+                        .opacity(0.7)
+                    
+                    HStack {
+                        if displayedDateText.lowercased() == "Выбрать дату".lowercased() {
+                            Text(displayedDateText)
+                                .font(.custom(CustomFont.fontName.rawValue, size: 16))
+                                .foregroundStyle(Color.white.opacity(0.6))
+                        } else {
+                            Text(displayedDateText)
+                                .customText(fontSize: 16, textColor: .white)
+                        }
                     }
                 }
-                .frame(width: UIScreen.main.bounds.width * 0.6)
-                .customButtonStyle(
-                    color1: .lightAroundSphere,
-                    color2: .lightAroundSphere,
-                    shape: .capsule
-                )
+                .frame(width: UIScreen.main.bounds.width * 0.5)
             }
             
             VStack {
@@ -53,3 +60,5 @@ struct DatePickerView: View {
         }
     }
 }
+
+

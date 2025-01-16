@@ -23,6 +23,7 @@ struct MatrixView: View {
             NavigationView {
                 ZStack(alignment: .leading) {
                     AnimatedStarryBackgroundView()
+                    ShadowBackgroundView()
                     
                     VStack {
                         PersonalTitleView(matrixData: matrixData)

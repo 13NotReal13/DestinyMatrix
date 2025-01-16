@@ -23,8 +23,6 @@ struct EnterDataView: View {
                     
                     EnterDataFormView(enterDataViewModel: enterDataViewModel)
                     
-                    Spacer()
-                    
                     NavigationButtonView(enterDataViewModel: enterDataViewModel)
                     
                     Spacer()
@@ -62,6 +60,7 @@ struct EnterDataView: View {
         AnimatedStarryBackgroundView()
         
         EnterDataView()
+            .environmentObject(AudioVisualizer())
     }
 }
         

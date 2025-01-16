@@ -19,7 +19,7 @@ struct NextButtonOnboardingView: View {
             navigateToHome = true
         } label: {
             Text("Далее")
-                .frame(width: UIScreen.main.bounds.width * 0.6)
+                .frame(width: UIScreen.main.bounds.width * 0.2)
                 .customText(fontSize: 17, textColor: .white)
                 .customButtonStyle(shape: .capsule)
                 .opacity(onboardingAudioIsFinished ? 1 : 0)

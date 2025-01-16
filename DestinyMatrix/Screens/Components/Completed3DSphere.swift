@@ -11,13 +11,13 @@ struct Completed3DSphere: View {
     @EnvironmentObject private var homeViewModel: HomeViewModel
     @EnvironmentObject private var audioVusualizer: AudioVisualizer
     
-    @State private var size: CGFloat = 0.8
+    @State private var size: CGFloat = 0.7
     
     private var colorOfEqualizer: Color = .cyan
     private var shadowColorOfEqualizer: Color = .white
     
     private var offsetDistanceOfEqualizer: CGFloat {
-        UIScreen.main.bounds.width * -0.28 // Процент от ширины экрана
+        UIScreen.main.bounds.width * -0.23 // Процент от ширины экрана
     }
     
     private var imageName: String = ShapeOfSphere.shapeName.rawValue
@@ -40,12 +40,12 @@ struct Completed3DSphere: View {
                     .stroke(lineWidth: 4)
                     .frame(width: UIScreen.main.bounds.width * (size - 0.2))
                     .foregroundStyle(.lightAroundSphere)
-                    .shadow(color: .yellow, radius: 10)
+                    .shadow(color: .cyan, radius: 10)
                 
                 Circle()
                     .stroke(lineWidth: 0.1)
                     .frame(width: UIScreen.main.bounds.width * (size - 0.05))
-                    .foregroundStyle(.lightAroundSphere)
+                    .foregroundStyle(.cyan)
             }
         }
     }

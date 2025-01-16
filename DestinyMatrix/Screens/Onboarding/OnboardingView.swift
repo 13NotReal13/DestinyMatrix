@@ -20,6 +20,7 @@ struct OnboardingView: View {
         NavigationView {
             ZStack {
                 AnimatedStarryBackgroundView()
+                ShadowBackgroundView()
                 
                 VStack {
                     Spacer()
@@ -57,6 +58,7 @@ struct OnboardingView: View {
                     )
                     
                 }
+                
                 VStack {
                     Spacer()
                     
