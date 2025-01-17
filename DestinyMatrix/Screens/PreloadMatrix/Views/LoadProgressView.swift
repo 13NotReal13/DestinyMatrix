@@ -18,7 +18,7 @@ struct LoadProgressView: View {
                 .customText(fontSize: 16, textColor: .white)
             
             ProgressView(value: viewModel.progress, total: 1.0)
-                .tint(.buttonColor2)
+                .tint(.cyan)
         }
         .padding(.horizontal, 32)
         .frame(height: UIScreen.main.bounds.height * 0.4)

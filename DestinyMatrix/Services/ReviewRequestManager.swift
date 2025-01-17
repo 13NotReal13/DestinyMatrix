@@ -15,27 +15,17 @@ final class ReviewRequestManager: NSObject, ObservableObject, MFMailComposeViewC
     private override init() {}
     
     @AppStorage("hasSeenReviewPrompt") private var hasSeenReviewPrompt: Bool = false
-    @AppStorage("viewedLastSection") private var viewedLastSection: Bool = false
     
     private let minMatricesCount = 2
-    private let minUsageTime: TimeInterval = 900 // 15 минут (900 секунд)
     
     func reviewPromptWasShowing() -> Bool {
         return hasSeenReviewPrompt
     }
     
-    func checkReviewConditions(
-        matricesCount: Int,
-        totalTime: TimeInterval,
-        currentSection: Int
-    ) {
+    func checkReviewConditions(matricesCount: Int) {
         guard !hasSeenReviewPrompt else { return }
-        
-        if currentSection == 13 {
-            viewedLastSection = true
-        }
      
-        if matricesCount >= minMatricesCount || (viewedLastSection && totalTime >= minUsageTime) {
+        if matricesCount >= minMatricesCount {
             FirebaseLogManager.shared.logReviewPromptShown() // Лог показа формы
             showFeedbackAlert()
         }
@@ -88,8 +78,8 @@ final class ReviewRequestManager: NSObject, ObservableObject, MFMailComposeViewC
     
     private func showFeedbackAlert() {
         let alert = UIAlertController(
-            title: "Насколько полезно это приложение?",
-            message: "Вы довольны расчётом матрицы? Нашли это приложение полезным?",
+            title: "Нам важно ваше мнение",
+            message: "Находите ли вы это приложение полезным?",
             preferredStyle: .alert
         )
         

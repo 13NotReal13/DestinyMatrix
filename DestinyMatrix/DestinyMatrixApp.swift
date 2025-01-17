@@ -15,12 +15,6 @@ struct DestinyMatrixApp: App {
     @StateObject private var storageManager = StorageManager()
     @AppStorage("isBackgroundMusicPlaying") private var isBackgroundMusicPlaying: Bool = true
     @AppStorage("onboardingWasShowing") private var onboardingWasShowing: Bool = false
-
-    // Для отслеживания времени работы
-    @AppStorage("totalAppTime") private var totalAppTime: Double = 0.0
-    @State private var startTime: Date?
-
-    @Environment(\.scenePhase) private var scenePhase
     
     var body: some Scene {
         WindowGroup {
@@ -45,19 +39,6 @@ struct DestinyMatrixApp: App {
                     audioVisualizer.playBackgroundAudio()
                 }
                 FirebaseLogManager.shared.logDeviceInfoOnce()
-            }
-            .onChange(of: scenePhase) { phase in
-                switch phase {
-                case .active:
-                    startTime = Date() // Начало сессии
-                case .inactive, .background:
-                    if let startTime = startTime {
-                        let sessionDuration = Date().timeIntervalSince(startTime)
-                        totalAppTime += sessionDuration
-                    }
-                @unknown default:
-                    break
-                }
             }
         }
     }

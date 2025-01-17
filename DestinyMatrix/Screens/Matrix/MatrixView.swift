@@ -44,12 +44,6 @@ struct MatrixView: View {
                                 // Возвращаемся на предыдущий экран
                                 presentationMode.wrappedValue.dismiss()
                             }
-                            
-                            if !ReviewRequestManager.shared.reviewPromptWasShowing() {
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                                    checkReviewConditions()
-                                }
-                            }
                         } label: {
                             Image(systemName: isFromPreload ? "house" : "chevron.left")
                                 .customText(fontSize: 17, textColor: .white)
@@ -62,6 +56,12 @@ struct MatrixView: View {
                 }
                 .onAppear {
                     FirebaseLogManager.shared.logScreenView(screenName: "matrix")
+                    
+                    if !ReviewRequestManager.shared.reviewPromptWasShowing() {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                            checkReviewConditions()
+                        }
+                    }
                 }
             }
             .navigationBarHidden(true)
@@ -75,14 +75,8 @@ struct MatrixView: View {
     
     private func checkReviewConditions() {
         let matricesCount = storageManager.historyMatrixData.count
-        let totalTime = UserDefaults.standard.double(forKey: "totalAppTime")
-        let currentSection = viewModel.selectedSection
         
-        ReviewRequestManager.shared.checkReviewConditions(
-            matricesCount: matricesCount,
-            totalTime: totalTime,
-            currentSection: currentSection
-        )
+        ReviewRequestManager.shared.checkReviewConditions(matricesCount: matricesCount)
     }
 }
 
