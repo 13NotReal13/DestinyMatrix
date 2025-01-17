@@ -36,6 +36,7 @@ struct HomeView: View {
                     
                     BottomNavigationBarView(isRootActive: $navigationManager.isRootActive)
                         .environmentObject(navigationManager)
+                        .environmentObject(audioVisualizer)
                     
                     Spacer()
                 }

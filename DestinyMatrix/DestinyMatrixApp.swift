@@ -13,6 +13,7 @@ struct DestinyMatrixApp: App {
     
     @StateObject private var audioVisualizer = AudioVisualizer()
     @StateObject private var storageManager = StorageManager()
+    @AppStorage("isBackgroundMusicPlaying") private var isBackgroundMusicPlaying: Bool = true
     @AppStorage("onboardingWasShowing") private var onboardingWasShowing: Bool = false
 
     // Для отслеживания времени работы
@@ -40,7 +41,9 @@ struct DestinyMatrixApp: App {
                     .opacity(0)
             }
             .onAppear {
-                audioVisualizer.playBackgroundAudio()
+                if isBackgroundMusicPlaying {
+                    audioVisualizer.playBackgroundAudio()
+                }
                 FirebaseLogManager.shared.logDeviceInfoOnce()
             }
             .onChange(of: scenePhase) { phase in
@@ -51,8 +54,6 @@ struct DestinyMatrixApp: App {
                     if let startTime = startTime {
                         let sessionDuration = Date().timeIntervalSince(startTime)
                         totalAppTime += sessionDuration
-//                        print("Session duration: \(sessionDuration)")
-//                        print("Total time: \(totalAppTime)")
                     }
                 @unknown default:
                     break

@@ -41,40 +41,8 @@ final class ReviewRequestManager: NSObject, ObservableObject, MFMailComposeViewC
         }
     }
     
-    private func requestReview() {
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            SKStoreReviewController.requestReview(in: windowScene)
-            hasSeenReviewPrompt = true
-            
-            FirebaseLogManager.shared.logReviewPromptAccepted() // Лог положительного ответа
-        }
-    }
-    
-    private func showFeedbackAlert() {
-        let alert = UIAlertController(
-            title: "Насколько полезно это приложение?",
-            message: "Вы довольны расчётом матрицы? Нашли это приложение полезным?",
-            preferredStyle: .alert
-        )
-        
-        alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { _ in
-            self.requestReview()
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Нет", style: .cancel, handler: { _ in
-            self.hasSeenReviewPrompt = true
-            FirebaseLogManager.shared.logReviewPromptDeclined() // Лог отказа от отзыва
-            self.showFeedbackForm() // Переход к форме обратной связи
-        }))
-        
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let rootVC = windowScene.windows.first?.rootViewController {
-            rootVC.present(alert, animated: true)
-        }
-    }
-    
     // Форма обратной связи
-    private func showFeedbackForm() {
+    func showFeedbackForm() {
         // Лог открытия формы обратной связи
         FirebaseLogManager.shared.logFeedbackFormOpened()
         
@@ -106,6 +74,38 @@ final class ReviewRequestManager: NSObject, ObservableObject, MFMailComposeViewC
             
             // Лог ошибки при открытии формы обратной связи
             FirebaseLogManager.shared.logFeedbackError(message: "Mail client not available")
+        }
+    }
+    
+    private func requestReview() {
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            SKStoreReviewController.requestReview(in: windowScene)
+            hasSeenReviewPrompt = true
+            
+            FirebaseLogManager.shared.logReviewPromptAccepted() // Лог положительного ответа
+        }
+    }
+    
+    private func showFeedbackAlert() {
+        let alert = UIAlertController(
+            title: "Насколько полезно это приложение?",
+            message: "Вы довольны расчётом матрицы? Нашли это приложение полезным?",
+            preferredStyle: .alert
+        )
+        
+        alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { _ in
+            self.requestReview()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Нет", style: .cancel, handler: { _ in
+            self.hasSeenReviewPrompt = true
+            FirebaseLogManager.shared.logReviewPromptDeclined() // Лог отказа от отзыва
+            self.showFeedbackForm() // Переход к форме обратной связи
+        }))
+        
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let rootVC = windowScene.windows.first?.rootViewController {
+            rootVC.present(alert, animated: true)
         }
     }
     

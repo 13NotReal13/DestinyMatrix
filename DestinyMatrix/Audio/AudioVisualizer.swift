@@ -17,6 +17,8 @@ final class AudioVisualizer: ObservableObject {
     /// Флаг, воспроизводится ли основной трек
     @Published var isPlaying: Bool = false
     
+    @AppStorage("isBackgroundMusicPlaying") var isBackgroundMusicPlaying: Bool = true
+    
     // MARK: - Audio Engine
     
     private let audioEngine = AVAudioEngine()
@@ -65,7 +67,6 @@ final class AudioVisualizer: ObservableObject {
                 message: "Failed to load audio file.",
                 details: "URL: \(url.absoluteString), Error: \(error.localizedDescription)"
             )
-//            print("Ошибка при загрузке аудиофайла: \(error.localizedDescription)")
         }
     }
     
@@ -76,7 +77,6 @@ final class AudioVisualizer: ObservableObject {
                 message: "Background audio file not found.",
                 details: "Unable to load background audio from bundle."
             )
-//            print("Background audio file not found.")
             return
         }
         
@@ -86,7 +86,9 @@ final class AudioVisualizer: ObservableObject {
         
         backgroundPlayerNode.scheduleFile(backgroundFile, at: nil) { [weak self] in
             DispatchQueue.main.async {
-                self?.playBackgroundAudio() // зацикливаем
+                if self?.isBackgroundMusicPlaying == true {
+                    self?.playBackgroundAudio() // зацикливаем
+                }
             }
         }
         
@@ -96,8 +98,16 @@ final class AudioVisualizer: ObservableObject {
     
     /// Остановить фоновую музыку вручную
     func stopBackgroundAudio() {
-        if backgroundPlayerNode.isPlaying {
-            backgroundPlayerNode.stop()
+        backgroundPlayerNode.stop()
+        backgroundPlayerNode.reset()
+    }
+    
+    func toggleBackgroundAudio() {
+        isBackgroundMusicPlaying.toggle()
+        if isBackgroundMusicPlaying {
+            playBackgroundAudio()
+        } else {
+            stopBackgroundAudio()
         }
     }
     
@@ -112,7 +122,6 @@ final class AudioVisualizer: ObservableObject {
                     message: "Failed to load background audio.",
                     details: "Error loading BackgroundMusic.mp3: \(error.localizedDescription)"
                 )
-//                print("Ошибка при загрузке фоновой музыки: \(error.localizedDescription)")
             }
         }
     }
@@ -127,7 +136,6 @@ final class AudioVisualizer: ObservableObject {
                 message: "Failed to configure audio session.",
                 details: "Error: \(error.localizedDescription)"
             )
-//            print("Ошибка настройки аудиосессии: \(error)")
         }
     }
     
@@ -151,7 +159,6 @@ final class AudioVisualizer: ObservableObject {
                 message: "Failed to start audio engine.",
                 details: "Error: \(error.localizedDescription)"
             )
-//            print("Ошибка запуска аудиодвижка: \(error.localizedDescription)")
         }
     }
     
