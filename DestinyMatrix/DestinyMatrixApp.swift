@@ -14,7 +14,7 @@ struct DestinyMatrixApp: App {
     @StateObject private var audioVisualizer = AudioVisualizer()
     @StateObject private var storageManager = StorageManager()
     @AppStorage("isBackgroundMusicPlaying") private var isBackgroundMusicPlaying: Bool = true
-    @AppStorage("onboardingWasShowing") private var onboardingWasShowing: Bool = false
+    @AppStorage("onboardingWasShowing") private var onboardingWasShowing: Bool = true
     
     var body: some Scene {
         WindowGroup {
@@ -39,6 +39,8 @@ struct DestinyMatrixApp: App {
                     audioVisualizer.playBackgroundAudio()
                 }
                 FirebaseLogManager.shared.logDeviceInfoOnce()
+                IAPManager.shared.startObserving()
+                IAPManager.shared.fetchProducts()
             }
         }
     }

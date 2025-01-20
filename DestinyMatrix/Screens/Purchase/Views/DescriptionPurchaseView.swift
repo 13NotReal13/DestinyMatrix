@@ -11,8 +11,8 @@ struct DescriptionPurchaseView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             Text("Что вы получите:")
-                .font(.subheadline)
-                .foregroundColor(.primary)
+                .customText(fontSize: 15, textColor: .white)
+                .padding(.leading, 6)
             
             VStack(alignment: .leading, spacing: 8) {
                 HStack {
@@ -53,19 +53,11 @@ struct DescriptionPurchaseView: View {
                 }
             }
             .padding()
-            .background {
-                LinearGradient(
-                    gradient: Gradient(colors: [Color.cyan.opacity(0.8), Color.black]),
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
-                .edgesIgnoringSafeArea(.all)
+            .overlay {
+                RoundedRectangle(cornerRadius: 20)
+                    .stroke(Color.cyan, lineWidth: 1)
             }
-//            .overlay {
-//                RoundedRectangle(cornerRadius: 10)
-//                    .stroke(Color.cyan, lineWidth: 1)
-//            }
-            .clipShape(RoundedRectangle(cornerRadius: 10))
+            .clipShape(RoundedRectangle(cornerRadius: 20))
         }
         .padding(.horizontal)
     }

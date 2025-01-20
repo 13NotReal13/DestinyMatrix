@@ -13,72 +13,107 @@ struct PurchaseModalView: View {
     
     var body: some View {
         ZStack {
-            VStack {
-                ZStack {
-                    Image("BackgroundPurchaseScreen")
-                        .resizable()
-                        .scaledToFill()
-                        .frame(height: UIScreen.main.bounds.height * 0.4)
-                        .ignoresSafeArea(edges: .horizontal)
-                        .ignoresSafeArea(edges: .top)
-                        .mask(
-                            LinearGradient(
-                                gradient: Gradient(stops: [
-                                    .init(color: .white, location: 0.9),
-                                    .init(color: .clear, location: 1)
-                                ]),
-                                startPoint: .top,
-                                endPoint: .bottom
-                            )
-                        )
-                    
-                    Text("Матрица Судьбы")
-                        .customText(fontSize: 29, textColor: .white)
-                        .padding()
-                }
-                
-                Spacer()
-            }
+            BackgroundImageView()
             
             VStack(spacing: 16) {
                 Spacer()
                 
+                Text("Матрица Судьбы")
+                    .customText(fontSize: 29, textColor: .white)
+                    .ignoresSafeArea()
+                
                 DescriptionPurchaseView()
                 
-//                Text("Чтобы продолжить, необходимо приобрести доступ к расчёту Матрицы Судьбы.")
-//                    .multilineTextAlignment(.center)
-//                    .font(.system(size: 11))
-//                    .foregroundStyle(.secondary)
-//                    .padding(.horizontal)
-                
-                Button(action: {
-                    // Логика покупки
-                    print("Покупка начата")
+                VStack(spacing: 8) {
+                    HStack(spacing: 16) {
+                        Button {
+                            IAPManager.shared.restorePurchases()
+                        } label: {
+                            Text("Восстановить покупки")
+                                .font(.footnote)
+                                .foregroundColor(.gray)
+                        }
+                        
+                        Button(action: {
+                            if let url = URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/") {
+                                UIApplication.shared.open(url)
+                            }
+                        }) {
+                            Text("Условия использования")
+                                .font(.footnote)
+                                .foregroundColor(.gray)
+                        }
+                    }
                     
-                    // После успешной покупки
-                    isPresented = false // Закрываем модальное окно
-                    navigateToMatrix = true // Инициируем переход
-                }) {
-                    Text("Приобрести за 12.99 $")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
+                    Button(action: {
+                        if let url = URL(string: "https://13notreal13.github.io/privacy-policy-destiny-matrix/privacy.html") {
+                            UIApplication.shared.open(url)
+                        }
+                    }) {
+                        Text("Политика конфиденциальности")
+                            .font(.footnote)
+                            .foregroundColor(.gray)
+                    }
                 }
-                .padding(.horizontal)
+                
+                ZStack {
+                    if let product = IAPManager.shared.getProducts().first {
+                        Button(action: {
+                            IAPManager.shared.purchase(
+                                productID: product.productIdentifier,
+                                success: {
+                                    DispatchQueue.main.async {
+                                        navigateToMatrix = true
+                                        isPresented = false
+                                    }
+                                },
+                                failure: { error in
+                                    showErrorAlert(error: error)
+                                }
+                            )
+                        }) {
+                            Text("Приобрести за \(product.localizedPrice ?? "N/A")")
+                                .frame(width: UIScreen.main.bounds.width * 0.95)
+                                .frame(height: 50)
+                                .foregroundColor(.white)
+                                .cornerRadius(20)
+                        }
+                    } else {
+                        Text("Загрузка цены...")
+                            .frame(width: UIScreen.main.bounds.width * 0.95)
+                            .frame(height: 50)
+                            .foregroundColor(.white)
+                            .cornerRadius(20)
+                    }
+                    
+                    OutlineGradientView()
+                }
                 
                 Button(action: {
-                    isPresented = false // Закрываем окно
+                    isPresented = false
                 }) {
                     Text("Отмена")
                         .frame(maxWidth: .infinity)
                         .padding()
                         .foregroundColor(.blue)
                 }
+                
             }
         }
         .ignoresSafeArea(edges: .top)
+    }
+    
+    private func showErrorAlert(error: Error?) {
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let rootVC = windowScene.windows.first?.rootViewController else { return }
+        
+        let alert = UIAlertController(
+            title: "Ошибка",
+            message: error?.localizedDescription ?? "Не удалось завершить покупку.",
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "Ок", style: .default))
+        rootVC.present(alert, animated: true)
     }
 }
 

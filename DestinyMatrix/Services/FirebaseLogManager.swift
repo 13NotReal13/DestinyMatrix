@@ -31,6 +31,13 @@ final class FirebaseLogManager {
         static let feedbackFormOpened = "TEST_feedback_form_opened"
         static let feedbackSubmitted = "TEST_feedback_submitted"
         static let feedbackError = "TEST_feedback_error"
+        
+        // Логи для покупок
+        static let purchaseStart = "TEST_purchase_start"
+        static let purchaseSuccess = "TEST_purchase_success"
+        static let purchaseFailure = "TEST_purchase_failure"
+        static let purchaseRestoreSuccess = "TEST_purchase_restore_success"
+        static let purchaseRestoreFailure = "TEST_purchase_restore_failure"
     }
     
     // MARK: - Логирование событий
@@ -66,6 +73,41 @@ final class FirebaseLogManager {
     /// Лог открытия экрана
     func logScreenView(screenName: String) {
         logEvent(name: EventNames.screenView, parameters: ["screen_name": screenName])
+    }
+    
+    // MARK: - Логи покупок
+    
+    /// Лог начала покупки
+    func logPurchaseStart(productID: String) {
+        logEvent(name: EventNames.purchaseStart, parameters: ["product_id": productID])
+    }
+    
+    /// Лог успешной покупки
+    func logPurchaseSuccess(productID: String, price: String) {
+        logEvent(name: EventNames.purchaseSuccess, parameters: [
+            "product_id": productID,
+            "price": price
+        ])
+    }
+    
+    /// Лог ошибки при покупке
+    func logPurchaseFailure(productID: String, error: String?) {
+        logEvent(name: EventNames.purchaseFailure, parameters: [
+            "product_id": productID,
+            "error": error ?? "Unknown error"
+        ])
+    }
+    
+    /// Лог успешного восстановления покупок
+    func logRestoreSuccess() {
+        logEvent(name: EventNames.purchaseRestoreSuccess)
+    }
+    
+    /// Лог ошибки при восстановлении покупок
+    func logRestoreFailure(error: String?) {
+        logEvent(name: EventNames.purchaseRestoreFailure, parameters: [
+            "error": error ?? "Unknown error"
+        ])
     }
     
     // MARK: - Логи ошибок

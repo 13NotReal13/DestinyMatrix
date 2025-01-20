@@ -25,19 +25,6 @@ struct NavigationButtonView: View {
                 enterDataViewModel.validateDate()
                 
                 if enterDataViewModel.isNameValid && enterDataViewModel.isDateValid {
-                    StorageManager().add(
-                        shortMatrixData: ShortMatrixData(
-                            name: enterDataViewModel.name,
-                            dateOfBirthday: enterDataViewModel.dateBirthday,
-                            dateCreationMatrix: .now
-                        )
-                    )
-                    
-                    FirebaseLogManager.shared.logMatrixCalculated(
-                        name: enterDataViewModel.name,
-                        dateOfBirth: enterDataViewModel.dateBirthday.formattedDate()
-                    )
-                    
                     enterDataViewModel.canNavigate = true
                 }
             } label: {
